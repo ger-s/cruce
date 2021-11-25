@@ -1,5 +1,6 @@
 import dbConnect from '../../../utils/dbConnect';
 import Test from '../../../models/Test';
+import TestController from '../../../controllers/test.controller'
 
 dbConnect();
 
@@ -8,22 +9,10 @@ export default async (req, res) => {
 
     switch (method) {
         case 'GET':
-            try {
-                const tests = await Test.find({});
-
-                res.status(200).json({ success: true, data: tests })
-            } catch (error) {
-                res.status(400).json({ success: false });
-            }
+            TestController.getAllTest(req, res)
             break;
         case 'POST':
-            try {
-                const test = await Test.create(req.body);
-
-                res.status(201).json({ success: true, data: test })
-            } catch (error) {
-                res.status(400).json({ success: false });
-            }
+            TestController.postTest(req, res)
             break;
         default:
             res.status(400).json({ success: false });
