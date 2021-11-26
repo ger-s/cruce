@@ -16,8 +16,7 @@ const UserSchema = new mongoose.Schema(
       maxlength: [30, "los apellidos sólo pueden tener hasta 40 caracteres"],
     },
     password: {
-      type: String,
-      required: [true, "por favor, agregá una contraseña."],
+      type: String
     },
     dni: {
       type: String,
@@ -25,12 +24,13 @@ const UserSchema = new mongoose.Schema(
       maxlength: [10, "los DNI sólo pueden tener hasta 10 carácteres"],
       minlength: [7, "los DNI sólo pueden tener desde 7 carácteres"],
     },
+    salt: { type: String, default: ""},
     email: {
       type: String,
       required: true,
     },
-    admin: { type: Boolean, default: false },
-    operator: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false },
+    isOperator: { type: Boolean, default: false },
     type: { type: String, default: "default" },
   },
   { versionKey: false }
@@ -41,29 +41,24 @@ UserSchema.methods.switchAdmin = async function (password, salt) {
   await User.updateOne({ _id: this._id }, { admin: !this.admin });
 };
 
-// Para añadir metodos de clase
 UserSchema.static("hash", function (password, salt) {
   return bcrypt.hash(password, salt);
 });
 
-
 // Before create
 UserSchema.pre("save", async function (next) {
-  let user = this
-  console.log(user)
   // Checkear si es usuario default
-  if (!(user.type === "default")) return next();
+  if (this.type !== "default") return next();
   // Prevenir que se cree un usuario admin
-  user.admin = false;
-  user.operator = false;
-  // Crear el salt
-  const salt = await bcrypt.genSalt(10, user.password);
+  this.isAdmin = false;
+  this.isOperator = false;
+  const salt = await bcrypt.genSalt();
+  this.salt = salt
   // Guardar el salt
   // Generar la contraseña hasheada
-  const hashedPassword = await user.hash(user.password, salt);
+  const hashedPassword = await bcrypt.hash(this.password, salt);
   // Guardar contraseña hasheada
-  user.password = hashedPassword;
-  next();
+  this.password = hashedPassword;
 });
 
 module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
