@@ -1,5 +1,4 @@
 import dbConnect from '../../../utils/dbConnect';
-import Test from '../../../models/Test';
 import TestController from '../../../controllers/test.controller'
 
 dbConnect();
