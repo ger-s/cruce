@@ -7,17 +7,15 @@ export default async (req, res) => {
   const { method } = req;
 
   switch (method) {
-    case "PUT":
+    case "GET":
       try {
-        const userModified = await User.findOneAndUpdate({_id: `${req.query._id}`}, req.body)
-        return res.status(201).json({ success: true, data: "Usuario modificado satisfactoriamente." });
-        
+        const users = await User.find({});
+        res.status(200).json({ success: true, data: users });
       } catch (error) {
-        res.status(400).json({ success: console.log(error) });
+        res.status(400).json({ success: false });
       }
-
-      break;
-
+    break;
+   
     default:
       res.status(400).json({ success: false });
       break;

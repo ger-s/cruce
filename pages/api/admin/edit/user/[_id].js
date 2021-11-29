@@ -1,5 +1,5 @@
 import dbConnect from "../../../../../utils/dbConnect";
-import Sucursal from "../../../../../models/Sucursal";
+import User from "../../../../../models/User";
 
 dbConnect();
 
@@ -7,14 +7,16 @@ export default async (req, res) => {
   const { method } = req;
 
   switch (method) {
-    case "POST":
+    case "PUT":
       try {
-        const createSucursal = new Sucursal(req.body);
-        await createSucursal.save();
-        res.status(200).json({ success: true, data: "Sucursal success" });
+        const userModified = await User.findOneAndUpdate({_id: `${req.query._id}`}, req.body)
+        return res.status(201).json({ success: true, data: "Usuario modificado satisfactoriamente." });
+        
       } catch (error) {
         res.status(400).json({ success: console.log(error) });
       }
+
+      break;
 
     default:
       res.status(400).json({ success: false });
