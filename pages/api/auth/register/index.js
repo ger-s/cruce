@@ -1,7 +1,7 @@
-import dbConnect from "../../../utils/dbConnect";
-import User from "../../../models/User";
+import dbConnect from "../../../../utils/dbConnect";
+import User from "../../../../models/User";
 import jwt from "jsonwebtoken";
-import config from "../../../config";
+import { jwtPass } from "../../../../secret.json";
 
 dbConnect();
 
@@ -16,7 +16,7 @@ export default async (req, res) => {
 
         await newUser.save();
 
-        const token = jwt.sign({ id: newUser._id }, config.SECRET, {
+        const token = jwt.sign({ id: newUser._id }, jwtPass, {
           expiresIn: 86400, //24h
         });
 
