@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema(
     creationDate: {
       type: Date
     },
+    phone:{
+     type:Number,
+     required:true,
+    },
     isAdmin: { type: Boolean, default: false },
     isOperator: { type: Boolean, default: false },
     type: { type: String, default: "default" },
@@ -48,6 +52,14 @@ UserSchema.static("hash", function (password, salt) {
   return bcrypt.hash(password, salt);
 });
 
+
+
+UserSchema.statics.comparePassword=async function (password,newPassword) {
+return bcrypt.compare(password,newPassword)
+
+}
+
+
 // Before create
 UserSchema.pre("save", async function (next) {
   // Checkear si es usuario default
@@ -59,6 +71,7 @@ UserSchema.pre("save", async function (next) {
   this.salt = salt
   // Guardar el salt
   // Generar la contraseña hasheada
+  
   const hashedPassword = await bcrypt.hash(this.password, salt);
   // Guardar contraseña hasheada
   this.password = hashedPassword;
