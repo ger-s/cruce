@@ -29,6 +29,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    creationDate: {
+      type: Date
+    },
     phone:{
      type:Number,
      required:true,
