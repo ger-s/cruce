@@ -18,6 +18,7 @@ export default async (req, res) => {
     case "POST":
       try {
         const user = new User(req.body);
+        user.creationDate = new Date()
         await user.save()
         res.status(201).json(user);
       } catch (error) {
