@@ -2,6 +2,7 @@ import dbConnect from "../../../../utils/dbConnect";
 import User from "../../../../models/User";
 import jwt from "jsonwebtoken";
 import { jwtPass } from "../../../../secret.json";
+import generateJWT from "../../../../utils/generateJWT"
 
 dbConnect();
 
@@ -16,9 +17,7 @@ export default async (req, res) => {
 
         await newUser.save();
 
-        const token = jwt.sign({ id: newUser._id }, jwtPass, {
-          expiresIn: 86400, //24h
-        });
+        const token = generateJWT({ id: newUser._id })
 
         res.status(200).json({ success: true, data: token });
       } catch (error) {

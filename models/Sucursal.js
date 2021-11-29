@@ -29,12 +29,12 @@ const SucursalSchema = mongoose.Schema({
   }],
   openingTime: { 
     type: Date,
-    required: [true, "por favor, agregá un horario de apertura."],
+    //required: [true, "por favor, agregá un horario de apertura."],
     unique: true
   },
   closingTime: {
     type: Date,
-    required: [true, "por favor, agregá un horario de cierre."],
+    //required: [true, "por favor, agregá un horario de cierre."],
     unique: true
   },
   history: [{
