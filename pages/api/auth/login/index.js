@@ -1,7 +1,7 @@
-import dbConnect from "../../../utils/dbConnect";
-import User from "../../../models/User";
+import dbConnect from "../../../../utils/dbConnect";
+import User from "../../../../models/User";
 import jwt from "jsonwebtoken";
-import config from "../../../config";
+import { jwtPass } from "../../../../secret.json";
 
 dbConnect();
 
@@ -31,7 +31,7 @@ export default async (req, res) => {
               data: "Contraseña incorrecta",
               token: "",
             });
-        const token = jwt.sign({ id: userFound._id }, config.SECRET, {
+        const token = jwt.sign({ id: userFound._id }, jwtPass, {
           expiresIn: 86400,
         });
 
