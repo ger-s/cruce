@@ -18,11 +18,15 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // fetch es como axios, pero con particularidades
       const res = await fetch("/api/auth/register", {
+        // se especifica el método
         method: "POST",
+        // headers va por default
         headers: {
           "Content-Type": "application/json",
         },
+        // es importante que al enviar algo, se haga el stringify
         body: JSON.stringify({
           name: name.value,
           lastName: lastName.value,
@@ -32,11 +36,13 @@ const Register = () => {
           phone: phone.value,
         }),
       });
-      const data = await res.json()
+      // para conseguir la data, no alcanza con desestructurar res
+      // hay que convertirlo a json primero
+      const {data, success} = await res.json()
     
       console.log(data);
-      if (data) {
-        Notification.successMessage("bien");
+      if (success[0]) {
+        Notification.successMessage(success[1]);
         return router.push("/login");
       } else {
         Notification.errorMessage("Oops...");
