@@ -19,9 +19,9 @@ export default async (req, res) => {
 
         const token = generateJWT({ id: newUser._id })
 
-        res.status(200).json({ success: true, data: token });
+        res.status(200).json({ success: true, data: [token, newUser] });
       } catch (error) {
-        res.status(400).json({ success: console.log(error)});
+        res.status(400).json({ success: false, data: error });
       }
 
       break;
