@@ -107,12 +107,16 @@ const Navbar = function ({ size }) {
                       <Icon name="sidebar" />
                     </Menu.Item>
                     <Menu.Item position="right">
-                      <Button as="a" inverted>
-                        Log in
-                      </Button>
+                      <Link href="/login">
+                        <Button as="a" inverted>
+                          Log in
+                        </Button>
+                      </Link>
+                      <Link href="/register">
                       <Button as="a" inverted style={{ marginLeft: "0.5em" }}>
-                        Sign Up
+                        Register
                       </Button>
+                      </Link>
                     </Menu.Item>
                   </Menu>
                 </Container>
