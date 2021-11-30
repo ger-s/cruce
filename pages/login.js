@@ -5,7 +5,7 @@ import { Container } from "semantic-ui-react";
 import useInput from "../hooks/useInput";
 import Notification from "../utils/Notification";
 import jwt from "jsonwebtoken";
-import { jwtPass } from "../secret.json"
+const { jwtPass } = require("../secret.json")
 
 const Login = () => {
   const router = useRouter();
@@ -30,13 +30,13 @@ const Login = () => {
       console.log(success)
       
       
-      if (success) {
-        //const decodToken = jwt.verify(token, jwtPass)
-        localStorage.setItem("token", JSON.stringify(success.headers.Authorization))
-        Notification.successMessage(success.successMessage);
+      if (success.headers.Authorization) {
+        const decodToken = jwt.verify(success.headers.Authorization.split(" ")[1], jwtPass)
+        localStorage.setItem("token", JSON.stringify(decodToken))
+        Notification.successMessage(success.body.successMessage);
         return router.push("/")
       } else {
-        Notification.errorMessage(success.successMessage);
+        Notification.errorMessage(success.body.successMessage);
       }
     } catch (err) {
       Notification.errorMessage(err)
