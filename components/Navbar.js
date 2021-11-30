@@ -1,14 +1,11 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import {
   Button,
   Container,
-  Divider,
-  Grid,
-  Header,
   Icon,
   Image,
-  List,
   Menu,
   Segment,
   Sidebar,
@@ -16,26 +13,24 @@ import {
 } from "semantic-ui-react";
 
 const Navbar = function ({ size }) {
-  const [user, setUser] = useState({})
+  const router = useRouter()
+  const [user, setUser] = useState({});
   const [state, setState] = useState({ fixed: false, sidebarOpened: false });
 
   const hideFixedMenu = () => setState({ fixed: false });
   const showFixedMenu = () => setState({ fixed: true });
   const handleSidebarHide = () => setState({ sidebarOpened: false });
   const handleToggle = () => setState({ sidebarOpened: true });
-
-  console.log(user)
-
+  const handleLogout = () => {localStorage.removeItem('token'), router.push('/')}
 
   useEffect(() => {
-    const local = JSON.parse(localStorage.getItem('token'))
+    const local = JSON.parse(localStorage.getItem("token"));
     setUser(local);
-
-  }, []);
+  }, [router]);
 
   return (
     <>
-      {(size.width / size.height) > 0.7 ? (
+      {size.width / size.height > 0.7 ? (
         <>
           <Visibility
             once={false}
@@ -43,21 +38,28 @@ const Navbar = function ({ size }) {
             onBottomPassedReverse={hideFixedMenu}
           >
             <Segment
-              inverted
               textAlign="center"
-              style={{ padding: "1em 0em", background: "none" }}
+              style={{ padding: "1em 0em", border: "none" }}
               vertical
-              
             >
               <Menu
                 fixed={state.fixed ? "top" : null}
-                //inverted={!state.fixed}
-                //pointing={!state.fixed}
+                // inverted={!state.fixed}
+                pointing={!state.fixed}
                 secondary={!state.fixed}
                 size="large"
-                style={{background: "none"}}
+                style={{ border: "none" }}
               >
                 <Container>
+                  <Menu.Item position="left">
+                    <Link href="/">
+                      <Image
+                        src="https://www.e-cruce.com/wp-content/uploads/2019/10/cruce.svg"
+                        size="tiny"
+                        disabled
+                      />
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item as="a" active>
                     Home
                   </Menu.Item>
@@ -65,23 +67,21 @@ const Navbar = function ({ size }) {
                   <Menu.Item as="a">Company</Menu.Item>
                   <Menu.Item as="a">Careers</Menu.Item>
                   <Menu.Item position="right">
-                  {!user ? (<><Link href="/login">
-                    <Button as="a"
-                    //inverted={!state.fixed}
-                    >
-                      Log in
-                    </Button>
-                    </Link>
-                    <Link href="/register">
-                    <Button
-                      as="a"
-                      //inverted={!state.fixed}
-                      primary={state.fixed}
-                      style={{ marginLeft: "0.5em" }}
-                    >
-                      Registro
-                    </Button>
-                    </Link></>) : null}
+                    {!user ? (
+                      <>
+                        <Link href="/login">
+                          <Button as="a">Log in</Button>
+                        </Link>
+                        <Link href="/register">
+                          <Button as="a" style={{ marginLeft: "0.5em" }}>
+                            Registrate
+                          </Button>
+                        </Link>
+                      </>
+                    ) : (
+                      
+                        <Button as="a" onClick={handleLogout}>Log out</Button>
+                    )}
                   </Menu.Item>
                 </Container>
               </Menu>
@@ -94,44 +94,63 @@ const Navbar = function ({ size }) {
             <Sidebar
               as={Menu}
               animation="overlay"
-              //inverted
               onHide={handleSidebarHide}
               vertical
               visible={state.sidebarOpened}
             >
-              <Menu.Item as="a" active>
-                Home
-              </Menu.Item>
-              <Menu.Item as="a">Work</Menu.Item>
-              <Menu.Item as="a">Company</Menu.Item>
-              <Menu.Item as="a">Careers</Menu.Item>
-              <Menu.Item as="a">Log in</Menu.Item>
-              <Menu.Item as="a">Sign Up</Menu.Item>
+              <Menu.Item as="a">Opciones</Menu.Item>
+
+              {!user ? (
+                <>
+                  <Link href="/login">
+                    <Menu.Item onClick={handleSidebarHide}>Log in</Menu.Item>
+                  </Link>
+
+                  <Link href="/register">
+                    <Menu.Item onClick={handleSidebarHide}>
+                      Registrate
+                    </Menu.Item>
+                  </Link>
+                </>
+              ) : (
+              
+                  <Menu.Item onClick={handleLogout}>
+                    <p onClick={handleSidebarHide}>Log out</p>
+                  </Menu.Item>
+              
+              )}
             </Sidebar>
 
             <Sidebar.Pusher dimmed={state.sidebarOpened}>
               <Segment
-                inverted
+                // inverted
                 textAlign="center"
-                style={state.sidebarOpened ? ({ minHeight: 280, padding: "1em 0em", background: "none" }) : ({ padding: "1em 0em", background: "none" })}
+                style={
+                  state.sidebarOpened
+                    ? { minHeight: 125, padding: "1em 0em", background: "none" }
+                    : { padding: "1em 0em", background: "none" }
+                }
                 vertical
               >
                 <Container>
-                  <Menu  secondary size="large">
-                    <Menu.Item onClick={handleToggle}>
-                      <Icon name="sidebar" />
-                    </Menu.Item>
-                    <Menu.Item position="right">
-                      {!user ? (<><Link href="/login">
-                        <Button as="a" inverted>
-                          Log in
-                        </Button>
+                  <Menu
+                    pointing
+                    secondary
+                    size="large"
+                    style={{ border: "none" }}
+                  >
+                    <Menu.Item position="left">
+                      <Link href="/">
+                        <Image
+                          src="https://www.e-cruce.com/wp-content/uploads/2019/10/cruce.svg"
+                          size="tiny"
+                          disabled
+                        />
                       </Link>
-                      <Link href="/register">
-                        <Button as="a" inverted style={{ marginLeft: "0.5em" }}>
-                          Register
-                        </Button>
-                      </Link></>) : null}
+                    </Menu.Item>
+
+                    <Menu.Item position="right" onClick={handleToggle}>
+                      <Icon name="sidebar" />
                     </Menu.Item>
                   </Menu>
                 </Container>
