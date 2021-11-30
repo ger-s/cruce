@@ -12,9 +12,9 @@ export default async (req, res) => {
       try {
         const createOperator = new User(req.body);
         await createOperator.save();
-        res.status(200).json({success: true, data: "user success"});
+        res.status(200).json({success: true,successMessage:"operador creado", data: ""});
       } catch (error) {
-        res.status(400).json({ success: console.log(error) });
+        res.status(400).json({ success:false,successMessage:error});
       }
 
     default:

@@ -22,15 +22,15 @@ export default async (req, res) => {
             // si todo sale bien, se updatea el usuario
             const userModified = await User.findOneAndUpdate({_id: `${req.user._id}`}, {password: req.body.newPassword})
           } else {
-            res.status(400).json({ success: [false, "la contraseña ingresada es incorrecta."] });
+            res.status(400).json({ success: false, successMessage:"la contraseña ingresada es incorrecta",data:"" });
           }
         } else {
           const userModified = await User.findOneAndUpdate({_id: `${req.query._id}`}, req.body)
         }
-        return res.status(201).json({ success: true, data: "Usuario modificado satisfactoriamente." });
+        return res.status(201).json({ success: true, successMessage:"Usuario modificado satisfactoriamente",data: "" });
         
       } catch (error) {
-        res.status(400).json({ success: console.log(error) });
+        res.status(400).json({ success: false,successMessage:error });
       }
 
       break;
