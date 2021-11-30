@@ -26,16 +26,17 @@ const Login = () => {
           password: password.value
         })
       })
-      const { success, successMessage, token } = await res.json()
-
-
+      const success = await res.json()
+      console.log(success)
+      
+      
       if (success) {
-        const decodToken = jwt.verify(token, jwtPass)
-        localStorage.setItem("token", JSON.stringify(decodToken))
-        Notification.successMessage(successMessage);
+        //const decodToken = jwt.verify(token, jwtPass)
+        localStorage.setItem("token", JSON.stringify(success.headers.Authorization))
+        Notification.successMessage(success.successMessage);
         return router.push("/")
       } else {
-        Notification.errorMessage(successMessage);
+        Notification.errorMessage(success.successMessage);
       }
     } catch (err) {
       Notification.errorMessage(err)
