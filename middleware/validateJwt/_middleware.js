@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { jwtPass } = require('../../secret.json')
 
 
-const validateJWT = async (req, res) => {
+const validateJWT = async (req, res ) => {
   try {
     const reqToken = await req.headers.authorization.split(" ")[1];
     let type;
