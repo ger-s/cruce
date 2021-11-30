@@ -7,7 +7,9 @@ function MyApp({ Component, pageProps }) {
   const size = useWindowSize();
 
 
-    return <Layout size={size}>{size.width}px / {size.height}px<Component {...pageProps} /></Layout>
+  return <Layout size={size}>
+    <Component {...pageProps} />
+  </Layout>
 }
 
 // Only uncomment this method if you have blocking data requirements for
