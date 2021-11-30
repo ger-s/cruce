@@ -19,7 +19,7 @@ export default async (req, res) => {
         const token = generateJWT({ id: newUser._id });
 
         res
-          .status(200)
+          .status(201)
           .json({
             success: true,
             successMessage: "registro existoso",
@@ -32,7 +32,7 @@ export default async (req, res) => {
           .json({
             success: false,
             successMessage: "registro fallido",
-            data: error,
+            data: console.log('asdjsbdff', error),
           });
       }
 
