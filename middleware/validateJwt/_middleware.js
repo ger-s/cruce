@@ -1,19 +1,48 @@
 const jwt = require("jsonwebtoken");
+const { jwtPass } = require('../../secret.json')
 
 
-
-const validateJWT = (req, res, next) => {
-  const [type, reqToken] = (req.get("Authorization") || "").split(" ");
-
-  if (!reqToken) {
-    return res.status(401).json({ msg: "No se pudo obtener token" });
+const validateJWT = async (req, res) => {
+  try {
+    const reqToken = await req.headers.authorization.split(" ")[1];
+    let type;
+    if (!reqToken) {
+      return new Response("Auth required", {
+        status: 401,
+        headers: {
+          "WW-Authenticate": "Basic realm='Secure Area'"
+        }
+      })
+    }
+    jwt.verify(reqToken, jwtPass, (err, payload) => {
+      if (err) return new Response("Auth required", {
+        status: 401,
+        headers: {
+          "WW-Authenticate": "Basic realm='Secure Area'"
+        }
+      })
+      type = payload;
+    });
+    if (!type) {
+      return new Response("Auth required", {
+        status: 401,
+        headers: {
+          "WW-Authenticate": "Basic realm='Secure Area'"
+        }
+      })
+    }
+    
+    return {status: true, token: type}
+      
+  } catch (err) {
+    return new Response("Auth required", {
+      status: 401,
+      headers: {
+        "WW-Authenticate": "Basic realm='Secure Area'"
+      }
+    })
   }
+}
 
-  jwt.verify(reqToken, "SECRET", (err, payload) => {
-    if (err) return res.status(401).json({ msg: "El token no es valido" });
-    req.payload = payload;
-    next();
-  });
-};
 
 module.exports = validateJWT;

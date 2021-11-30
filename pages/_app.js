@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
 
 
   return <Layout size={size}>
-    <Component {...pageProps} />
+    <Component {...pageProps}/>
   </Layout>
 }
 
