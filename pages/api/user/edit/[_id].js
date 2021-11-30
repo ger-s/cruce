@@ -7,9 +7,15 @@ export default async (req, res) => {
   const { method } = req;
 
   switch (method) {
+
+// validar la contraseña antigua (hasheada que sea correcta)
     case "PUT":
-      try {
+      
+    try {
         const userModified = await User.findOneAndUpdate({_id: `${req.query._id}`}, req.body)
+
+        // utiliza un Json {} para solo modificar la pass
+        
         return res.status(201).json({ success: true, data: "Usuario modificado satisfactoriamente." });
         
       } catch (error) {

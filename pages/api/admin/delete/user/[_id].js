@@ -8,6 +8,7 @@ export default async (req, res) => {
 
   switch (method) {
     case "DELETE":
+      // si es admin no puede autoeliminarse //
       try {
         const userDeleted = await User.deleteOne({_id: `${req.query._id}`})
         

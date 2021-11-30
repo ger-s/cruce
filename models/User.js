@@ -36,6 +36,9 @@ const UserSchema = new mongoose.Schema(
      type:Number,
      required:true,
     },
+
+    // rol: "admin" o "operator" o "user"  en string
+    
     isAdmin: { type: Boolean, default: false },
     isOperator: { type: Boolean, default: false },
     type: { type: String, default: "default" },
