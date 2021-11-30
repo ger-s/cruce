@@ -32,6 +32,7 @@ export default async (req, res) => {
               data: "Contraseña incorrecta",
               token: "",
             });
+            // verificar si es un isAdmin  o isOperator  //
         const token = generateJWT({ id: userFound._id })
 
         res.status(200).json({ success: true, token:token });

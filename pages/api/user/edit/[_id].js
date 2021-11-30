@@ -8,6 +8,8 @@ export default async (req, res) => {
   const { method } = req;
 
   switch (method) {
+
+// validar la contraseña antigua (hasheada que sea correcta)
     case "PUT":
       try {
         // req.body.passConfirmation va a ser una key que se mete desde el front en el req.body
