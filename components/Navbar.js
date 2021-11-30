@@ -65,7 +65,7 @@ const Navbar = function ({ size }) {
                       primary={state.fixed}
                       style={{ marginLeft: "0.5em" }}
                     >
-                      Sign Up
+                      Register
                     </Button>
                   </Menu.Item>
                 </Container>
