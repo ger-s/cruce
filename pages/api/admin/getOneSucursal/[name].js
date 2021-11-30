@@ -10,7 +10,7 @@ export default async (req, res) => {
     case "GET":
       try {
         const sucursal = await Sucursal.findOne({name: `${req.query.name}`});
-        res.status(200).json({ success: true,successMessage:"Usuario encontrado", data:"" });
+        res.status(200).json({ success: true,successMessage:"Usuario encontrado", data:sucursal });
       } catch (error) {
         res.status(400).json({ success: false ,successMessage:error});
       }

@@ -9,7 +9,7 @@ export default async (req, res) => {
     case "GET":
       try {
         const sucursales = await Sucursal.find({});
-        res.status(200).json({ success: true,successMessage:"Sucursales encontradas" ,data:"" });
+        res.status(200).json({ success: true,successMessage:"Sucursales encontradas" ,data:sucursales });
       } catch (error) {
         res.status(400).json({ success:false , successMessage:error  });
       }
