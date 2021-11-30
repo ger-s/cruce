@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   Container,
@@ -17,6 +17,7 @@ import {
 import NavbarParts from "./NavbarParts";
 
 const Navbar = function ({ size }) {
+  const [user, setUser] = useState({})
   const [state, setState] = useState({ fixed: false, sidebarOpened: false });
 
   const hideFixedMenu = () => setState({ fixed: false });
@@ -24,11 +25,18 @@ const Navbar = function ({ size }) {
   const handleSidebarHide = () => setState({ sidebarOpened: false });
   const handleToggle = () => setState({ sidebarOpened: true });
 
-  console.log(size)
+
+  useEffect(() => {
+    const local = JSON.parse(localStorage.getItem('token'))
+    setUser(local);
+
+  }, []);
+
+  // console.log("useer",user)
 
   return (
     <>
-      {(size.width/size.height) > 0.7 ? (
+      {(size.width / size.height) > 0.7 ? (
         <>
           <Visibility
             once={false}
@@ -98,7 +106,7 @@ const Navbar = function ({ size }) {
               <Segment
                 inverted
                 textAlign="center"
-                style={state.sidebarOpened ? ({ minHeight: 400, padding: "1em 0em" }) : ({padding: "1em 0em"})}
+                style={state.sidebarOpened ? ({ minHeight: 400, padding: "1em 0em" }) : ({ padding: "1em 0em" })}
                 vertical
               >
                 <Container>
@@ -113,9 +121,9 @@ const Navbar = function ({ size }) {
                         </Button>
                       </Link>
                       <Link href="/register">
-                      <Button as="a" inverted style={{ marginLeft: "0.5em" }}>
-                        Register
-                      </Button>
+                        <Button as="a" inverted style={{ marginLeft: "0.5em" }}>
+                          Register
+                        </Button>
                       </Link>
                     </Menu.Item>
                   </Menu>
