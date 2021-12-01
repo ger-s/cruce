@@ -21,7 +21,7 @@ const sendEmail = async (user, subject, text) => {
       text: text,
     };
   
-    const envio = await transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         res.status(500).send(error.message);
       } else {
