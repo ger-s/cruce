@@ -32,7 +32,7 @@ export default async (req, res) => {
           .json({
             success: false,
             successMessage: "registro fallido",
-            data: console.log('asdjsbdff', error),
+            data: ""
           });
       }
 

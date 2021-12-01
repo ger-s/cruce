@@ -12,9 +12,9 @@ export default async (req, res) => {
       try {
         const userDeleted = await User.deleteOne({_id: `${req.query._id}`})
         
-        res.status(202).json({ success: true, data: "Usuario eliminado satisfactoriamente." });
+        res.status(202).json({ success: true,successMessage:"usuario eliminado satisfactoriamente", data: "" });
       } catch (error) {
-        res.status(400).json({ success: console.log(error) });
+        res.status(400).json({ success:false,successMessage:error });
       }
 
       break;

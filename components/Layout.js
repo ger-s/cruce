@@ -13,8 +13,13 @@ const Layout = ({ children, size }) => (
         href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
       />
     </Head>
+    
     <Navbar size={size} />
+
+
     {children}
+
+
   </>
 );
 

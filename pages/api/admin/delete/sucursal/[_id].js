@@ -11,9 +11,9 @@ export default async (req, res) => {
       try {
         const sucursalDeleted = await Sucursal.deleteOne({_id: `${req.query._id}`})
         
-        res.status(201).json({ success: true, data: "Sucursal eliminada satisfactoriamente." });
+        res.status(201).json({ success: true,successMessage:"Sucursal eliminada satisfactoriamente",data:""  });
       } catch (error) {
-        res.status(400).json({ success: console.log(error) });
+        res.status(400).json({ success: false , successMessage:error});
       }
 
       break;
