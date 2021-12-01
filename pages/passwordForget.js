@@ -1,16 +1,14 @@
 import { Button, Form } from "semantic-ui-react";
 import { useEffect, useState } from "react";
-//import Link from "next/link";
-//import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { Container } from "semantic-ui-react";
 import useInput from "../hooks/useInput";
 import Notification from "../utils/Notification";
-
-const { secretSalt } = require("../secret.json");
 import bcryptjs from "bcryptjs";
 
 function passwordForget() {
-  const [currentStep, setCurrentStep] = useState('email');
+  const router = useRouter()
+  const [currentStep, setCurrentStep] = useState('');
 
   const email = useInput("email");
   const code = useInput("code");
@@ -30,14 +28,12 @@ function passwordForget() {
         })
       });
       const success = await res.json();
-      console.log(success)
       if (success.body.code) {
         setCurrentStep('code');
         localStorage.setItem("code", JSON.stringify(success.body.code));
         return console.log('se mando bien el mail')
       }
     } catch (err) {
-      console.log('hola, hubo error', err);
       Notification.errorMessage(err);
     }
   };
@@ -49,9 +45,7 @@ function passwordForget() {
       if (bcryptjs.compare(code.value, parseLocal)) {
         return setCurrentStep('pass');
       } else {
-        console.log(code.value)
-        console.log(parseLocal)
-        console.log('no dan igual')
+        console.log('no son iguales')
       }
     } catch (err) {
       Notification.errorMessage(err);
@@ -62,12 +56,9 @@ function passwordForget() {
   const handleSubmitReset = async (e) => {
     e.preventDefault();
     try {
-      if (password.value !== verification.value) {
-        Notification.errorMessage("Las contraseñas no coinciden");
-        return console.log('eyyyyy');
+      if (password.value.toString() !== verification.value.toString()) {
+        return Notification.errorMessage("Las contraseñas no coinciden");
       }
-      console.log(email.value)
-      console.log(code.value)
       const res = await fetch("/api/resetPassword", {
         method: "PUT",
         headers: {
@@ -79,18 +70,20 @@ function passwordForget() {
           code: code.value
         })
       });
-      const success = res.json()
+      const success = await res.json()
       if (success.success) {
-        return console.log('todo salio biennnnn')
+        localStorage.removeItem('code')
+        router.push('/login')
+        return Notification.successMessage('todo salio biennnnn');
       }
     } catch (err) {
-      console.log('a ver si entra aca', err);
       Notification.errorMessage(err);
+      return console.log('a ver si entra aca', err);
     }
   };
 
   useEffect(() => {
-    console.log(currentStep)
+     if (currentStep === '') setCurrentStep('email')
   }, [currentStep])
 
   return (
@@ -108,7 +101,8 @@ function passwordForget() {
             <Button type="submit">Enviar</Button>
           </Form>
         </Container>
-      ) : (currentStep === 'code' ? (
+      ) : null}
+      {currentStep === 'code' ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
           <Form onSubmit={handleSubmitCode}>
             <Form.Field>
@@ -120,8 +114,9 @@ function passwordForget() {
             <Button type="submit">Enviar</Button>
           </Form>
         </Container>
-      ) : (
-        <Container textAlign="center" style={{ marginTop: "20%" }}>
+      ) : null}
+      { currentStep === 'pass' ? (
+      <Container textAlign="center" style={{ marginTop: "20%" }}>
           <Form onSubmit={handleSubmitReset}>
             <Form.Field>
               <label>
@@ -139,7 +134,7 @@ function passwordForget() {
             <Button type="submit">Enviar</Button>
           </Form>
         </Container>
-      ))}
+      ) : null}
 
       {/* ---------- */}
     </Container>

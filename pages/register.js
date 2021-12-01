@@ -39,8 +39,7 @@ const Register = () => {
       // para conseguir la data, no alcanza con desestructurar res
       // hay que convertirlo a json primero
       const { data, success, successMessage } = await res.json()
-
-      console.log('asdasdasdDATA', data);
+      
       if (success) {
         Notification.successMessage(successMessage);
         return router.push("/login");
