@@ -13,9 +13,6 @@ const useInput = (name, defaultValue) => {
   const [value, setValue] = react.useState(defaultValue);
 
   const onChange = ({ target: { value } }) => setValue(value);
-  
-  react.useEffect(() => {
-  }, [value])
   return { value, onChange, name };
 };
 

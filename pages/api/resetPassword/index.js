@@ -5,18 +5,15 @@ import sendEmail from '../../../utils/sendEmail'
 const bcrypt = require("bcrypt");
 
 dbConnect();
+const resetCode = (Math.floor(100000 + Math.random() * 900000)).toString();
 
 export default async (req, res) => {
   const { method } = req;
   switch (method) {
     case "POST":
       try {
-        const resetCode = (Math.floor(100000 + Math.random() * 900000)).toString();
-        console.log('codigo', resetCode)
         const salt = await bcrypt.genSalt(secretSalt)
-        console.log('salt', salt)
         const hashedCode = await bcrypt.hash(resetCode, salt)
-        console.log('req.body', req.body)
         const userFound = await User.findOne({ email: req.body.email });
         if (!userFound)
           return res.status(400).json({ body: {
@@ -35,8 +32,6 @@ export default async (req, res) => {
       } catch (error) {
         console.log(error);
       }
-      break;
-
     case "PUT":
       try {
         if (resetCode !== req.body.code) {
@@ -45,15 +40,11 @@ export default async (req, res) => {
             successMessage: "código de 6 dígitos incorrecto",
           });
         }
-        const userFound = await User.findOneAndUpdate(
+        
+        await User.updateOne(
           { email: req.body.email },
           { password: req.body.password }
         );
-        /* if (!userFound)
-          return res.status(400).json({
-            success: false,
-            successMessage: "usuario no encontrado",
-          }); */
         const userUpdated = await User.findOne({ email: req.body.email });
         res.status(200).json({
           success: true,
