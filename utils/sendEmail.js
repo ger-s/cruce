@@ -1,34 +1,36 @@
-import nodemailer from "nodemailer"
+import { sendError } from "next/dist/server/api-utils";
+import nodemailer from "nodemailer";
+const {userGoogle, passGoogle} = require('../secret.json')
 
-const  sendEmail=async (newUser,subject,text)=>    {
+const sendEmail = async (user, subject, text) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: userGoogle,
+        pass: passGoogle,
+      },
+    });
+  
+    const mailOptions = {
+      from: "CRUCE",
+      to: user,
+      subject: subject,
+      text: text,
+    };
+  
+    const envio = await transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        res.status(500).send(error.message);
+      } else {
+        res.status(200).jsonp(req.body);
+      }
+    });
+  } catch (err) {
+    console.log(err)
+  }
+};
 
-let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-      user: "cruce.ecommers@gmail.com",
-      pass: "gcbgikgyjrxqcric",
-    },
-  });
-
-
-  var mailOptions = {
-    from: "CRUCE",
-    to: newUser.email,
-    subject: subject,
-    text: text,
-  };
-
-
-
-
-  const envio = await transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      res.status(500).send(error.message);
-    } else {
-      res.status(200).jsonp(req.body);
-    }
-  })    }
-
-  export default sendEmail
+export default sendEmail;

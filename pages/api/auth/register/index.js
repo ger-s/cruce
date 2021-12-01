@@ -3,7 +3,7 @@ import User from "../../../../models/User";
 import jwt from "jsonwebtoken";
 import { jwtPass } from "../../../../secret.json";
 import generateJWT from "../../../../utils/generateJWT";
-import sendEmail from "../../../../utils/sendEmail"
+import sendEmail from "../../../../utils/sendEmail";
 
 dbConnect();
 
@@ -19,9 +19,8 @@ export default async (req, res) => {
 
         const token = generateJWT({ id: newUser._id });
         console.log(newUser, "AOSKDASKOD");
-      ///Sendmail el 2do parametro es el subject y el 3ero es el texto del email
-       sendEmail(newUser,"registro","me  registre")
-
+        ///Sendmail el 2do parametro es el subject y el 3ero es el texto del email
+        sendEmail(newUser.email, "registro", "me registre");
 
         res.status(201).json({
           success: true,
