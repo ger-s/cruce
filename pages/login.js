@@ -27,7 +27,7 @@ const Login = () => {
         })
       });
       const success = await res.json();
-      // console.log(success);
+      console.log(success);
 
       if (success.headers.Authorization) {
         const decodToken = jwt.verify(

@@ -12,6 +12,7 @@ export default async (req, res) => {
   switch (method) {
     case "POST":
       try {
+        console.log("code", resetCode);
         const salt = await bcrypt.genSalt(secretSalt)
         const hashedCode = await bcrypt.hash(resetCode, salt)
         const userFound = await User.findOne({ email: req.body.email });
@@ -40,10 +41,11 @@ export default async (req, res) => {
             successMessage: "código de 6 dígitos incorrecto",
           });
         }
-        
+        const salt=await bcrypt.genSalt()
+        const newHash = await bcrypt.hash(req.body.password, salt);
         await User.updateOne(
           { email: req.body.email },
-          { password: req.body.password }
+          { password: newHash },
         );
         const userUpdated = await User.findOne({ email: req.body.email });
         res.status(200).json({
