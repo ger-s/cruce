@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 
 const TurnoSchema = mongoose.Schema({
   turnosRestantes: {
-    type: Number,
-    required: true
+    type: Number
   },
-  horaTurno: { type: Date },
+  horaTurno: { type: String },
   sucursal: {
+    
     name: {type: String},
     phone: {type: String},
     address: {type: String}

@@ -46,6 +46,8 @@ const UserSchema = new mongoose.Schema(
       default: 'user'
     },
     type: { type: String, default: "default" },
+    
+
   },
   { versionKey: false }
 );
