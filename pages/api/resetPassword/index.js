@@ -1,10 +1,10 @@
 const bcrypt = require("bcrypt");
-import dbConnect from "../../../../utils/dbConnect";
-import User from "../../../../models/User";
-import { secretSalt } from '../../../secret.json'
+import dbConnect from "../../../utils/dbConnect";
+import User from "../../../models/User";
+const { secretSalt } = require ('../../../secret.json')
+import sendEmail from '../../../utils/sendEmail'
 
 //se importa esta funcion mailer
-const sendPasswordReset = (code, email) => {};
 
 dbConnect();
 
@@ -26,7 +26,7 @@ export default async (req, res) => {
         // se necesita guardar desde el front el email enviado,
         // para enviarlo en el put
         // también se va a guardar el reset code para el put
-        sendPasswordReset(resetCode, req.body.email);
+        sendEmail(req.body.email, "code", `Código para restauración: ${resetCode} .`);
         return res.status(200).json({
           success: true,
           successMessage: "usuario encontrado",
