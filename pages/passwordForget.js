@@ -1,18 +1,16 @@
 import { Button, Form } from "semantic-ui-react";
-import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+//import Link from "next/link";
+//import { useRouter } from "next/router";
 import { Container } from "semantic-ui-react";
 import useInput from "../hooks/useInput";
 import Notification from "../utils/Notification";
 
-import { secretSalt } from "../secret.json";
-import bcrypt from "bcryptjs";
+const { secretSalt } = require("../secret.json");
+import bcryptjs from "bcryptjs";
 
 function passwordForget() {
-  const [emailValidation, setEmailValidation] = useState(false);
-  const [codeValidation, setCodeValidation] = useState(false);
-  const [newPass, setNewPass] = useState(false);
+  const [currentStep, setCurrentStep] = useState('email');
 
   const email = useInput("email");
   const code = useInput("code");
@@ -32,12 +30,14 @@ function passwordForget() {
         })
       });
       const success = await res.json();
+      console.log(success)
       if (success.body.code) {
-        localStorage.setItem("code", success.body.code);
-        setEmailValidation(true);
+        setCurrentStep('code');
+        localStorage.setItem("code", JSON.stringify(success.body.code));
+        return console.log('se mando bien el mail')
       }
     } catch (err) {
-      console.log(err);
+      console.log('hola, hubo error', err);
       Notification.errorMessage(err);
     }
   };
@@ -45,16 +45,17 @@ function passwordForget() {
   const handleSubmitCode = async (e) => {
     e.preventDefault();
     try {
-      const hashCode = await bcrypt.hash(
-        code.value,
-        bcrypt.genSalt(secretSalt)
-      );
-      if (hashCode === localStorage.getItem("code")) {
-        setCodeValidation(true);
+      const parseLocal = JSON.parse(localStorage.getItem("code"))
+      if (bcryptjs.compare(code.value, parseLocal)) {
+        return setCurrentStep('pass');
+      } else {
+        console.log(code.value)
+        console.log(parseLocal)
+        console.log('no dan igual')
       }
     } catch (err) {
-      console.log(err);
       Notification.errorMessage(err);
+      return console.log(err);
     }
   };
 
@@ -63,9 +64,10 @@ function passwordForget() {
     try {
       if (password.value !== verification.value) {
         Notification.errorMessage("Las contraseñas no coinciden");
-        return false;
+        return console.log('eyyyyy');
       }
-
+      console.log(email.value)
+      console.log(code.value)
       const res = await fetch("/api/resetPassword", {
         method: "PUT",
         headers: {
@@ -77,35 +79,43 @@ function passwordForget() {
           code: code.value
         })
       });
+      const success = res.json()
+      if (success.success) {
+        return console.log('todo salio biennnnn')
+      }
     } catch (err) {
-      console.log(err);
+      console.log('a ver si entra aca', err);
       Notification.errorMessage(err);
     }
   };
 
+  useEffect(() => {
+    console.log(currentStep)
+  }, [currentStep])
+
   return (
     <Container>
-      {!emailValidation ? (
+      {currentStep === 'email' ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
           <Form onSubmit={handleSubmitEmail}>
             <Form.Field>
               <label>
                 <h3>Email</h3>
               </label>
-              <input placeholder="Email" style={{ width: "75%" }} />
+              <input placeholder="Email" style={{ width: "75%" }} {...email} />
             </Form.Field>
 
             <Button type="submit">Enviar</Button>
           </Form>
         </Container>
-      ) : !codeValidation ? (
+      ) : (currentStep === 'code' ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
           <Form onSubmit={handleSubmitCode}>
             <Form.Field>
               <label>
-                <h3>Codigo</h3>
+                <h3>Código</h3>
               </label>
-              <input placeholder="Email" style={{ width: "75%" }} />
+              <input placeholder="código" style={{ width: "75%" }} {...code}/>
             </Form.Field>
             <Button type="submit">Enviar</Button>
           </Form>
@@ -117,19 +127,19 @@ function passwordForget() {
               <label>
                 <h3>Nueva contraseña</h3>
               </label>
-              <input type="password" style={{ width: "75%" }} />
+              <input type="password" style={{ width: "75%" }} {...password}/>
             </Form.Field>
 
             <Form.Field>
               <label>
                 <h3>Reingrese contraseña</h3>
               </label>
-              <input type="password" style={{ width: "75%" }} />
+              <input type="password" style={{ width: "75%" }} {...verification} />
             </Form.Field>
             <Button type="submit">Enviar</Button>
           </Form>
         </Container>
-      )}
+      ))}
 
       {/* ---------- */}
     </Container>
