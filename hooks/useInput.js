@@ -9,8 +9,8 @@ import * as react from "react";
  *   {name} name
  */
 
-const useInput = (name, defaultValue) => {
-  const [value, setValue] = react.useState(defaultValue);
+const useInput = (name) => {
+  const [value, setValue] = react.useState('');
 
   const onChange = ({ target: { value } }) => setValue(value);
   return { value, onChange, name };
