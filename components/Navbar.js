@@ -90,7 +90,7 @@ const Navbar = function ({ size }) {
                     {!user ? (
                       <>
                         <Link href="/login">
-                          <Button as="a">Log in</Button>
+                          <Button as="a"> Iniciar sesión </Button>
                         </Link>
                         <Link href="/register">
                           <Button as="a" 
@@ -106,7 +106,7 @@ const Navbar = function ({ size }) {
                         onClick={handleLogout}
                         style={{ border: "none" }}
                       >
-                        Log out
+                        Cerrar sesión
                       </Button>
                     )}
                   </Menu.Item>
@@ -130,18 +130,18 @@ const Navbar = function ({ size }) {
               {!user ? (
                 <>
                   <Link href="/login">
-                    <Menu.Item onClick={handleSidebarHide}>Log in</Menu.Item>
+                    <Menu.Item onClick={handleSidebarHide}> Iniciar sesión </Menu.Item>
                   </Link>
 
                   <Link href="/register">
                     <Menu.Item onClick={handleSidebarHide}>
-                      Registrate
+                      Registrarme
                     </Menu.Item>
                   </Link>
                 </>
               ) : (
                 <Menu.Item onClick={handleLogout}>
-                  <p onClick={handleSidebarHide}>Log out</p>
+                  <p onClick={handleSidebarHide}>Cerrar sesión</p>
                 </Menu.Item>
               )}
             </Sidebar>

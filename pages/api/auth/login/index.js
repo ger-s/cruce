@@ -15,12 +15,12 @@ export default async (req, res) => {
         
         const userFound = await User.findOne({ email: req.body.email });
         if (!userFound)
-          return res.status(400).json({
+          return res.status(400).json({headers:{Authorization: null}, body: {
             success: false,
             data: "",
             successMessage: "usuario no encontrado",
             token: "",
-          });
+          }});
 
         const comparePassword = await User.comparePassword(
           req.body.password,
@@ -28,19 +28,19 @@ export default async (req, res) => {
         );
 
         if (!comparePassword)
-          return res.status(400).json({
+          return res.status(400).json({headers:{Authorization: null}, body: {
             success: false,
             successMessage: "Contraseña incorrecta",
             data: "",
             token: "",
-          });
+          }});
         // verificar si es un isAdmin  o isOperator  //
         const token = generateJWT({ id: userFound._id, role: userFound.role, dni: userFound.dni, email: userFound.email });
 
         res.status(200).json({headers: { Authorization: `Bearer ${token} `  }, body: { success: true, successMessage: "usuario logueado", data: '' }});
       } catch (error) {
-        res.status(400).json({ success: false, successMessage: error});
+        res.status(400).json({headers: { Authorization: null }, body:{ success: false, successMessage: error}});
       }
       break;
-  }
+    }
 };
