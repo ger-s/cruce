@@ -3,6 +3,7 @@ import User from "../../../models/User";
 const { secretSalt } = require ('../../../secret.json')
 import sendEmail from '../../../utils/sendEmail'
 const bcrypt = require("bcrypt");
+import validateJWT from "../../../middleware/_middleware"
 
 dbConnect();
 const resetCode = (Math.floor(100000 + Math.random() * 900000)).toString();
@@ -12,6 +13,9 @@ export default async (req, res) => {
   switch (method) {
     case "POST":
       try {
+        const auth = await validateJWT(req)
+        auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
+
         console.log("code", resetCode);
         const salt = await bcrypt.genSalt(secretSalt)
         const hashedCode = await bcrypt.hash(resetCode, salt)

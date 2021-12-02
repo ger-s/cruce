@@ -12,6 +12,7 @@ export default async (req, res) => {
   switch (method) {
     case "POST":
       try {
+        
         const userFound = await User.findOne({ email: req.body.email });
         if (!userFound)
           return res.status(400).json({

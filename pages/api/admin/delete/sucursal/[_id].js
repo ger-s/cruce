@@ -1,6 +1,6 @@
 import dbConnect from "../../../../../utils/dbConnect";
 import Sucursal from "../../../../../models/Sucursal";
-
+import validateJWT from "../../../../../middleware/_middleware"
 dbConnect();
 
 export default async (req, res) => {
@@ -9,6 +9,8 @@ export default async (req, res) => {
   switch (method) {
     case "DELETE":
       try {
+        const auth = await validateJWT(req)
+        auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
         const sucursalDeleted = await Sucursal.deleteOne({_id: `${req.query._id}`})
         
         res.status(201).json({ success: true,successMessage:"Sucursal eliminada satisfactoriamente",data:""  });
