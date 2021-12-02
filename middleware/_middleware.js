@@ -25,7 +25,7 @@ const validateJWT = async (req, res, role) => {
       console.log("TYPEEE",type.role)
     });
 
-
+    
     if (!type) {
       return new Response("Auth required", {
         status: 401,

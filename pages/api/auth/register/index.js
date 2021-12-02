@@ -20,7 +20,7 @@ export default async (req, res) => {
         const token = generateJWT({ id: newUser._id });
         console.log(newUser, "AOSKDASKOD");
         ///Sendmail el 2do parametro es el subject y el 3ero es el texto del email
-        sendEmail(newUser.email, "registro", "me registre");
+        sendEmail(newUser.email, "Cuenta creada en Cruce", `Bienvenido a CRUCE ${newUser.name}! \n Te registraste correctamente!`);
 
         res.status(201).json({
           success: true,

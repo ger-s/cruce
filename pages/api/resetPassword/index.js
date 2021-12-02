@@ -56,6 +56,7 @@ export default async (req, res) => {
           successMessage: "cambio de contraseña exitoso",
           data: userUpdated,
         });
+        sendEmail(req.body.email, "Cambio de contraseña", `Cambio de contraseña exitoso!`);
       } catch (error) {
         res.status(400).json({ success: false, successMessage: `algo sale mal ${error}` });
       }

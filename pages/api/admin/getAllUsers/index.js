@@ -11,6 +11,7 @@ export default async (req, res) => {
     case "GET":
       try {
         const auth = await validateJWT(req)
+      
         auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
         const users = await User.find({});
         res.status(200).json({ success: true,successMessage:"Usuarios encontrados", data: users });
