@@ -2,6 +2,7 @@ import dbConnect from "../../../../utils/dbConnect";
 import Turno from "../../../../models/Turno";
 //import sendEmail from "../../../../utils/sendEmail";
 //import User from "../../../../models/User";
+import validateJWT from "../../../../middleware/_middleware"
 
 dbConnect();
 
@@ -11,6 +12,9 @@ export default async (req, res) => {
   switch (method) {
     case "PUT":
       try {
+        const auth = await validateJWT(req)
+auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
+
 
         //const user = await User.findOne({dni: `${req.query.dni}`});
         const turnoModified = await Turno.findOneAndUpdate({_id: `${req.query._id}`}, req.body)
