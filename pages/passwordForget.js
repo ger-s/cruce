@@ -6,7 +6,8 @@ import useInput from "../hooks/useInput";
 import Notification from "../utils/Notification";
 import bcryptjs from "bcryptjs";
 
-function passwordForget() {
+const PasswordForget = () => {
+
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState('');
 
@@ -83,6 +84,10 @@ function passwordForget() {
   };
 
   useEffect(() => {
+    if (currentStep === '') setCurrentStep('email')
+ }, [email])
+
+  useEffect(() => {
      if (currentStep === '') setCurrentStep('email')
   }, [currentStep])
 
@@ -141,4 +146,4 @@ function passwordForget() {
   );
 }
 
-export default passwordForget;
+export default PasswordForget;
