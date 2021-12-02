@@ -4,6 +4,7 @@ const { secretSalt } = require ('../../../secret.json')
 import sendEmail from '../../../utils/sendEmail'
 const bcrypt = require("bcrypt");
 
+
 dbConnect();
 const resetCode = (Math.floor(100000 + Math.random() * 900000)).toString();
 
@@ -12,6 +13,8 @@ export default async (req, res) => {
   switch (method) {
     case "POST":
       try {
+        
+
         console.log("code", resetCode);
         const salt = await bcrypt.genSalt(secretSalt)
         const hashedCode = await bcrypt.hash(resetCode, salt)

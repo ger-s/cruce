@@ -3,15 +3,15 @@ import Sucursal from "../../../../models/Sucursal";
 import validateJWT from "../../../../middleware/_middleware"
 dbConnect();
 
+
 export default async (req, res) => {
   const { method } = req;
 
   switch (method) {
     case "GET":
       try {
-
         const auth = await validateJWT(req)
-auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
+        auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
         const sucursales = await Sucursal.find({});
         res.status(200).json({ success: true,successMessage:"Sucursales encontradas" ,data:sucursales });
       } catch (error) {
