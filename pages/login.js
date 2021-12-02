@@ -27,14 +27,14 @@ const Login = () => {
         })
       });
       const success = await res.json();
-      console.log(success);
+      console.log(success,"dasdasd");
 
       if (success.headers.Authorization) {
         const decodToken = jwt.verify(
           success.headers.Authorization.split(" ")[1],
           jwtPass
         );
-        localStorage.setItem("token", JSON.stringify(decodToken));
+        localStorage.setItem("token", JSON.stringify(success.headers.Authorization));
         Notification.successMessage(success.body.successMessage);
         return router.push("/");
       } else {

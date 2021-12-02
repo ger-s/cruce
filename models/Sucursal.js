@@ -4,49 +4,62 @@ const SucursalSchema = mongoose.Schema({
   name: {
     type: String,
     required: [true, "por favor, agregá un nombre."],
-    unique: true,
+    unique: [true, "este nombre esta siendo utilizado"],
     trim: true,
-    maxlength: [30, "el nombre de la sucursal sólo puede tener hasta 30 caracteres"],
+    maxlength: [
+      30,
+      "el nombre de la sucursal sólo puede tener hasta 30 caracteres",
+    ],
   },
   address: {
     type: String,
     required: [true, "por favor, agregá una dirección."],
-    unique: true,
+    unique: [true, "esta dirección esta siendo utilizada"],
     trim: true,
     maxlength: [200, "la dirección sólo puede tener hasta 200 caracteres"],
   },
   phone: {
     type: Number,
     required: [true, "por favor, agregá un teléfono."],
-    unique: true,
-    maxlength: [15, "el teléfono sólo puede tener hasta 15 dígitos"]
+    unique: [true,"este telefono esta siendo utilizado"],
+    trim: true,
+    maxlength: [15, "el teléfono sólo puede tener hasta 15 dígitos"],
   },
-  operators: [{
-    name: { type: String },
-    lastName: { type: String },
-    dni: { type: Number },
-    email: { type: String }
-  }],
-  openingTime: { 
+  operators: [
+    {
+      name: { type: String },
+      lastName: { type: String },
+      dni: { type: Number, unique: [true,"este dni esta siendo utilizado"] },
+      email: { type: String, unique: [true, "este mail esta siendo utilizado"]},
+      
+    },
+  ],
+  openingTime: {
     type: String,
     required: [true, "por favor, agregá un horario de apertura."],
-    unique: true
+    trim: true,
   },
   closingTime: {
     type: String,
     required: [true, "por favor, agregá un horario de cierre."],
-    unique: true
+    trim: true,
   },
-  history: [{
-    client: {
-      name: {type: String},
-      dni: {type: Number},
-      email: {type: String}
+  history: [
+    {
+      // ver si aplica unique: true o al ser del model user no es necesario
+      client: {
+        name: { type: String},
+        dni: { type: Number },
+        email: { type: String},
+        
+      },
+      date: { type: Date },
+      sucursal: { type: String },
+      state: { type: String },
+      
     },
-    date: {type: Date},
-    sucursal: {type: String},
-    state: {type: String}
-  }]
-})
+  ],
+});
 
-module.exports = mongoose.models.Sucursal || mongoose.model("Sucursal", SucursalSchema);
+module.exports =
+  mongoose.models.Sucursal || mongoose.model("Sucursal", SucursalSchema);
