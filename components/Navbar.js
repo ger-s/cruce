@@ -54,7 +54,7 @@ const Navbar = function ({ size }) {
                   <Menu.Item position="left">
                     <Link href="/">
                       <Image
-                        src="https://www.e-cruce.com/wp-content/uploads/2019/10/cruce.svg"
+                        src="/cruce.svg"
                         size="tiny"
                         disabled
                       />
