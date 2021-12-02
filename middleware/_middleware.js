@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { jwtPass } = require('../secret.json')
 
 
-const validateJWT = async (req, res) => {
+const validateJWT = async (req, res, role) => {
   try {
     const reqToken = await req.headers.authorization.split(" ")[1];
     let type;
@@ -22,7 +22,10 @@ const validateJWT = async (req, res) => {
         }
       })
       type = payload;
+      console.log("TYPEEE",type.role)
     });
+
+    
     if (!type) {
       return new Response("Auth required", {
         status: 401,

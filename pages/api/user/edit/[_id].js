@@ -1,6 +1,7 @@
 import dbConnect from "../../../../utils/dbConnect";
 import User from "../../../../models/User";
-import validateJWT from '../../../../middleware/_middleware'
+import validateJWT from "../../../../middleware/_middleware"
+
 
 
 dbConnect();
@@ -30,8 +31,8 @@ export default async (req, res) => {
         } else {
           const userModified = await User.findOneAndUpdate({_id: `${req.query._id}`}, req.body)
         }
+        sendEmail(userModified.email, "Cambio de datos CRUCE", `Se modificaron los datos exitosamente!`);
         return res.status(201).json({ success: true, successMessage:"Usuario modificado satisfactoriamente",data: "" });
-        
       } catch (error) {
         res.status(400).json({ success: false,successMessage:error });
       }
