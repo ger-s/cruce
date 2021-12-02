@@ -11,11 +11,14 @@ export default async (req, res) => {
     case "GET":
       try {
         const auth = await validateJWT(req);
+
         auth.status === 401
           ? res
               .status(401)
               .json({ status: auth.status, message: auth.statusText })
           : null;
+          console.log(auth.token.role)
+         auth.token.role !=="admin"?res.status(401).json( {status:false,message:"NO SOS ADMIN "}):null; 
         const user = await User.findOne({ dni: `${req.query.dni}` });
         res
           .status(200)
