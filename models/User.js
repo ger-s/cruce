@@ -27,16 +27,16 @@ const UserSchema = new mongoose.Schema(
     dni: {
       trim: true,
       type: Number,
-      unique: true,
-      required: [true, "por favor, agregá el DNI."],
+      unique: [true, "Ya existe una cuenta con este DNI"],
+      required: [true, "Por favor, agregá el DNI."],
       maxlength: [8, "los DNI sólo pueden tener hasta 8 carácteres"],
       minlength: [7, "los DNI sólo pueden tener desde 7 carácteres"],
     },
     salt: { type: String, default: ""},
     email: {
       type: String,
-      required: true,
-      unique: true,
+      required: [true, "por favor agrega un email"],
+      unique: [true, "ya existe una cuenta con este mail"],
       lowercase: true,
       trim: true,
       match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'por favor, verifica un mail correcto']
@@ -48,7 +48,7 @@ const UserSchema = new mongoose.Schema(
     phone:{
     trim: true,
      type: Number,
-     required:true,
+     required: [true, "por favor agrega un telefono"]
     },
 
     // rol: "admin" o "operator" o "user"  en string
