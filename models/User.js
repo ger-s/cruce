@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema(
       maxlength: [30, "los nombres sólo pueden tener hasta 30 caracteres"],
     },
     lastName: {
+      
       type: String,
       required: [true, "por favor, agregá un apellido."],
       unique: false,
@@ -18,33 +19,41 @@ const UserSchema = new mongoose.Schema(
       maxlength: [30, "los apellidos sólo pueden tener hasta 40 caracteres"],
     },
     password: {
+      trim: true,
       required: [true, "por favor, agregá una contraseña."],
       unique: false,
       type: String
     },
     dni: {
-      type: String,
+      trim: true,
+      type: Number,
       unique: true,
       required: [true, "por favor, agregá el DNI."],
-      maxlength: [10, "los DNI sólo pueden tener hasta 10 carácteres"],
+      maxlength: [8, "los DNI sólo pueden tener hasta 8 carácteres"],
       minlength: [7, "los DNI sólo pueden tener desde 7 carácteres"],
     },
     salt: { type: String, default: ""},
     email: {
       type: String,
       required: true,
-      //validate: [validateEmail, 'por favor, ingresá un email válido.'],
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'por favor, verifica un mail correcto']
+
     },
     creationDate: {
       type: Date
     },
     phone:{
-     type:Number,
+    trim: true,
+     type: Number,
      required:true,
     },
 
     // rol: "admin" o "operator" o "user"  en string
     role: {
+      trim: true,
       type: String,
       default: 'user'
     },
@@ -59,6 +68,8 @@ const UserSchema = new mongoose.Schema(
 UserSchema.methods.switchAdmin = async function (password, salt) {
   await User.updateOne({ _id: this._id }, { role: !this.role });
 };
+
+
 
 UserSchema.static("hash", function (password, salt) {
   return bcrypt.hash(password, salt);
@@ -87,5 +98,6 @@ UserSchema.pre("save", async function (next) {
   // Guardar contraseña hasheada
   this.password = hashedPassword;
 });
+
 
 module.exports = mongoose.models.User || mongoose.model("User", UserSchema);
