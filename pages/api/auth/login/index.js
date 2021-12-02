@@ -18,7 +18,7 @@ export default async (req, res) => {
           return res.status(400).json({headers:{Authorization: null}, body: {
             success: false,
             data: "",
-            successMessage: "usuario no encontrado",
+            successMessage: "Usuario no encontrado",
             token: "",
           }});
 
@@ -37,7 +37,7 @@ export default async (req, res) => {
         // verificar si es un isAdmin  o isOperator  //
         const token = generateJWT({ id: userFound._id, role: userFound.role, dni: userFound.dni, email: userFound.email });
 
-        res.status(200).json({headers: { Authorization: `Bearer ${token} `  }, body: { success: true, successMessage: "usuario logueado", data: '' }});
+        res.status(200).json({headers: { Authorization: `Bearer ${token} `  }, body: { success: true, successMessage: "Usuario logueado", data: '' }});
       } catch (error) {
         res.status(400).json({headers: { Authorization: null }, body:{ success: false, successMessage: error}});
       }

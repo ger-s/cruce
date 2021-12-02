@@ -20,7 +20,7 @@ const Layout = ({ children, size }) => (
 
     {children}
 
-    <Footer/>
+    <Footer size={size}/>
   </>
 );
 

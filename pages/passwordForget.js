@@ -29,13 +29,15 @@ const PasswordForget = () => {
         })
       });
       const success = await res.json();
-      if (success.body.code) {
+      if (success.body.success) {
         setCurrentStep('code');
         localStorage.setItem("code", JSON.stringify(success.body.code));
-        return console.log('se mando bien el mail')
+        return Notification.successMessage('Código enviado a tu correo')
+      } else {
+        return Notification.errorMessage(success.body.successMessage)
       }
     } catch (err) {
-      Notification.errorMessage(err);
+      return Notification.errorMessage(err);
     }
   };
 
@@ -44,9 +46,10 @@ const PasswordForget = () => {
     try {
       const parseLocal = JSON.parse(localStorage.getItem("code"))
       if (bcryptjs.compare(code.value, parseLocal)) {
-        return setCurrentStep('pass');
+        setCurrentStep('pass');
+        return Notification.successMessage('Código correcto')
       } else {
-        console.log('no son iguales')
+        Notification.errorMessage('Código incorrecto')
       }
     } catch (err) {
       Notification.errorMessage(err);
@@ -72,21 +75,16 @@ const PasswordForget = () => {
         })
       });
       const success = await res.json()
-      if (success.success) {
+      if (success.body.success) {
         localStorage.removeItem('code')
         router.push('/login')
-        return Notification.successMessage('todo salio biennnnn');
+        return Notification.successMessage(success.body.successMessage);
       }
     } catch (err) {
-      Notification.errorMessage(err);
-      return console.log('a ver si entra aca', err);
+      console.log(err);
+      return Notification.errorMessage(err);
     }
   };
-
-  useEffect(() => {
-    if (currentStep === '') setCurrentStep('email')
- }, [email])
-
   useEffect(() => {
      if (currentStep === '') setCurrentStep('email')
   }, [currentStep])
@@ -95,6 +93,7 @@ const PasswordForget = () => {
     <Container>
       {currentStep === 'email' ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
+          <h1>Ingresá tu correo:</h1>
           <Form onSubmit={handleSubmitEmail}>
             <Form.Field>
               <label>
@@ -109,6 +108,7 @@ const PasswordForget = () => {
       ) : null}
       {currentStep === 'code' ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
+          <h1>Ingresá el código de 6 dígitos:</h1>
           <Form onSubmit={handleSubmitCode}>
             <Form.Field>
               <label>
@@ -122,6 +122,7 @@ const PasswordForget = () => {
       ) : null}
       { currentStep === 'pass' ? (
       <Container textAlign="center" style={{ marginTop: "20%" }}>
+        <h1>Ingresá una nueva contraseña:</h1>
           <Form onSubmit={handleSubmitReset}>
             <Form.Field>
               <label>
