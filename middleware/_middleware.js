@@ -23,6 +23,8 @@ const validateJWT = async (req, res) => {
       })
       type = payload;
     });
+
+    
     if (!type) {
       return new Response("Auth required", {
         status: 401,
