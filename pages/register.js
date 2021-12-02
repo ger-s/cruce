@@ -27,7 +27,7 @@ const Register = ({size}) => {
   };
 
   const handlePasswordValidation = () => {
-    if (password.value.length > 8 && password.value.length < 30) {
+    if (password.value.length > 7 && password.value.length < 30) {
       return setPasswordValidation({status: true, error: ""});
     } else {
       return setPasswordValidation({status: false, error: "La contraseña sólo puede tener entre 8 y 30 caracteres."});
@@ -129,7 +129,7 @@ const Register = ({size}) => {
   return (
     <Container>
       <Container textAlign="center" style={size.width / size.height > 0.7 ? { marginTop: "10%" } : { marginTop: "15%" }}>
-        <h1 className="ui header">REGISTRO</h1>
+        <h1 className="ui header"  style={{ marginBottom: "10%" }}>REGISTRO</h1>
         <br />
         <form className="ui form" onSubmit={handleSubmit}>
           <div
@@ -140,7 +140,7 @@ const Register = ({size}) => {
               <h3>Nombre</h3>
             </label>
             <input
-              placeholder="Nombre"
+              placeholder="María"
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...name}
               required
@@ -156,7 +156,7 @@ const Register = ({size}) => {
               <h3>Apellido</h3>
             </label>
             <input
-              placeholder="Apellido"
+              placeholder="Perez"
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...lastName}
               required
@@ -172,7 +172,7 @@ const Register = ({size}) => {
               <h3>DNI</h3>
             </label>
             <input
-              placeholder="DNI"
+              placeholder="24811514"
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...dni}
               required
@@ -187,7 +187,7 @@ const Register = ({size}) => {
               <h3>Email</h3>
             </label>
             <input
-              placeholder="Email"
+              placeholder="maria@gmail.com"
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...email}
               required
@@ -202,7 +202,7 @@ const Register = ({size}) => {
               <h3>Teléfono</h3>
             </label>
             <input
-              placeholder="Teléfono"
+              placeholder="1153211478"
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...phone}
               required
@@ -218,7 +218,7 @@ const Register = ({size}) => {
             </label>
             <input
               type="password"
-              placeholder="Contraseña"
+              placeholder="Contraseña de entre 8 y 30 caracteres"
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...password}
               required
@@ -226,6 +226,7 @@ const Register = ({size}) => {
             {!passwordValidation.status ? <label>{passwordValidation.error}</label> : null}
           </div>
           <button
+            style={{ margin: "5% 0%" }}
             className={`ui animated primary huge submit button ${
               !nameValidation.status ||
               !lastNameValidation.status ||
@@ -239,14 +240,14 @@ const Register = ({size}) => {
             type="submit"
             tabIndex="0"
           >
-            <div className="visible content">Enviar</div>
+            <div className="visible content" > Registrarme </div>
             <div className="hidden content">
               <i className="right arrow icon"></i>
             </div>
           </button>
         </form>
         <p>
-          ¿Ya tenés cuenta? <Link href="/login">logueate</Link>.
+          ¿Ya tenés cuenta? <Link href="/login"> Iniciá sesión </Link>.
         </p>
       </Container>
     </Container>
