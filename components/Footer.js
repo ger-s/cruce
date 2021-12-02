@@ -1,23 +1,130 @@
-import React from 'react'
-import Image from "next/image";
+import React from "react";
+// import Image from "next/image";
+import {
+  Container,
+  Divider,
+  Dropdown,
+  Grid,
+  Header,
+  Image,
+  List,
+  Menu,
+  Segment
+} from "semantic-ui-react";
 
 function Footer() {
-    return (
-        
-             <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-        
-    )
+  return (
+    <footer
+      style={{
+        margin: "5em 0em 0em 0em",
+        width: "100vw",
+        padding: "0em",
+        background: "gray",
+        // position: "absolute",
+        // bottom: "0"
+      }}
+    >
+      <Segment
+        // inverted
+        vertical
+        style={{
+          margin: "5em 0em 0em",
+          padding: "5em 0em",
+        }}
+      >
+        <Container textAlign="center">
+          <Grid
+            divided
+            // inverted
+            stackable
+          >
+            <Grid.Column width={3}>
+              <Header
+                //  inverted
+                as="h4"
+                content="Información de interés"
+              />
+              <List
+                link
+                // inverted
+              >
+                <List.Item as="a">Link One</List.Item>
+                <List.Item as="a">Link Two</List.Item>
+                <List.Item as="a">Link Three</List.Item>
+                <List.Item as="a">Link Four</List.Item>
+              </List>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <Header
+                //  inverted
+                as="h4"
+                content="Legales"
+              />
+              <List
+                link
+                // inverted
+              >
+                <List.Item as="a">Link One</List.Item>
+                <List.Item as="a">Link Two</List.Item>
+                <List.Item as="a">Link Three</List.Item>
+                <List.Item as="a">Link Four</List.Item>
+              </List>
+            </Grid.Column>
+            <Grid.Column width={3}>
+              <Header
+                // inverted
+                as="h4"
+                content="Contacto"
+              />
+              <List
+                link
+                // inverted
+              >
+                <List.Item as="a">Link One</List.Item>
+                <List.Item as="a">Link Two</List.Item>
+                <List.Item as="a">Link Three</List.Item>
+                <List.Item as="a">Link Four</List.Item>
+              </List>
+            </Grid.Column>
+            <Grid.Column width={7}>
+              <Header
+                //  inverted
+                as="h4"
+                content="Redes sociales"
+              />
+              <p>
+                Extra space for a call to action inside the footer that could
+                help re-engage users.
+              </p>
+              <Image
+                centered
+                size="small"
+                src="/cruce.svg"
+                style={{ color: "red" }}
+              />
+            </Grid.Column>
+          </Grid>
+
+          {/* <Divider inverted section /> */}
+          {/* <Image centered size="small" src="/cruce.svg" />
+          <List horizontal inverted divided link size="small">
+            <List.Item as="a" href="#">
+              Site Map
+            </List.Item>
+            <List.Item as="a" href="#">
+              Contact Us
+            </List.Item>
+            <List.Item as="a" href="#">
+              Terms and Conditions
+            </List.Item>
+            <List.Item as="a" href="#">
+              Privacy Policy
+            </List.Item>
+          </List> */}
+        </Container>
+      </Segment>
+    </footer>
+  );
 }
 
-export default Footer
+export default Footer;
