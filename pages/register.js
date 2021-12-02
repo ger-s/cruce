@@ -4,9 +4,71 @@ import { useRouter } from "next/router";
 import { Container } from "semantic-ui-react";
 import useInput from "../hooks/useInput";
 import Notification from "../utils/Notification";
+import { useEffect, useState } from "react";
+//import useValidations from "../hooks/useValidations";
 
-const Register = () => {
+const Register = ({size}) => {
   const router = useRouter();
+  const [nameValidation, setNameValidation] = useState({status: true, error: ""});
+  const [lastNameValidation, setLastNameValidation] = useState({status: true, error: ""});
+  const [passwordValidation, setPasswordValidation] = useState({status: true, error: ""});
+  const [dniValidation, setDniValidation] = useState({status: true, error: ""});
+  const [phoneValidation, setPhoneValidation] = useState({status: true, error: ""});
+  const [emailValidation, setEmailValidation] = useState({status: true, error: ""});
+
+  const handleNameValidation = () => {
+    if (!name.value.match("^[a-zA-Z]+$")) {
+      return setNameValidation({status: false, error: "El nombre sólo acepta letras."});
+    } else if (name.value.length > 30) {
+      return setNameValidation({status: false, error: "El nombre debe tener menos de 30 caracteres."});
+    } else {
+      return setNameValidation({status: true, error: ""});
+    }
+  };
+
+  const handlePasswordValidation = () => {
+    if (password.value.length > 8 && password.value.length < 30) {
+      return setPasswordValidation({status: true, error: ""});
+    } else {
+      return setPasswordValidation({status: false, error: "La contraseña sólo puede tener entre 8 y 30 caracteres."});
+    }
+  };
+
+  const handleLastNameValidation = () => {
+    if (!lastName.value.match("^[a-zA-Z]+$")) {
+      return setLastNameValidation({status: false, error: "El apellido sólo acepta letras."});
+    } else if (lastName.value.length > 30) {
+      return setLastNameValidation({status: false, error: "El apellido debe tener menos de 30 caracteres."});
+    } else {
+      return setLastNameValidation({status: true, error: ""});
+    }
+  };
+
+  const handleDniValidation = () => {
+    if (!dni.value.match("^[0-9]+$")) {
+      return setDniValidation({status: false, error: "El DNI debe tener sólo números."})
+    } else if (dni.value.length < 7 || dni.value.length > 8) {
+      return setDniValidation({status: false, error: "El DNI debe tener sólo entre 7 y 8 caracteres."});
+    } else {
+      return setDniValidation({status: true, error: ""});
+    }
+  };
+
+  const handleEmailValidation = () => {
+    if (email.value.match(/^\S+@\S+\.\S+$/)) {
+      return setEmailValidation({status: true, error: ""});
+    } else {
+      return setEmailValidation({status: false, error: "Ingresá un email válido."});
+    }
+  };
+
+  const handlePhoneValidation = () => {
+    if (phone.value.match("^[0-9]*$")) {
+      return setPhoneValidation({status: true, error: ""});
+    } else {
+      return setPhoneValidation({status: false, error: "Ingresá un teléfono válido."});
+    }
+  };
 
   const email = useInput("email");
   const password = useInput("password");
@@ -16,6 +78,17 @@ const Register = () => {
   const phone = useInput("phone");
 
   const handleSubmit = async (e) => {
+    if (
+      !nameValidation.status ||
+      !lastNameValidation.status ||
+      !passwordValidation.status ||
+      !dniValidation.status ||
+      !phoneValidation.status ||
+      !emailValidation.status
+    ) {
+      Notification.errorMessage("Hay campos erroneos");
+      return false;
+    }
     e.preventDefault();
     try {
       // fetch es como axios, pero con particularidades
@@ -38,8 +111,8 @@ const Register = () => {
       });
       // para conseguir la data, no alcanza con desestructurar res
       // hay que convertirlo a json primero
-      const { data, success, successMessage } = await res.json()
-      
+      const { data, success, successMessage } = await res.json();
+
       if (success) {
         Notification.successMessage(successMessage);
         return router.push("/login");
@@ -51,57 +124,127 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {}, [name.value]);
+
   return (
     <Container>
-      <Container textAlign="center" style={{ marginTop: "20%" }}>
-        <Form onSubmit={handleSubmit}>
-          <Form.Field>
+      <Container textAlign="center" style={size.width / size.height > 0.7 ? { marginTop: "10%" } : { marginTop: "15%" }}>
+        <h1 className="ui header">REGISTRO</h1>
+        <br />
+        <form className="ui form" onSubmit={handleSubmit}>
+          <div
+            onBlur={handleNameValidation}
+            className={nameValidation.status ? "field" : "field error"}
+          >
             <label>
               <h3>Nombre</h3>
             </label>
-            <input placeholder="Nombre" style={{ width: "75%" }} {...name} />
-          </Form.Field>
-          <Form.Field>
+            <input
+              placeholder="Nombre"
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
+              {...name}
+              required
+            />
+          {!nameValidation.status ? <label>{nameValidation.error}</label> : null}
+          
+          </div>
+          <div
+            onBlur={handleLastNameValidation}
+            className={lastNameValidation.status ? "field" : "field error"}
+          >
             <label>
               <h3>Apellido</h3>
             </label>
             <input
               placeholder="Apellido"
-              style={{ width: "75%" }}
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...lastName}
+              required
             />
-          </Form.Field>
-          <Form.Field>
+            {!lastNameValidation.status ? <label>{lastNameValidation.error}</label> : null}
+            
+          </div>
+          <div
+            onBlur={handleDniValidation}
+            className={dniValidation.status ? "field" : "field error"}
+          >
             <label>
               <h3>DNI</h3>
             </label>
-            <input placeholder="DNI" style={{ width: "75%" }} {...dni} />
-          </Form.Field>
-          <Form.Field>
+            <input
+              placeholder="DNI"
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
+              {...dni}
+              required
+            />
+            {!dniValidation.status ? <label>{dniValidation.error}</label> : null}
+          </div>
+          <div
+            onBlur={handleEmailValidation}
+            className={emailValidation.status ? "field" : "field error"}
+          >
             <label>
               <h3>Email</h3>
             </label>
-            <input placeholder="Email" style={{ width: "75%" }} {...email} />
-          </Form.Field>
-          <Form.Field>
+            <input
+              placeholder="Email"
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
+              {...email}
+              required
+            />
+            {!emailValidation.status ? <label>{emailValidation.error}</label> : null}
+          </div>
+          <div
+            onBlur={handlePhoneValidation}
+            className={phoneValidation.status ? "field" : "field error"}
+          >
             <label>
               <h3>Teléfono</h3>
             </label>
-            <input placeholder="Teléfono" style={{ width: "75%" }} {...phone} />
-          </Form.Field>
-          <Form.Field>
+            <input
+              placeholder="Teléfono"
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
+              {...phone}
+              required
+            />
+            {!phoneValidation.status ? <label>{phoneValidation.error}</label> : null}
+          </div>
+          <div
+            onBlur={handlePasswordValidation}
+            className={passwordValidation.status ? "field" : "field error"}
+          >
             <label>
               <h3>Contraseña</h3>
             </label>
             <input
-              type='password'
+              type="password"
               placeholder="Contraseña"
-              style={{ width: "75%" }}
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...password}
+              required
             />
-          </Form.Field>
-          <Button type="submit">Enviar</Button>
-        </Form>
+            {!passwordValidation.status ? <label>{passwordValidation.error}</label> : null}
+          </div>
+          <button
+            className={`ui animated primary huge submit button ${
+              !nameValidation.status ||
+              !lastNameValidation.status ||
+              !passwordValidation.status ||
+              !dniValidation.status ||
+              !phoneValidation.status ||
+              !emailValidation.status
+                ? `disabled`
+                : null
+            }`}
+            type="submit"
+            tabIndex="0"
+          >
+            <div className="visible content">Enviar</div>
+            <div className="hidden content">
+              <i className="right arrow icon"></i>
+            </div>
+          </button>
+        </form>
         <p>
           ¿Ya tenés cuenta? <Link href="/login">logueate</Link>.
         </p>

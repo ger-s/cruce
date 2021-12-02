@@ -3,6 +3,7 @@ import User from "../../../../models/User";
 import validateJWT from "../../../../middleware/_middleware"
 
 
+
 dbConnect();
 
 export default async (req, res) => {
@@ -13,7 +14,6 @@ export default async (req, res) => {
 // validar la contraseña antigua (hasheada que sea correcta)
     case "PUT":
       try {
-        
         const auth = await validateJWT(req)
         auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
         // req.body.passConfirmation va a ser una key que se mete desde el front en el req.body

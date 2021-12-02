@@ -7,7 +7,7 @@ import Notification from "../utils/Notification";
 import jwt from "jsonwebtoken";
 const { jwtPass } = require("../secret.json");
 
-const Login = () => {
+const Login = ({size}) => {
   const router = useRouter();
 
   const email = useInput("email");
@@ -29,11 +29,7 @@ const Login = () => {
       const success = await res.json();
       console.log(success,"dasdasd");
 
-      if (success.headers.Authorization) {
-        const decodToken = jwt.verify(
-          success.headers.Authorization.split(" ")[1],
-          jwtPass
-        );
+      if (success.success) {
         localStorage.setItem("token", JSON.stringify(success.headers.Authorization));
         Notification.successMessage(success.body.successMessage);
         return router.push("/");
@@ -53,7 +49,7 @@ const Login = () => {
             <label>
               <h3>Email</h3>
             </label>
-            <input placeholder="Email" style={{ width: "75%" }} {...email} />
+            <input placeholder="Email" style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }} {...email} />
           </Form.Field>
           <Form.Field>
             <label>
@@ -62,7 +58,7 @@ const Login = () => {
             <input
               type="password"
               placeholder="Contraseña"
-              style={{ width: "75%" }}
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...password}
             />
           </Form.Field>
