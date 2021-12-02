@@ -6,7 +6,7 @@ class Notification {
             icon: "success",
             title: msg,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2000,
         });
     }
     static errorMessage (msg) {
@@ -14,7 +14,7 @@ class Notification {
             icon: "error",
             title: msg,
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2000,
         });
     }
 }

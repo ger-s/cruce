@@ -12,14 +12,26 @@ import {
   Segment
 } from "semantic-ui-react";
 
-function Footer() {
+function Footer({size}) {
   return (
+
+    /* 
+    para hacer el footer responsive dejo
+    la siguiente linea para corroborar
+    si es mobile (true), o desktop (false)
+
+    { size.width / size.height < 0.7 ? }
+
+    probablemente haya que hacer 2 footer distintos
+    o no, ya veremos cómo jugar
+    */
+   
     <footer
       style={{
         margin: "5em 0em 0em 0em",
         width: "100vw",
         padding: "0em",
-        background: "gray",
+        background: "lightgray",
         // position: "absolute",
         // bottom: "0"
       }}

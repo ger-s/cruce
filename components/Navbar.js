@@ -11,6 +11,7 @@ import {
   Sidebar,
   Visibility
 } from "semantic-ui-react";
+import Notification from "../utils/Notification";
 
 const Navbar = function ({ size }) {
   const router = useRouter();
@@ -23,6 +24,7 @@ const Navbar = function ({ size }) {
   const handleToggle = () => setState({ sidebarOpened: true });
   const handleLogout = () => {
     localStorage.removeItem("token"), router.push("/");
+    return Notification.successMessage("Sesión cerrada con éxito.")
   };
 
   useEffect(() => {
@@ -48,16 +50,15 @@ const Navbar = function ({ size }) {
             >
               <Menu
                 fixed={state.fixed ? "top" : null}
-                secondary={!state.fixed}
+                secondary
                 size="large"
-                style={{ border: "none" }}
+                style={{backgroundColor: "white"}}
+                
               >
                 <Container>
                   <Menu.Item
                     position="left"
-                    style={{
-                      border: "none"
-                    }}
+                    
                   >
                     <Link href="/">
                       <Image
@@ -104,7 +105,7 @@ const Navbar = function ({ size }) {
                       <Button
                         as="a"
                         onClick={handleLogout}
-                        style={{ border: "none" }}
+                        
                       >
                         Cerrar sesión
                       </Button>
@@ -124,6 +125,7 @@ const Navbar = function ({ size }) {
               onHide={handleSidebarHide}
               vertical
               visible={state.sidebarOpened}
+              
             >
               <Menu.Item as="a">Opciones</Menu.Item>
 
@@ -152,7 +154,7 @@ const Navbar = function ({ size }) {
                 textAlign="center"
                 style={
                   state.sidebarOpened
-                    ? { minHeight: 125, padding: "1em 0em", background: "none" }
+                    ? { minHeight: 125, padding: "1em 0em", background: "white" }
                     : { padding: "1em 0em", background: "none" }
                 }
                 vertical

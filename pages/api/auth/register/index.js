@@ -18,20 +18,19 @@ export default async (req, res) => {
         await newUser.save();
 
         const token = generateJWT({ id: newUser._id });
-        console.log(newUser, "AOSKDASKOD");
         ///Sendmail el 2do parametro es el subject y el 3ero es el texto del email
         sendEmail(newUser.email, "Cuenta creada en Cruce", `Bienvenido a CRUCE ${newUser.name}! \n Te registraste correctamente!`);
 
         res.status(201).json({
           success: true,
-          successMessage: "registro existoso",
+          successMessage: "¡Registro existoso!",
           token: token,
           data: newUser,
         });
       } catch (error) {
         res.status(400).json({
           success: false,
-          successMessage: "registro fallido",
+          successMessage: "Registro fallido",
           data: console.log(error),
         });
       }
