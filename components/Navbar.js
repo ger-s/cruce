@@ -9,11 +9,11 @@ import {
   Menu,
   Segment,
   Sidebar,
-  Visibility,
+  Visibility
 } from "semantic-ui-react";
 
 const Navbar = function ({ size }) {
-  const router = useRouter()
+  const router = useRouter();
   const [user, setUser] = useState({});
   const [state, setState] = useState({ fixed: false, sidebarOpened: false });
 
@@ -21,7 +21,9 @@ const Navbar = function ({ size }) {
   const showFixedMenu = () => setState({ fixed: true });
   const handleSidebarHide = () => setState({ sidebarOpened: false });
   const handleToggle = () => setState({ sidebarOpened: true });
-  const handleLogout = () => {localStorage.removeItem('token'), router.push('/')}
+  const handleLogout = () => {
+    localStorage.removeItem("token"), router.push("/");
+  };
 
   useEffect(() => {
     const local = JSON.parse(localStorage.getItem("token"));
@@ -39,19 +41,24 @@ const Navbar = function ({ size }) {
           >
             <Segment
               textAlign="center"
-              style={{ padding: "1em 0em", border: "none" }}
+              style={{
+                padding: "1em 0em",
+              }}
               vertical
             >
               <Menu
                 fixed={state.fixed ? "top" : null}
-                // inverted={!state.fixed}
-                pointing={!state.fixed}
                 secondary={!state.fixed}
                 size="large"
                 style={{ border: "none" }}
               >
                 <Container>
-                  <Menu.Item position="left">
+                  <Menu.Item
+                    position="left"
+                    style={{
+                      border: "none"
+                    }}
+                  >
                     <Link href="/">
                       <Image
                         src="/cruce.svg"
@@ -60,27 +67,47 @@ const Navbar = function ({ size }) {
                       />
                     </Link>
                   </Menu.Item>
-                  <Menu.Item as="a" active>
+                  <Menu.Item 
+                  as="a" 
+                  active 
+                  >
                     Home
                   </Menu.Item>
-                  <Menu.Item as="a">Work</Menu.Item>
-                  <Menu.Item as="a">Company</Menu.Item>
-                  <Menu.Item as="a">Careers</Menu.Item>
-                  <Menu.Item position="right">
+                  <Menu.Item as="a" >
+                    Work
+                  </Menu.Item>
+                  <Menu.Item as="a">
+                    Company
+                  </Menu.Item>
+                  <Menu.Item as="a" 
+                  
+                  >
+                    Careers
+                  </Menu.Item>
+                  <Menu.Item position="right" 
+                  
+                  >
                     {!user ? (
                       <>
                         <Link href="/login">
                           <Button as="a">Log in</Button>
                         </Link>
                         <Link href="/register">
-                          <Button as="a" style={{ marginLeft: "0.5em" }}>
+                          <Button as="a" 
+                          style={{ marginLeft: "0.5em" }}
+                          >
                             Registrate
                           </Button>
                         </Link>
                       </>
                     ) : (
-                      
-                        <Button as="a" onClick={handleLogout}>Log out</Button>
+                      <Button
+                        as="a"
+                        onClick={handleLogout}
+                        style={{ border: "none" }}
+                      >
+                        Log out
+                      </Button>
                     )}
                   </Menu.Item>
                 </Container>
@@ -113,11 +140,9 @@ const Navbar = function ({ size }) {
                   </Link>
                 </>
               ) : (
-              
-                  <Menu.Item onClick={handleLogout}>
-                    <p onClick={handleSidebarHide}>Log out</p>
-                  </Menu.Item>
-              
+                <Menu.Item onClick={handleLogout}>
+                  <p onClick={handleSidebarHide}>Log out</p>
+                </Menu.Item>
               )}
             </Sidebar>
 
