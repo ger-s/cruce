@@ -18,11 +18,13 @@ const UserSchema = new mongoose.Schema(
       maxlength: [30, "los apellidos sólo pueden tener hasta 40 caracteres"],
     },
     password: {
+      required: [true, "por favor, agregá una contraseña."],
       unique: false,
       type: String
     },
     dni: {
       type: String,
+      unique: true,
       required: [true, "por favor, agregá el DNI."],
       maxlength: [10, "los DNI sólo pueden tener hasta 10 carácteres"],
       minlength: [7, "los DNI sólo pueden tener desde 7 carácteres"],
@@ -31,6 +33,7 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      //validate: [validateEmail, 'por favor, ingresá un email válido.'],
     },
     creationDate: {
       type: Date

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { jwtPass } = require('../../secret.json')
+const { jwtPass } = require('../secret.json')
 
 
 const validateJWT = async (req, res) => {
