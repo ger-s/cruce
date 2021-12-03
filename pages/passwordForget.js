@@ -93,56 +93,48 @@ const PasswordForget = () => {
     <Container>
       {currentStep === 'email' ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
-          <h1>Ingresá tu correo:</h1>
+          <h1 style={{ marginBottom: "15%" }}>Ingresá tu correo:</h1>
           <Form onSubmit={handleSubmitEmail}>
             <Form.Field>
-              <label>
-                <h3>Email</h3>
-              </label>
+             
               <input placeholder="Email" style={{ width: "75%" }} {...email} />
             </Form.Field>
 
-            <Button type="submit">Enviar</Button>
+            <Button  primary size="huge" type="submit" style={{ marginBottom: "50%" , marginTop: "10%" }}>Enviar</Button>
           </Form>
         </Container>
       ) : null}
       {currentStep === 'code' ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
-          <h1>Ingresá el código de 6 dígitos:</h1>
+          <h1 style={{ marginBottom: "15%" }}>Ingresá el código de 6 dígitos:</h1>
           <Form onSubmit={handleSubmitCode}>
             <Form.Field>
-              <label>
-                <h3>Código</h3>
-              </label>
+             
               <input placeholder="código" style={{ width: "75%" }} {...code}/>
             </Form.Field>
-            <Button type="submit">Enviar</Button>
+            <Button type="submit" primary size="huge" style={{ marginBottom: "50%" , marginTop: "10%" }}>Enviar</Button>
           </Form>
         </Container>
       ) : null}
       { currentStep === 'pass' ? (
       <Container textAlign="center" style={{ marginTop: "20%" }}>
-        <h1>Ingresá una nueva contraseña:</h1>
+        <h1 style={{ marginBottom: "15%" }}>Ingresá una nueva contraseña:</h1>
           <Form onSubmit={handleSubmitReset}>
             <Form.Field>
-              <label>
-                <h3>Nueva contraseña</h3>
-              </label>
-              <input type="password" style={{ width: "75%" }} {...password}/>
+             
+              <input placeholder="Nueva contraseña" type="password" style={{ width: "75%" }} {...password}/>
             </Form.Field>
 
             <Form.Field>
-              <label>
-                <h3>Reingrese contraseña</h3>
-              </label>
-              <input type="password" style={{ width: "75%" }} {...verification} />
+              
+              <input placeholder="Reingrese contraseña" type="password" style={{ width: "75%" }} {...verification} />
             </Form.Field>
-            <Button type="submit">Enviar</Button>
+            <Button type="submit" primary size="huge" style={{ marginBottom: "30%" , marginTop: "10%" }} >Enviar</Button>
           </Form>
         </Container>
       ) : null}
 
-      {/* ---------- */}
+     
     </Container>
   );
 }
