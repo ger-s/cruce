@@ -12,9 +12,9 @@ export default async (req, res) => {
     case "GET":
       try {
 
-        const auth = await validateJWT(req)
+      /*   const auth = await validateJWT(req)
         auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
-
+ */
           // trae todos los turnos (deberia filtrar por sucursal)
         const user = await Sucursal.findOne({name: `${req.query.name}`}
         
