@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Turno = require("./Turno");
 
 const SucursalSchema = mongoose.Schema({
   name: {
@@ -46,7 +47,6 @@ const SucursalSchema = mongoose.Schema({
   },
   history: [
     {
-      // ver si aplica unique: true o al ser del model user no es necesario
       client: {
         name: { type: String},
         dni: { type: Number },

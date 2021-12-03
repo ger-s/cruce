@@ -1,7 +1,7 @@
-import dbConnect from "../../../../utils/dbConnect";
-import Turno from "../../../../models/Turno";
-import Sucursal from "../../../../models/Sucursal"
-import validateJWT from "../../../../middleware/_middleware"
+import dbConnect from "../../../../../utils/dbConnect";
+import Turno from "../../../../../models/Turno";
+import Sucursal from "../../../../../models/Sucursal"
+import validateJWT from "../../../../../middleware/_middleware"
 
 dbConnect();
 
@@ -33,3 +33,5 @@ export default async (req, res) => {
       break;
   }
 };
+
+

@@ -1,8 +1,8 @@
-import Turno from "../../../../models/Turno";
-import User from "../../../../models/User";
-import dbConnect from "../../../../utils/dbConnect";
-import sendEmail from "../../../../utils/sendEmail";
-import  validateJWT from "../../../../middleware/_middleware"
+import Turno from "../../../../../models/Turno";
+import User from "../../../../../models/User";
+import dbConnect from "../../../../../utils/dbConnect";
+import sendEmail from "../../../../../utils/sendEmail";
+import  validateJWT from "../../../../../middleware/_middleware"
 
 dbConnect();
 
