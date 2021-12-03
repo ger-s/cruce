@@ -59,13 +59,16 @@ const Navbar = function ({ size }) {
                   <Menu.Item
                     position="left"
                     
+                    
                   >
                     <Link href="/">
+                      <a>
                       <Image
+                      pointing
                         src="/cruce.svg"
                         size="tiny"
-                        disabled
-                      />
+                       //disabled
+                      /></a>
                     </Link>
                   </Menu.Item>
                   <Menu.Item 
@@ -171,7 +174,7 @@ const Navbar = function ({ size }) {
                         <Image
                           src="https://www.e-cruce.com/wp-content/uploads/2019/10/cruce.svg"
                           size="tiny"
-                          disabled
+                          //disabled
                         />
                       </Link>
                     </Menu.Item>

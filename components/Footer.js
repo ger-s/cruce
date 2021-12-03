@@ -62,8 +62,7 @@ function Footer({size}) {
               >
                 <List.Item as="a">Link One</List.Item>
                 <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
+               
               </List>
             </Grid.Column>
             <Grid.Column width={3}>
@@ -78,8 +77,7 @@ function Footer({size}) {
               >
                 <List.Item as="a">Link One</List.Item>
                 <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
+              
               </List>
             </Grid.Column>
             <Grid.Column width={3}>
@@ -94,20 +92,12 @@ function Footer({size}) {
               >
                 <List.Item as="a">Link One</List.Item>
                 <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
+                
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
-              <Header
-                //  inverted
-                as="h4"
-                content="Redes sociales"
-              />
-              <p>
-                Extra space for a call to action inside the footer that could
-                help re-engage users.
-              </p>
+             
+             
               <Image
                 centered
                 size="small"
