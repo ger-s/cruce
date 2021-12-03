@@ -4,14 +4,12 @@ const TurnoSchema = mongoose.Schema({
   turnosRestantes: {
     type: Number
   },
-  horaTurno: { type: String },
+  horaTurno: { type: Date },
   sucursal: {
-    // verificar si tiene q estar usuarios ademas de sucursal // verificar si aplica unique: true
     name: {type: String},
-    phone: {type: String},
+    phone: {type: Number},
     address: {type: String}
   }
-
 })
 
 module.exports = mongoose.models.Turno || mongoose.model("Turno", TurnoSchema);
