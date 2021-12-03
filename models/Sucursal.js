@@ -55,7 +55,7 @@ const SucursalSchema = mongoose.Schema({
       },
       date: { type: Date },
       sucursal: { type: String },
-      state: { type: String },
+      state: { type: String , default: "pendiente" },
       
     },
   ],
