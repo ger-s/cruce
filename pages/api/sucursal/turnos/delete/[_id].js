@@ -12,6 +12,10 @@ export default async (req, res) => {
       
       try {
 
+        // editar estatus de pending a cancelado 
+
+        //estados pending - asistio - no asistio - cancelo
+
         const auth = await validateJWT(req)
 auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
 
