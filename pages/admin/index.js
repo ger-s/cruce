@@ -1,7 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
-import { Header, Icon, Image, Menu, Segment, Sidebar ,Dropdown,Grid} from "semantic-ui-react";
+
+import { Header, Icon, Image, Menu, Segment, Sidebar ,Dropdown,Grid, Form, Button} from "semantic-ui-react";
 const HomeAdmin = () => {
+
+const [sucursales, setSucursales] = useState([]);
+
+
+
+useEffect(async () => {
+  try {
+    const res = await fetch(`/api/admin/getAllSucursales`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const success = await res.json();
+    if (success) {
+      success.data.map((sucursales, index) => {
+        setSucursales((old) => [
+          ...old,
+          { key: index, text: sucursales.name, value: index },
+        ]);
+      });
+    }
+  } catch (e) {
+    return Notification.errorMessage("nada");
+  }
+}, []);
+
   const [visible, setVisible] = React.useState(false);
 
   
@@ -52,12 +81,42 @@ const HomeAdmin = () => {
           <Dropdown
               clearable
               fluid
-              multiple
+             
               search
               selection
-             /*  options={SUCURSALES} */
+              options={sucursales} 
+   // onSubmit={handleSubmit}
               placeholder="Select Country"
             />
+            <Form /* onSubmit={handleSubmit} */ >
+          <Link href="/admin/info">
+          <Button
+            primary
+            size="huge"
+            type="submit"
+            style={{ marginBottom: "50%", marginTop: "10%" }}
+          >
+            Info sucursal
+          </Button>
+          </Link>
+          <Button
+            primary
+            size="huge"
+            type="submit"
+            style={{ marginBottom: "50%", marginTop: "10%" }}
+          >
+            Crear operador
+          </Button>
+          <Button
+            primary
+            size="huge"
+            type="submit"
+            style={{ marginBottom: "50%", marginTop: "10%" }}
+          >
+            Crear sucursal
+          </Button>
+        </Form>
+            
       </Grid.Column>
     </Grid.Row>
   </Grid>
