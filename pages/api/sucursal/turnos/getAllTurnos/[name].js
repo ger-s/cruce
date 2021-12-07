@@ -16,13 +16,13 @@ export default async (req, res) => {
         auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
  */
           // trae todos los turnos (deberia filtrar por sucursal)
-        const user = await Sucursal.findOne({name: `${req.query.name}`}
+        const sucursal = await Sucursal.findOne({name: `${req.query.name}`}
         
         
         );
 
-        const turnos = await Turno.find({});
-        res.status(200).json({ success: true, data: turnos });
+        
+        res.status(200).json({ success: true, data: sucursal });
       } catch (error) {
         res.status(400).json({ success: false });
       }
