@@ -10,7 +10,7 @@ export default async (req, res) => {
   switch (method) {
     case "GET":
       try {
-        const auth = await validateJWT(req);
+        /* const auth = await validateJWT(req);
         auth.status === 401
           ? res
               .status(401)
@@ -19,7 +19,7 @@ export default async (req, res) => {
 
         auth.token.role !== "admin"
           ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
-          : null;
+          : null; */
 
         const sucursal = await Sucursal.findOne({ name: `${req.query.name}` });
         res.status(200).json({

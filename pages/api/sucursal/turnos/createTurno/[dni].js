@@ -22,6 +22,8 @@ export default async (req, res) => {
  */
         const user = await User.findOne({ dni: `${req.query.dni}` });
 
+        !user ? res.status(400).json({ success: false, successMessage: "hubo un problema con el usuario." }) : null;
+
         const createTurno = await Sucursal.updateOne(
           { _id: req.body.sucursal._id },
           {
@@ -44,7 +46,7 @@ export default async (req, res) => {
           `Hola ${user.name}! \nTe enviamos la confirmación del turno. \nSucursal: ${req.body.sucursal.name}, \nDirección: ${createTurno.sucursal.address},\nHorario: ${createTurno.horaTurno}  \nContacto: ${createTurno.sucursal.phone}`
         ); */
 
-        res.status(200).json({ success: true, data: "turno success" });
+        res.status(200).json({ success: true, successMessage: "Turno creado con éxito", data: createTurno });
       } catch (error) {
         res.status(400).json({ success: console.log(error) });
       }

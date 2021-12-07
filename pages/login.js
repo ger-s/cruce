@@ -27,7 +27,6 @@ const Login = ({size}) => {
         })
       });
       const success = await res.json();
-      console.log(success,"dasdasd");
 
       if (success.body.success) {
         localStorage.setItem("token", JSON.stringify(success.headers.Authorization));
