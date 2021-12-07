@@ -23,11 +23,18 @@ export default async (req, res) => {
           : null; */
 
         const user = await User.findOne({ dni: `${req.query.dni}` });
-        res.status(200).json({
-          success: true,
-          successMessage: "usuario encontrado",
-          data: user,
-        });
+
+        if (user)
+          return res.status(200).json({
+            success: true,
+            successMessage: "usuario encontrado",
+            data: user
+          });
+        else {
+          res
+            .status(400)
+            .json({ success: false, successMessage: "Usuario no encontrado" });
+        }
       } catch (error) {
         res.status(400).json({ success: false, successMessage: error });
       }
