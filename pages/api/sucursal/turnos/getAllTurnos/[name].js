@@ -22,7 +22,7 @@ export default async (req, res) => {
         );
 
         
-        res.status(200).json({ success: true, data: sucursal.history });
+        res.status(200).json({ success: true, data: sucursal });
       } catch (error) {
         res.status(400).json({ success: false });
       }

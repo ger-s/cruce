@@ -12,7 +12,7 @@ export default async (req, res) => {
       try {
         const auth = await validateJWT(req);
 
-        auth.status === 401
+        /* auth.status === 401
           ? res
               .status(401)
               .json({ status: auth.status, message: auth.statusText })
@@ -20,7 +20,7 @@ export default async (req, res) => {
 
         auth.token.role !== "admin"
           ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
-          : null;
+          : null; */
 
         const user = await User.findOne({ dni: `${req.query.dni}` });
         res.status(200).json({
