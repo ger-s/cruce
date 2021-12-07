@@ -16,24 +16,32 @@ export default async (req, res) => {
         // editar estatus de pending a cancelado 
 
         //estados pending - asistio - no asistio - cancelo
-/* 
-        const auth = await validateJWT(req)
-auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null */
         
-        const turnoDeleted = await Sucursal.findOneAndUpdate({_id: `${req.query._id}`}, {history: {_id: `${req.query._id}`}
-        },
-        {
-        history:{ 
-        state: req.body.state
-        }
-      }
-      )
+        /* 
+          const auth = await validateJWT(req)
+          auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null 
+        */
+
+        // Busco la sucursal
+         const sucursal = await Sucursal.findOne(
+          { _id:  `${req.query._id}` }
+        );
+
+        // Mapeo todos los turnos de esa sucursal para encontrar el turno a cancelar.
+        sucursal.history.map(turno => {
+          const turnoString = turno._id.toString();
+
+          if (turnoString ===  req.body._id) {
+            turno.state = req.body.state;
+            sucursal.save()
+          }
+        })
         
         res.status(202).json({ success: true, data: "Turno eliminado satisfactoriamente." });
-      } catch (error) {
+      } 
+      catch (error) {
         res.status(400).json({ success: console.log(error) });
       }
-
       break;
 
     default:
