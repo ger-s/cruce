@@ -8,7 +8,6 @@ import UserFound from "../../../components/UserFound";
 // import Link from "next/link";
 
 const SearchUser = () => {
-
   const [dniValidation, setDniValidation] = useState({
     status: true,
     error: ""
@@ -31,7 +30,7 @@ const SearchUser = () => {
   };
   const router = useRouter();
   const dni = useInput("DNI");
-  // const [user, setUser] = useState({});
+  const [user, setUser] = useState({});
 
   const handleSubmit = async (e) => {
     if (!dniValidation.status) {
@@ -64,7 +63,7 @@ const SearchUser = () => {
 
   return (
     <Container>
-      {/* {!user.data ? (
+      {!user.data ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
           <h1 style={{ marginBottom: "15%" }}>Ingresá un DNI:</h1>
           <Form onSubmit={handleSubmit}>
@@ -81,11 +80,11 @@ const SearchUser = () => {
             </Button>
           </Form>
         </Container>
-       ) : (
+      ) : (
         <UserFound user={user} />
-       )} */}
+      )}
     </Container>
   );
-}
+};
 
 export default SearchUser;

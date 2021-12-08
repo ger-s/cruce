@@ -10,11 +10,12 @@ const UserDni = () => {
   const router = useRouter();
   const query = router.query;
   const [user, setUser] = useState({});
-  console.log("user", user._id);
+  // console.log("user", user._id);
 
   const [state, setState] = useState(true);
-  const [rol, setRol] = useState("");
+  const [rol, setRol] = useState({});
   console.log("rol", rol);
+  const { value } = rol;
 
   useEffect(async () => {
     try {
@@ -33,7 +34,7 @@ const UserDni = () => {
     } catch (e) {
       //  return Notification.errorMessage("Ha ocurrido un error");
     }
-  }, [router]);
+  }, [query.dni, state]);
 
 
   const change = async (e) => {
@@ -55,7 +56,7 @@ const UserDni = () => {
       });
       const success = await res.json();
       if (success.success) {
-        console.log("success", success);
+        // console.log("success", success);
         Notification.successMessage(success.successMessage);
         change();
       }
@@ -162,7 +163,9 @@ const UserDni = () => {
                 </Card.Description>
                 <Card.Content extra>
                   <div className="ui two buttons">
-                    <Button basic color="green">
+                    <Button basic color="green"
+                    onClick={update}
+                    >
 
                       Confirmar cambios
                     </Button>
