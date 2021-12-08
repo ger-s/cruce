@@ -32,7 +32,7 @@ export default async (req, res) => {
           const turnoString = turno._id.toString();
 
           if (turnoString ===  req.body._id) {
-            turno.state = req.body.state;
+           turno.state = req.body.state;
             sucursal.save()
           }
         })
