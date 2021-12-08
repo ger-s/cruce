@@ -6,14 +6,14 @@ import TurnoSucursalSelector from "../components/TurnoSucursalSelector";
 import TurnoHourSelector from "../components/TurnoHourSelector";
 import TurnoCheckout from "../components/TurnoCheckout";
 
-const Turno = ({ size }) => {
+const Turno = ({ size, parse }) => {
   const [user, setUser] = useState({})
   const [sucursalSelection, setSucursalSelection] = useState("");
   const [daySelection, setDaySelection] = useState("");
   const [hourSelection, setHourSelection] = useState("");
   const [currentStep, setCurrentStep] = useState("sucursal");
 
-  const parseJwt = (token) => {
+  /* const parseJwt = (token) => {
     try {
       return JSON.parse(window.atob(token.split(".")[1]));
     } catch (e) {
@@ -28,7 +28,7 @@ const Turno = ({ size }) => {
     } catch(error) {
       console.log(error)
     }
-  }, [])
+  }, []) */
 
   /* useEffect( async () => {
     try {
@@ -112,7 +112,7 @@ const Turno = ({ size }) => {
             hourSelection={hourSelection}
             size={size}
             step={setCurrentStep}
-            user={user}
+            user={parse}
           />
       ) : null}
     </div>

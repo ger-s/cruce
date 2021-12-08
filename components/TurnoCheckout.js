@@ -9,12 +9,9 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
   const [sucursal, setSucursal] = useState({})
   const [dateString, setDateString] = useState('')
 
-  console.log(user)
-
   const handleClick = (e) => {
     e.preventDefault()
     const str = e.target.textContent
-    console.log(str.slice(8))
     if (str.slice(8) === 'día') return step('day')
     if (str.slice(8) === 'hora') return step('hour')
     if (str.slice(8) === 'sucursal') return step('sucursal')
@@ -29,14 +26,13 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          horaTurno: `${daySelection}T${Number(hourSelection.slice(0,2))}:${hourSelection.slice(3)}:00`,
+          horaTurno: `${daySelection}T${hourSelection.slice(0,2)}:${hourSelection.slice(3)}:00`,
           sucursal: {
             name: sucursal.name,
             _id: sucursal._id,
           }
         })
       })
-
       const success = await res.json()
       if(success.success) {
         Notification.successMessage(success.successMessage)
@@ -51,8 +47,7 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
 
   useEffect(async () => {
     try {
-      setDateString(new Date(`${daySelection}T${Number(hourSelection.slice(0,2))}:${hourSelection.slice(3)}:00`).toLocaleDateString('es-AR'))
-      console.log(`${daySelection}T${Number(hourSelection.slice(0,2))}:${hourSelection.slice(3)}:00`)
+      setDateString(new Date(`${daySelection}T${hourSelection.slice(0,2)}:${hourSelection.slice(3)}:00`).toLocaleDateString('es-AR'))
       const res = await fetch(`/api/admin/getOneSucursal/${sucursalSelection}`, {
         method: "GET",
         headers: {
@@ -61,7 +56,6 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
       })
       const success = await res.json()
       if (success.success) {
-        console.log(success.data)
         return setSucursal(success.data)
       } else {
         console.log('algo salio mal')
@@ -92,7 +86,9 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
           <h1 style={{ marginBottom: "20%" }}>El turno elegido:</h1>
           <Card style={{boxShadow: "none", backgroundColor: "gainsboro", padding: "10%"}}>
             <Card.Content>
-              <Card.Header>{`Sucursal: ${sucursalSelection}`}</Card.Header>
+              <Card.Header>{`${sucursal.name}`}</Card.Header>
+              {`Dirección: ${sucursal.address}`}<br/>
+              {`Teléfono: ${sucursal.phone}`}
               <div onClick={handleClick}>
                 <a>Cambiar sucursal</a>
               </div>
