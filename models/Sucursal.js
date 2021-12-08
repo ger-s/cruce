@@ -21,13 +21,13 @@ const SucursalSchema = mongoose.Schema({
   },
   city: {
     type: String,
-    required: [true, "por favor, agregá una ciudad."],
+    required: [false, "por favor, agregá una ciudad."],
     unique: false,
     trim: true,
   },
   zipCode: {
     type: String,
-    required: [true, "por favor, agregá una dirección."],
+    required: [false, "por favor, agregá una dirección."],
     unique: false,
     trim: true,
   },
