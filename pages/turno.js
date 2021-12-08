@@ -7,10 +7,28 @@ import TurnoHourSelector from "../components/TurnoHourSelector";
 import TurnoCheckout from "../components/TurnoCheckout";
 
 const Turno = ({ size }) => {
+  const [user, setUser] = useState({})
   const [sucursalSelection, setSucursalSelection] = useState("");
   const [daySelection, setDaySelection] = useState("");
   const [hourSelection, setHourSelection] = useState("");
   const [currentStep, setCurrentStep] = useState("sucursal");
+
+  const parseJwt = (token) => {
+    try {
+      return JSON.parse(window.atob(token.split(".")[1]));
+    } catch (e) {
+      return null;
+    }
+  };
+
+  useEffect(async () => {
+    try {
+      const token = await parseJwt(localStorage.getItem('token'))
+      setUser(token)
+    } catch(error) {
+      console.log(error)
+    }
+  }, [])
 
   /* useEffect( async () => {
     try {
@@ -23,11 +41,16 @@ const Turno = ({ size }) => {
         });
         const success = await scs.json();
         console.log(success)
-        if (success.data.length < 1) {
-          const scs2 = await fetch(`/api/admin/getOneSucursal/${sucursalSelection}`)
+        if (success.data[0].length < 1) {
+          const scs2 = await fetch(`/api/admin/getOneSucursal/${sucursalSelection}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json"
+            },
+          });
           const sucursal = await scs2.json()
 
-          console.log(sucursal)
+          console.log("asdasdasd", sucursal)
 
           for (let day = 7; day <= 29; day++) {
             for (let hour = Number(sucursal.data.openingTime.slice(0, 2)); hour <= Number(sucursal.data.closingTime.slice(0, 2)); hour++) {
@@ -89,6 +112,7 @@ const Turno = ({ size }) => {
             hourSelection={hourSelection}
             size={size}
             step={setCurrentStep}
+            user={user}
           />
       ) : null}
     </div>
