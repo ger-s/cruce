@@ -12,6 +12,7 @@
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "faker": "^5.5.3",
+    "framer-motion": "^5.4.3",
     "install": "^0.13.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.13",
