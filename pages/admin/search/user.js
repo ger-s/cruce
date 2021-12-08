@@ -4,15 +4,41 @@ import { useRouter } from "next/router";
 import useInput from "../../../hooks/useInput";
 import Notification from "../../../utils/Notification";
 import UserFound from "../../../components/UserFound";
+
 // import Link from "next/link";
 
-function user() {
+const SearchUser = () => {
+
+  const [dniValidation, setDniValidation] = useState({
+    status: true,
+    error: ""
+  });
+
+  const handleDniValidation = () => {
+    if (!dni.value.match("^[0-9]+$")) {
+      return setDniValidation({
+        status: false,
+        error: "El DNI debe tener sólo números."
+      });
+    } else if (dni.value.length < 7 || dni.value.length > 8) {
+      return setDniValidation({
+        status: false,
+        error: "El DNI debe tener sólo entre 7 y 8 caracteres."
+      });
+    } else {
+      return setDniValidation({ status: true, error: "" });
+    }
+  };
   const router = useRouter();
-   const dni = useInput("DNI");
+  const dni = useInput("DNI");
   // const [user, setUser] = useState({});
 
-
   const handleSubmit = async (e) => {
+    if (!dniValidation.status) {
+      Notification.errorMessage("Hay campos erroneos");
+      return false;
+    }
+
     e.preventDefault();
     try {
       const res = await fetch(`/api/admin/getOneUser/${dni.value}`, {
@@ -25,13 +51,10 @@ function user() {
         })
       });
       const success = await res.json();
-     
 
       if (success.success) {
-        // localStorage.setItem("dni", JSON.stringify(success.data));
-          return router.push(`/admin/edit/user/${success.data.dni}`);
-        // setUser(success);
-      }else{
+        return router.push(`/admin/edit/user/${success.data.dni}`);
+      } else {
         return Notification.errorMessage(success.successMessage);
       }
     } catch (e) {
@@ -41,7 +64,7 @@ function user() {
 
   return (
     <Container>
-      {/* {!user.data ? ( */}
+      {/* {!user.data ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
           <h1 style={{ marginBottom: "15%" }}>Ingresá un DNI:</h1>
           <Form onSubmit={handleSubmit}>
@@ -58,11 +81,11 @@ function user() {
             </Button>
           </Form>
         </Container>
-      // ) : (
-        // <UserFound user={user} />
-      // )
+       ) : (
+        <UserFound user={user} />
+       )} */}
     </Container>
   );
 }
 
-export default user;
+export default SearchUser;

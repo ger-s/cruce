@@ -24,7 +24,7 @@ export default async (req, res) => {
         const sucursal = await Sucursal.findOne({ _id: `${req.query._id}` });
         res.status(200).json({
           success: true,
-          successMessage: "Usuario encontrado",
+          successMessage: "Sucursal encontrada",
           data: sucursal,
         });
       } catch (error) {

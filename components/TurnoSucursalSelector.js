@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, Form } from "semantic-ui-react";
+import { motion } from "framer-motion";
 
 const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
   const [sucursales, setSucursales] = useState([]);
@@ -14,9 +15,7 @@ const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
     try {
       const scs = await fetch("/api/admin/getAllSucursales", {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        
       });
       const success = await scs.json();
       if (success) {
@@ -27,10 +26,15 @@ const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [step]);
 
   return (
-    <>
+    <motion.div
+          className="ui container fluid"
+          initial={{ x: "-100vw" }}
+          animate={{ x: 0 }}
+          transition={{ stiffness: 150 }}
+        >
       <div
         className="ui container"
         style={{
@@ -57,7 +61,7 @@ const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
           </Form>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 };
 

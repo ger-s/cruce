@@ -19,6 +19,18 @@ const SucursalSchema = mongoose.Schema({
     trim: true,
     maxlength: [200, "la dirección sólo puede tener hasta 200 caracteres"],
   },
+  city: {
+    type: String,
+    required: [true, "por favor, agregá una ciudad."],
+    unique: false,
+    trim: true,
+  },
+  zipCode: {
+    type: String,
+    required: [true, "por favor, agregá una dirección."],
+    unique: false,
+    trim: true,
+  },
   phone: {
     type: Number,
     required: [true, "por favor, agregá un teléfono."],
