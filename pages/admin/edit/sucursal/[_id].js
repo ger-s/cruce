@@ -11,13 +11,17 @@ const CreateSucursal = ({size}) => {
   
   const name        = useInput("name");
   const address     = useInput("address");
-  const phone       = useInput("phone");
+  const zipCode     = useInput("zipCode");
+  const city        = useInput("city");
+  const phone     = useInput("phone");
   const openingTime = useInput("openingTime");
   const closingTime = useInput("closingTime");
   
   const [form, setForm] = useState({
     name: "",
     address: "",
+    zipCode: "",
+    city: "",
     phone: "",
     openingTime: "",
     closingTime: "",
@@ -55,6 +59,8 @@ const CreateSucursal = ({size}) => {
           ...form,
           name: data.name,
           address: data.address,
+          zipCode: data.zipCode,
+          city: data.city,
           phone: data.phone,
           openingTime: data.openingTime,
           closingTime: data.closingTime
@@ -89,6 +95,8 @@ const CreateSucursal = ({size}) => {
         body: JSON.stringify({
           name: form.name,
           address: form.address,
+          zipCode: form.zipCode,
+          city: form.city,
           phone: form.phone,
           openingTime: form.openingTime,
           closingTime: form.closingTime,
@@ -134,6 +142,30 @@ const CreateSucursal = ({size}) => {
               type="text"
               placeholder="Dirección"
               name="address"
+              onChange={handleInput}
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
+              required
+            />
+          </div>
+
+          <div style={{marginTop: "4%" }}>
+            <input
+              value= {form.zipCode}
+              type="text"
+              placeholder="Código postal"
+              name="zipCode"
+              onChange={handleInput}
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
+              required
+            />
+          </div>
+
+          <div style={{marginTop: "4%" }}>
+            <input
+              value= {form.city}
+              type="text"
+              placeholder="Ciudad"
+              name="city"
               onChange={handleInput}
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               required
