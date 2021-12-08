@@ -21,7 +21,7 @@ export default async (req, res) => {
           ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
           : null; */
 
-        const sucursal = await Sucursal.findOne({ name: `${req.query.name}` });
+        const sucursal = await Sucursal.findOne({ _id: `${req.query._id}` });
         res.status(200).json({
           success: true,
           successMessage: "Usuario encontrado",
