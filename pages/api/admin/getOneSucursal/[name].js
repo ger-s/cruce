@@ -27,6 +27,8 @@ export default async (req, res) => {
           successMessage: "Usuario encontrado",
           data: sucursal,
         });
+
+        
       } catch (error) {
         res.status(400).json({ success: false, successMessage: error });
       }
