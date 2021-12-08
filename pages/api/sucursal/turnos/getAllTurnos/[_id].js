@@ -16,11 +16,11 @@ export default async (req, res) => {
  */
         // trae todos los turnos (deberia filtrar por sucursal)
 
-        const sucursal = await Sucursal.findOne({ name: `${req.query.name}` });
+        const sucursal = await Sucursal.findOne({ _id: `${req.query._id}` });
 
-        const turnos = await Turno.find({ "sucursal.name": sucursal.name });
+        const turnos = await Turno.find({ "sucursal._id": sucursal._id});
         turnos
-          ? res.status(200).json({ success: true, data: turnos })
+          ? res.status(200).json({ success: true, data:   [turnos,sucursal] })
           : res.status(404).json({ success: false });
       } catch (error) {
         res.status(400).json({ success: false, successMessage: "holaaaaa" });
