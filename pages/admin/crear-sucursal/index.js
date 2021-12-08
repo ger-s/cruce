@@ -5,14 +5,13 @@ import Notification          from "../../../utils/Notification";
 import { useRouter }         from "next/router";
 
 
-
-
-
 const CreateSucursal = ({size}) => {
   const router = useRouter();
 
   const name        = useInput("name");
   const address     = useInput("address");
+  const zipCode     = useInput("zipCode");
+  const city        = useInput("city");
   const phone       = useInput("phone");
   const openingTime = useInput("openingTime");
   const closingTime = useInput("closingTime");
@@ -33,6 +32,8 @@ const CreateSucursal = ({size}) => {
         body: JSON.stringify({
           name: name.value,
           address: address.value,
+          zipCode: zipCode.value,
+          city: city.value,
           phone: phone.value,
           openingTime: openingTime.value,
           closingTime: closingTime.value,
@@ -44,7 +45,7 @@ const CreateSucursal = ({size}) => {
 
       if (success) {
         Notification.successMessage(successMessage);
-        return router.reload();
+        return router.push("/admin");
       } 
       else {
         Notification.errorMessage(successMessage);
@@ -78,6 +79,26 @@ const CreateSucursal = ({size}) => {
               placeholder="Dirección"
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               {...address}
+              required
+            />
+          </div>
+
+          <div style={{marginTop: "4%" }}>
+            <input
+              type="text"
+              placeholder="Código postal"
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
+              {...zipCode}
+              required
+            />
+          </div>
+
+          <div style={{marginTop: "4%" }}>
+            <input
+              type="text"
+              placeholder="Ciudad"
+              style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
+              {...city}
               required
             />
           </div>

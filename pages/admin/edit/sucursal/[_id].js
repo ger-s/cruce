@@ -5,25 +5,33 @@ import Notification          from "../../../../utils/Notification";
 import { useRouter }         from "next/router";
 
 
-
-
-
 const CreateSucursal = ({size}) => {
   const router      = useRouter();
   const query       = router.query;
-
-  const [sucursal, setSucursal] = useState({});
   
   const name        = useInput("name");
   const address     = useInput("address");
   const phone       = useInput("phone");
   const openingTime = useInput("openingTime");
   const closingTime = useInput("closingTime");
+  
+  const [form, setForm] = useState({
+    name: "",
+    address: "",
+    phone: "",
+    openingTime: "",
+    closingTime: "",
+  });
 
 
+  // Hacer la logica para limpiar el input cuando hago click, y si no completo que me vuelva el value original
 
-
-
+/*   const handleClick = (e) => {
+    setForm({
+      ...form,
+      [e.target.value]: "",
+  });
+  } */
 
 
   useEffect(async () => {
@@ -38,21 +46,67 @@ const CreateSucursal = ({size}) => {
           })
       });
       const { data, success, successMessage } = await res.json();
-      console.log("DATAAAA", data)
-      console.log("SUCCESSSS", success)
-      console.log("MESSAGEEE", successMessage)
+      // console.log("DATAAAA", data)
+      // console.log("SUCCESSSS", success)
+      // console.log("MESSAGEEE", successMessage) 
 
       if (success) {
-        setSucursal(data);
+        setForm({
+          ...form,
+          name: data.name,
+          address: data.address,
+          phone: data.phone,
+          openingTime: data.openingTime,
+          closingTime: data.closingTime
+      });
       } 
       else {
-        Notification.errorMessage(successMessage);
+        Notification.errorMessage("hola elseee");
       }
 
     } catch (error) {
       Notification.errorMessage(error);
     }
   }, [query._id]);
+  
+
+  const handleInput = (e) => {
+    setForm({
+        ...form,
+        [e.target.name]: e.target.value,
+    });
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/admin/edit/sucursal/${query._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          address: form.address,
+          phone: form.phone,
+          openingTime: form.openingTime,
+          closingTime: form.closingTime,
+        }),
+      });
+      const { data, success, successMessage } = await res.json();
+
+      if (success) {
+        Notification.successMessage(successMessage);
+        return router.push("/admin");
+      } 
+      else {
+        Notification.errorMessage(successMessage);
+      }
+    } catch (error) {
+      Notification.errorMessage(error);
+    }
+  };
 
 
   return (
@@ -61,11 +115,14 @@ const CreateSucursal = ({size}) => {
         
         <h1 className="ui header"  style={{ marginBottom: "10%" }}> EDITAR SUCURSAL </h1>
         
-        <form className="ui form" /* onSubmit={handleSubmit} */>
+        <form className="ui form" onSubmit={handleSubmit}>
           <div style={{marginTop: "4%" }}>
             <input
+              value= {form.name}
               type="text"
-              value= {sucursal.name}
+              placeholder="Nombre"
+              name="name"
+              onChange={handleInput}
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               required
             />
@@ -73,8 +130,11 @@ const CreateSucursal = ({size}) => {
 
           <div style={{marginTop: "4%" }}>
             <input
+              value= {form.address}
               type="text"
-              value= {sucursal.address}
+              placeholder="Dirección"
+              name="address"
+              onChange={handleInput}
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               required
             />
@@ -82,8 +142,11 @@ const CreateSucursal = ({size}) => {
 
           <div style={{marginTop: "4%" }}>
             <input
+              value= {form.phone}
               type="number"
-              value= {sucursal.phone}
+              placeholder="Teléfono"
+              name="phone"
+              onChange={handleInput}
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               required
             />
@@ -91,8 +154,11 @@ const CreateSucursal = ({size}) => {
 
           <div style={{marginTop: "4%" }}>
             <input
+              value= {form.openingTime}
               type="text"
-              value= {sucursal.openingTime}
+              placeholder="Hora de Apertura"
+              name="openingTime"
+              onChange={handleInput}
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               required
             />
@@ -100,8 +166,11 @@ const CreateSucursal = ({size}) => {
 
           <div style={{marginTop: "4%" }}>
             <input
+              value= {form.closingTime}
               type="text"
-              value= {sucursal.closingTime}
+              placeholder="Hora de Cierre"
+              name="closingTime"
+              onChange={handleInput}
               style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
               required
             />
@@ -114,7 +183,7 @@ const CreateSucursal = ({size}) => {
             type="submit"
             style={size.width / size.height > 0.7 ? { width: "55%" } : { width: "75%" }}
           >
-            Crear
+            Confirmar
           </Button>
           </div>
         </form>
