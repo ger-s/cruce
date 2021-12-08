@@ -19,7 +19,7 @@ export default async (req, res) => {
         auth.token.role !== "admin"
           ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
           : null; */
-          const sucursal = await Sucursal.findOne({ name: `${req.query.name}` });
+          const sucursal = await Sucursal.findOne({ _id: `${req.query._id}` });
 
           const turno = await new Turno({
             turnosRestantes: req.body.turnosRestantes,
@@ -31,7 +31,7 @@ export default async (req, res) => {
           } });
           await turno.save()
   
-          res.status(200).json({ success: true, data: turno });
+          res.status(200).json({ success: true, data: [turno, sucursal] });
         } catch (error) {
           res.status(400).json({ success: false });
         }
