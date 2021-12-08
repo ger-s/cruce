@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form } from "semantic-ui-react";
+import { motion } from "framer-motion";
 import SemanticDatepicker from "react-semantic-ui-datepickers";
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
 
@@ -15,7 +16,12 @@ const TurnoDaySelector = ({ daySelection, size, step }) => {
   };
 
   return (
-    <>
+    <motion.div
+          className="ui container fluid"
+          initial={{ x: "-100vw" }}
+          animate={{ x: 0 }}
+          transition={{ stiffness: 150 }}
+        >
       <div
         className="ui container"
         style={{
@@ -39,7 +45,7 @@ const TurnoDaySelector = ({ daySelection, size, step }) => {
           </Form>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 };
 

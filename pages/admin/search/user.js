@@ -7,7 +7,8 @@ import UserFound from "../../../components/UserFound";
 
 // import Link from "next/link";
 
-function user() {
+const SearchUser = () => {
+
   const [dniValidation, setDniValidation] = useState({
     status: true,
     error: ""
@@ -28,7 +29,6 @@ function user() {
       return setDniValidation({ status: true, error: "" });
     }
   };
-
   const router = useRouter();
   const dni = useInput("DNI");
   // const [user, setUser] = useState({});
@@ -64,37 +64,28 @@ function user() {
 
   return (
     <Container>
-      <Container textAlign="center" style={{ marginTop: "20%" }}>
-        <h1 style={{ marginBottom: "15%" }}>Ingresá un DNI:</h1>
-        <Form onSubmit={handleSubmit}>
-          {/* <Form.Field> */}
-          <div
-            onBlur={handleDniValidation}
-            className={dniValidation.status ? "field" : "field error"}
-          >
-            <input
-              placeholder="24811514"
-              style={{ width: "75%" }}
-              required
-              {...dni}
-            />
-            {!dniValidation.status ? (
-              <label>{dniValidation.error}</label>
-            ) : null}
-          </div>
-          {/* </Form.Field> */}
-          <Button
-            primary
-            size="huge"
-            type="submit"
-            style={{ marginBottom: "50%", marginTop: "10%" }}
-          >
-            Enviar
-          </Button>
-        </Form>
-      </Container>
+      {/* {!user.data ? (
+        <Container textAlign="center" style={{ marginTop: "20%" }}>
+          <h1 style={{ marginBottom: "15%" }}>Ingresá un DNI:</h1>
+          <Form onSubmit={handleSubmit}>
+            <Form.Field>
+              <input placeholder="DNI" style={{ width: "75%" }} {...dni} />
+            </Form.Field>
+            <Button
+              primary
+              size="huge"
+              type="submit"
+              style={{ marginBottom: "50%", marginTop: "10%" }}
+            >
+              Enviar
+            </Button>
+          </Form>
+        </Container>
+       ) : (
+        <UserFound user={user} />
+       )} */}
     </Container>
   );
 }
 
-export default user;
+export default SearchUser;
