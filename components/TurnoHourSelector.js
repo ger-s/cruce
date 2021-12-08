@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, Form } from "semantic-ui-react";
+import { motion } from "framer-motion";
 
 
-const TurnoHourSelector = ({size, hourSelection, setHourSelection, step, daySelection, sucursalSelection}) => {
+const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSelection}) => {
 
+  const [hourSelector, setHourSelector] = useState([])
   const handleSelection = (e) => {
     e.preventDefault();
-    /* const str = e.target.dataset.testid.slice(
-      e.target.dataset.testid.indexOf("2")
-    ); */
-    console.log(e.target);
+    const str = e.target.textContent;
+    hourSelection(str)
+    return step('checkout')
   };
 
   useEffect(async () => {
@@ -27,11 +28,14 @@ const TurnoHourSelector = ({size, hourSelection, setHourSelection, step, daySele
       const success = await res.json();
       console.log(success)
       if (success.success) {
-        return success.data.map((horario, index) =>
-        setHourSelection((old) => [
-            ...old,
-            { key: index, text: new Date(horario.horaTurno).toLocaleTimeString('es-AR').slice(0,5), value: index },
-          ])
+        return success.data.map((horario, index) => {
+          if (horario.turnosRestantes > 0) {
+            setHourSelector((old) => [
+              ...old,
+              { key: index, text: new Date(horario.horaTurno).toLocaleTimeString('es-AR').slice(0,5), value: index },
+            ])
+          }
+        }
         );
       }
     } catch (err) {
@@ -40,7 +44,12 @@ const TurnoHourSelector = ({size, hourSelection, setHourSelection, step, daySele
   }, [daySelection]);
 
   return (
-    <>
+    <motion.div
+          className="ui container fluid"
+          initial={{ x: "-100vw" }}
+          animate={{ x: 0 }}
+          transition={{ stiffness: 150 }}
+        >
       <div
         className="ui container"
         style={{
@@ -58,7 +67,7 @@ const TurnoHourSelector = ({size, hourSelection, setHourSelection, step, daySele
               <Dropdown
                 placeholder="Sucursal"
                 selection
-                options={hourSelection}
+                options={hourSelector}
                 onChange={handleSelection}
                 //style={{ height: "70px" }}
               />
@@ -66,7 +75,7 @@ const TurnoHourSelector = ({size, hourSelection, setHourSelection, step, daySele
           </Form>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 }
 

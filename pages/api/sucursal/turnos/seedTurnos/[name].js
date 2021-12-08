@@ -21,8 +21,6 @@ export default async (req, res) => {
           : null; */
           const sucursal = await Sucursal.findOne({ name: `${req.query.name}` });
 
-          console.log(req.body.horaTurno[0], req.body.horaTurno[1], req.body.horaTurno[2])
-
           const turno = await new Turno({
             turnosRestantes: req.body.turnosRestantes,
             horaTurno: new Date(2021, 11, req.body.horaTurno[0], req.body.horaTurno[1], req.body.horaTurno[2]),
