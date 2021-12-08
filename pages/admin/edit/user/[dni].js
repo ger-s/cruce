@@ -5,27 +5,23 @@ import UserFound from "../../../../components/UserFound";
 
 import Link from "next/link";
 
-function userDni() {
+const UserDni = () => {
   const router = useRouter();
   const query = router.query;
   const [user, setUser] = useState({});
-  console.log("user",user._id);
+  console.log("user", user._id);
 
   const [state, setState] = useState(true);
   const [rol, setRol] = useState("");
-  console.log("rol",rol);
-
+  console.log("rol", rol);
 
   useEffect(async () => {
     try {
       const res = await fetch(`/api/admin/getOneUser/${query.dni}`, {
         method: "GET",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        param: JSON.stringify({
-          dni: query.id
-        })
       });
 
       const success = await res.json();
@@ -37,13 +33,13 @@ function userDni() {
     } catch (e) {
       // return Notification.errorMessage("Ha ocurrido un error");
     }
-  }, [query.dni]);
+  }, [router]);
 
   const change = async (e) => {
     setState(!state);
   };
 
-  const handleChange = async (e,  value ) => setRol({ value });
+  const handleChange = async (e, value) => setRol({ value });
 
   const update = async (e) => {
     e.preventDefault();
@@ -51,13 +47,13 @@ function userDni() {
       const res = await fetch(`/api/admin/edit/user/${user._id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          role: rol.value.value
-        })
+          role: rol.value.value,
+        }),
       });
-      const success = await res.json()
+      const success = await res.json();
       console.log("success", success);
       // change();
     } catch (e) {
@@ -73,7 +69,7 @@ function userDni() {
           <Card
             style={{
               margin: "20% auto",
-              width: "100%"
+              width: "100%",
             }}
             margin="20%"
           >
@@ -109,7 +105,7 @@ function userDni() {
           <Card
             style={{
               margin: "20% auto",
-              width: "100%"
+              width: "100%",
             }}
             margin="20%"
           >
@@ -146,7 +142,7 @@ function userDni() {
                 </Card.Description>
                 <Card.Content extra>
                   <div className="ui two buttons">
-                    <Button basic color="green" >
+                    <Button basic color="green">
                       Confirmar cambios
                     </Button>
 
@@ -162,7 +158,7 @@ function userDni() {
       )}
     </Container>
   );
-}
+};
 
 // export async function getStaticProps() {
 //   const router = useRouter();
@@ -183,4 +179,4 @@ function userDni() {
 //   }
 // }
 
-export default userDni;
+export default UserDni;

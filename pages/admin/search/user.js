@@ -6,7 +6,7 @@ import Notification from "../../../utils/Notification";
 import UserFound from "../../../components/UserFound";
 // import Link from "next/link";
 
-function user() {
+const SearchUser = () => {
   const router = useRouter();
    const dni = useInput("DNI");
   // const [user, setUser] = useState({});
@@ -41,7 +41,7 @@ function user() {
 
   return (
     <Container>
-      {/* {!user.data ? ( */}
+      {/* {!user.data ? (
         <Container textAlign="center" style={{ marginTop: "20%" }}>
           <h1 style={{ marginBottom: "15%" }}>Ingresá un DNI:</h1>
           <Form onSubmit={handleSubmit}>
@@ -58,11 +58,11 @@ function user() {
             </Button>
           </Form>
         </Container>
-      // ) : (
-        // <UserFound user={user} />
-      // )
+       ) : (
+        <UserFound user={user} />
+       )} */}
     </Container>
   );
 }
 
-export default user;
+export default SearchUser;

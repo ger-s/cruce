@@ -16,7 +16,6 @@ export default async (req, res) => {
  */
         // trae todos los turnos (deberia filtrar por sucursal)
 
-        console.log(req.query.name);
         const sucursal = await Sucursal.findOne({ name: `${req.query.name}` });
 
         const turnos = await Turno.find({ "sucursal.name": sucursal.name });
@@ -30,7 +29,6 @@ export default async (req, res) => {
       try {
         const sucursal = await Sucursal.findOne({ name: `${req.query.name}` });
 
-        console.log(req.body.dayAfter);
         const turnos = await Turno.find({
           "sucursal.name": sucursal.name,
           horaTurno: {

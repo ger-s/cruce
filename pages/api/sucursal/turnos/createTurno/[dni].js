@@ -39,7 +39,15 @@ export default async (req, res) => {
               },
             },
           }
-        );        
+        );
+        const update = await Turno.updateOne({
+          "sucursal.name": req.body.sucursal.name,
+          horaTurno: new Date(req.body.horaTurno),
+        }, [{
+          $set: {
+            turnosRestantes: {$sum: ["$turnosRestantes", -1]}
+          }
+        }]);
         /* sendEmail(
           user.email,
           "registro de turno",
@@ -50,7 +58,7 @@ export default async (req, res) => {
       } catch (error) {
         res.status(400).json({ success: console.log(error) });
       }
-
+      break;
     default:
       res.status(400).json({ success: false });
       break;
