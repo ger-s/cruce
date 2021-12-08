@@ -44,7 +44,6 @@ const SucursalSchema = mongoose.Schema({
       lastName: { type: String },
       dni: { type: Number  },
       email: { type: String},
-      
     },
   ],
   openingTime: {

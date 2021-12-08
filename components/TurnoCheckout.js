@@ -4,11 +4,12 @@ import { useRouter } from 'next/router'
 import Notification from '../utils/Notification'
 import { motion } from "framer-motion";
 
-const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, step}) => {
+const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, step, user}) => {
   const router = useRouter()
-  const [user, setUser] = useState({})
   const [sucursal, setSucursal] = useState({})
   const [dateString, setDateString] = useState('')
+
+  console.log(user)
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -22,7 +23,7 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
   const handleConfirm = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch('/api/sucursal/turnos/createTurno/33131131', {
+      const res = await fetch(`/api/sucursal/turnos/createTurno/${user.dni}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -50,8 +51,8 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
 
   useEffect(async () => {
     try {
-      setDateString(new Date(`${daySelection}T${Number(hourSelection.slice(0,2)) + 3}:${hourSelection.slice(3)}:00`).toLocaleDateString('es-AR'))
-      console.log(`${daySelection}T${Number(hourSelection.slice(0,2)) + 3}:${hourSelection.slice(3)}:00`)
+      setDateString(new Date(`${daySelection}T${Number(hourSelection.slice(0,2))}:${hourSelection.slice(3)}:00`).toLocaleDateString('es-AR'))
+      console.log(`${daySelection}T${Number(hourSelection.slice(0,2))}:${hourSelection.slice(3)}:00`)
       const res = await fetch(`/api/admin/getOneSucursal/${sucursalSelection}`, {
         method: "GET",
         headers: {

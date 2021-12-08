@@ -5,26 +5,33 @@ import { motion } from "framer-motion";
 const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
   const [sucursales, setSucursales] = useState([]);
 
-  const handleSelection = (e) => {
+  const handleSelection = async (e) => {
     e.preventDefault();
-    sucursalSelection(e.target.textContent);
-    return step('day')
+    try {
+      const str = sucursales.filter(sucursal => sucursal.text === e.target.textContent)
+      sucursalSelection(str[0].value)
+      return step('day')
+    } catch(error) {
+      console.log(error)
+    }
   };
 
   useEffect(async () => {
-    try {
-      const scs = await fetch("/api/admin/getAllSucursales", {
-        method: "GET",
-        
-      });
-      const success = await scs.json();
-      if (success) {
-        return success.data.map((sucursal, index) =>
-          setSucursales((old) => [...old, { key: index, text: sucursal.name, value: index }])
-        );
+    if (sucursales.length < 1) {
+      try {
+        const scs = await fetch("/api/admin/getAllSucursales", {
+          method: "GET",
+          
+        });
+        const success = await scs.json();
+        if (success) {
+          return success.data.map((sucursal, index) =>
+            setSucursales((old) => [...old, { key: index, text: sucursal.name, value: sucursal._id}])
+          );
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
   }, [step]);
 
