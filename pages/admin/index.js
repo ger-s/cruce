@@ -78,10 +78,10 @@ useEffect(async () => {
           return router.push(`/admin/info/${success.data._id}`);
         // setUser(success);
       }else{
-        return Notification.errorMessage(success.successMessage);
+        return Notification.errorMessage("Ha ocurrido un error");
       }
     } catch (e) {
-      return Notification.errorMessage(e);
+      return Notification.errorMessage("Ha ocurrido un error");
     }
   };
 
