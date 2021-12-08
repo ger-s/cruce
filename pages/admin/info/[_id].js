@@ -33,39 +33,7 @@ function _id() {
       // return Notification.errorMessage("Ha ocurrido un error");
     }
   }, [query._id]);
-
-  const handleSubmit = async (e) => {
-
-
-   
-    e.preventDefault();
-    try {
-      const res = await fetch(`/api/admin/delete/sucursal/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        /* param: JSON.stringify({
-          _id: id.value
-         
-        }) */
-      });
-      const success = await res.json();
-      
-     console.log("Eliminada",success)
-
-      if (success.success) {
-        
-          return router.push(`/admin`);
-       
-      }else{
-        return Notification.errorMessage(success.successMessage);
-      }
-    } catch (e) {
-      return Notification.errorMessage("Ha ocurrido un error");
-    }
-  };
-
+console.log("sucursallll", sucursal)
 
   return (
     <div>
@@ -99,12 +67,10 @@ function _id() {
                   Editar
                 </Button>
 </Link>
-              <Form onChange={handleSubmit}>
 
                 <Button basic color="red">
                   Eliminar
                 </Button>
-              </Form>
               </div>
             </Card.Content>
               </Container>

@@ -42,8 +42,8 @@ const SucursalSchema = mongoose.Schema({
     {
       name: { type: String },
       lastName: { type: String },
-      dni: { type: Number  },
-      email: { type: String},
+      dni: { type: Number, unique: false },
+      email: { type: String, unique: false },
       
     },
   ],
