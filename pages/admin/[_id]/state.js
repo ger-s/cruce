@@ -5,12 +5,14 @@ import { Icon, Table, Button } from "semantic-ui-react";
 const state = () => {
   const router = useRouter();
   const [turno, setTurno] = useState([]);
-  const query = router.query;
   const [state, setState] = useState("");
+  const [idSucursal, setIdSucursal] = useState("");
+  const [idTurno, setIdTurno] = useState("");
 
   useEffect(async () => {
+    const { _id } = router.query;
     try {
-      const res = await fetch(`/api/admin/getOneSucursal/${query._id}`, {
+      const res = await fetch(`/api/admin/getOneSucursal/${_id}`, {
         method: "GET",
         headers: {
           "Content-Type": "aplication/json",
@@ -22,64 +24,42 @@ const state = () => {
 
       if (success.success) {
         setTurno(success.data.history);
+        setIdSucursal(success.data._id);
       } else return "salio mal";
     } catch (err) {}
-  }, [query.sucursal]);
+  }, [router]);
 
-  
+  const handleClick = async (e, value, id) => {
+    try {
+      setIdTurno(e.target.id);
+      setState(e.target.textContent);
+      console.log(e.target.textContent, "IDDELTURNO");
+      console.log(state, "ESTADO");
 
-
-  const handleClick = async (e, value,id) => {
-e.preventDefault()
-try {
-  setState(e.target.value)
-  const dni=e.target.id
-
-  const res=await fetch(`/api/admin/getOneUser/${dni}`,  {
-  method:"GET",
-  headers:  {
-   "Content-Type":"aplication/json",
-  },
-  
-  })
-  const success = await res.json();
-  console.log(success)
-const idUser=success.id
-
-  if (success.success) {
-try{
-
-const res =await fetch(`api/sucursal/turnos/editstatus/${idUser}`,  {
-method:"PUT",
-headers:  {
-"Content-Type":"aplication/json",
-},
-body:JSON.stringify(  {
-status:state
-})
-})  
-const success=await res.json();
-
-
-}
-catch(err)  {
-  return err
-}
-  } else {
-    return Notification.errorMessage("Ha ocurrido un error");
-  }
-
-
-} catch (error) {
-  return error
-}
+      const res = await fetch(`/api/sucursal/turnos/editStatus/${idSucursal}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "aplication/json",
+        },
+        body: JSON.stringify({
+          _id: idTurno,
+          state: state,
+        }),
+      });
+      console.log(state,"PLS")
+      const success = await res.json();
+      console.log(success)
+      if(success) {
+       console.log("exitoso")
+      }else {
+        console.log("error")
+      }
+    } catch (error) {
+      return error;
+    }
   };
 
-
-
-  
   console.log(turno, "SOY EL TURNO");
-
 
   return (
     <div>
@@ -98,17 +78,17 @@ catch(err)  {
         <Table.Body>
           {turno.map((data, i) => {
             return (
-              <Table.Row  >
+              <Table.Row>
                 <Table.Cell> {data.client.name}</Table.Cell>
                 <Table.Cell> {data.date}</Table.Cell>
                 {console.log(data)}
                 <Table.Cell> {data.state}</Table.Cell>
 
                 <Table.Cell>
-                  <Button onClick={handleClick} positive id={data.client.dni}>
+                  <Button onClick={handleClick} positive id={data._id}>
                     Asistio
                   </Button>
-                  <Button onClick={handleClick} negative id={data.client.dni}>
+                  <Button onClick={handleClick} negative id={data._id}>
                     No asistio
                   </Button>
                 </Table.Cell>
