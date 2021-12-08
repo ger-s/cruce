@@ -16,21 +16,9 @@ import Notification from "../utils/Notification";
 // import jwt_decode from 'jwt-decode';
 // const { jwtPass } = require("../secret.json");
 
-const Navbar = function ({ size }) {
+const Navbar = function ({ size, parse }) {
   const router = useRouter();
   const [user, setUser] = useState({});
-  const [me, setMe] = useState({});
-
-  const parseJwt = (token) => {
-    try {
-      return JSON.parse(window.atob(token.split(".")[1]));
-    } catch (e) {
-      return null;
-    }
-  };
-
-  console.log("ME", me);
-
   const [state, setState] = useState({ fixed: false, sidebarOpened: false });
 
   const hideFixedMenu = () => setState({ fixed: false });
@@ -41,12 +29,6 @@ const Navbar = function ({ size }) {
     localStorage.removeItem("token"), router.push("/");
     return Notification.successMessage("Sesión cerrada con éxito.");
   };
-
-  useEffect(() => {
-    const local = JSON.parse(localStorage.getItem("token"));
-    setUser(local);
-    setMe(parseJwt(user));
-  }, [router]);
 
   return (
     <>
@@ -83,12 +65,12 @@ const Navbar = function ({ size }) {
                       </a>
                     </Link>
                   </Menu.Item>
-                  <Menu.Item as="a" active>
+                  {/* <Menu.Item as="a" active>
                     Home
                   </Menu.Item>
                   <Menu.Item as="a">Work</Menu.Item>
                   <Menu.Item as="a">Company</Menu.Item>
-                  <Menu.Item as="a">Careers</Menu.Item>
+                  <Menu.Item as="a">Careers</Menu.Item> */}
                   <Menu.Item position="right">
                     {!user ? (
                       <>
