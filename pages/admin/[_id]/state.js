@@ -10,7 +10,7 @@ const state = () => {
 
   useEffect(async () => {
     try {
-      const res = await fetch(`/api/admin/getOneSucursal/${query.sucursal}`, {
+      const res = await fetch(`/api/admin/getOneSucursal/${query._id}`, {
         method: "GET",
         headers: {
           "Content-Type": "aplication/json",
@@ -32,38 +32,52 @@ const state = () => {
   const handleClick = async (e, value,id) => {
 e.preventDefault()
 try {
+  setState(e.target.value)
   const dni=e.target.id
 
   const res=await fetch(`/api/admin/getOneUser/${dni}`,  {
   method:"GET",
   headers:  {
    "Content-Type":"aplication/json",
-  }
-
-
+  },
+  
   })
-
   const success = await res.json();
   console.log(success)
+const idUser=success.id
+
   if (success.success) {
-    setUser(success.data);
+try{
+
+const res =await fetch(`api/sucursal/turnos/editstatus/${idUser}`,  {
+method:"PUT",
+headers:  {
+"Content-Type":"aplication/json",
+},
+body:JSON.stringify(  {
+status:state
+})
+})  
+const success=await res.json();
+
+
+}
+catch(err)  {
+  return err
+}
   } else {
     return Notification.errorMessage("Ha ocurrido un error");
   }
+
+
 } catch (error) {
   return error
-  // return Notification.errorMessage("Ha ocurrido un error");
 }
-
-
-   /*  try {
-  const res=await fetch(`/api/sucursal/turnos/editStatus/${xd }`,  {
-  })
-
-    } catch (err) {
-      console.log(err);
-    } */
   };
+
+
+
+  
   console.log(turno, "SOY EL TURNO");
 
 
