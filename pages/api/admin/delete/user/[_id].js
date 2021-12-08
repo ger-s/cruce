@@ -11,15 +11,15 @@ export default async (req, res) => {
     case "DELETE":
       // si es admin no puede autoeliminarse //
       try {
-        const auth = await validateJWT(req);
-        auth.status === 401
-          ? res
-              .status(401)
-              .json({ status: auth.status, message: auth.statusText })
-          : null;
-        auth.token.role !== "admin"
-          ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
-          : null;
+        // const auth = await validateJWT(req);
+        // auth.status === 401
+        //   ? res
+        //       .status(401)
+        //       .json({ status: auth.status, message: auth.statusText })
+        //   : null;
+        // auth.token.role !== "admin"
+        //   ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
+        //   : null;
 
         const userDeleted = await User.deleteOne({ _id: `${req.query._id}` });
 

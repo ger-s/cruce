@@ -7,12 +7,37 @@ import UserFound from "../../../components/UserFound";
 // import Link from "next/link";
 
 function user() {
+  const [dniValidation, setDniValidation] = useState({
+    status: true,
+    error: ""
+  });
+
+  const handleDniValidation = () => {
+    if (!dni.value.match("^[0-9]+$")) {
+      return setDniValidation({
+        status: false,
+        error: "El DNI debe tener sólo números."
+      });
+    } else if (dni.value.length < 7 || dni.value.length > 8) {
+      return setDniValidation({
+        status: false,
+        error: "El DNI debe tener sólo entre 7 y 8 caracteres."
+      });
+    } else {
+      return setDniValidation({ status: true, error: "" });
+    }
+  };
+
   const router = useRouter();
-   const dni = useInput("DNI");
+  const dni = useInput("DNI");
   // const [user, setUser] = useState({});
 
-
   const handleSubmit = async (e) => {
+    if (!dniValidation.status) {
+      Notification.errorMessage("Hay campos erroneos");
+      return false;
+    }
+
     e.preventDefault();
     try {
       const res = await fetch(`/api/admin/getOneUser/${dni.value}`, {
@@ -25,13 +50,10 @@ function user() {
         })
       });
       const success = await res.json();
-     
 
       if (success.success) {
-        // localStorage.setItem("dni", JSON.stringify(success.data));
-          return router.push(`/admin/edit/user/${success.data.dni}`);
-        // setUser(success);
-      }else{
+        return router.push(`/admin/edit/user/${success.data.dni}`);
+      } else {
         return Notification.errorMessage(success.successMessage);
       }
     } catch (e) {
@@ -41,26 +63,35 @@ function user() {
 
   return (
     <Container>
-      {/* {!user.data ? ( */}
-        <Container textAlign="center" style={{ marginTop: "20%" }}>
-          <h1 style={{ marginBottom: "15%" }}>Ingresá un DNI:</h1>
-          <Form onSubmit={handleSubmit}>
-            <Form.Field>
-              <input placeholder="DNI" style={{ width: "75%" }} {...dni} />
-            </Form.Field>
-            <Button
-              primary
-              size="huge"
-              type="submit"
-              style={{ marginBottom: "50%", marginTop: "10%" }}
-            >
-              Enviar
-            </Button>
-          </Form>
-        </Container>
-      // ) : (
-        // <UserFound user={user} />
-      // )
+      <Container textAlign="center" style={{ marginTop: "20%" }}>
+        <h1 style={{ marginBottom: "15%" }}>Ingresá un DNI:</h1>
+        <Form onSubmit={handleSubmit}>
+          {/* <Form.Field> */}
+          <div
+            onBlur={handleDniValidation}
+            className={dniValidation.status ? "field" : "field error"}
+          >
+            <input
+              placeholder="24811514"
+              style={{ width: "75%" }}
+              required
+              {...dni}
+            />
+            {!dniValidation.status ? (
+              <label>{dniValidation.error}</label>
+            ) : null}
+          </div>
+          {/* </Form.Field> */}
+          <Button
+            primary
+            size="huge"
+            type="submit"
+            style={{ marginBottom: "50%", marginTop: "10%" }}
+          >
+            Enviar
+          </Button>
+        </Form>
+      </Container>
     </Container>
   );
 }
