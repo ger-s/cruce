@@ -37,7 +37,7 @@ export default async (req, res) => {
           }
         })
         
-        res.status(202).json({ success: true, data: "Turno eliminado satisfactoriamente." });
+        res.status(202).json({ success: true, successMessage: "Turno eliminado satisfactoriamente.", data: sucursal });
       } 
       catch (error) {
         res.status(400).json({ success: console.log(error) });
