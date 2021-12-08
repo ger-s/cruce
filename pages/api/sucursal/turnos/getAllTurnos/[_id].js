@@ -18,26 +18,26 @@ export default async (req, res) => {
 
         const sucursal = await Sucursal.findOne({ _id: `${req.query._id}` });
 
-        const turnos = await Turno.find({ "sucursal._id": sucursal._id});
+        const turnos = await Turno.find({ "sucursal._id": sucursal._id });
         turnos
-          ? res.status(200).json({ success: true, data:   [turnos,sucursal] })
+          ? res.status(200).json({ success: true, data: [turnos, sucursal] })
           : res.status(404).json({ success: false });
       } catch (error) {
         res.status(400).json({ success: false, successMessage: "holaaaaa" });
       }
     case "POST":
       try {
-        const sucursal = await Sucursal.findOne({ name: `${req.query.name}` });
+        const sucursal = await Sucursal.findOne({ _id: `${req.query._id}` });
 
         const turnos = await Turno.find({
-          "sucursal.name": sucursal.name,
+          "sucursal._id": sucursal._id,
           horaTurno: {
             $gte: new Date(req.body.day),
             $lte: new Date(req.body.dayAfter),
           },
         });
         turnos
-          ? res.status(200).json({ success: true, data: turnos })
+          ? res.status(200).json({ success: true, data: [turnos, sucursal] })
           : res.status(404).json({ success: false });
       } catch (error) {
         res.status(400).json({ success: false, successMessage: error });
