@@ -19,17 +19,7 @@ import Notification from "../utils/Notification";
 const Navbar = function ({ size }) {
   const router = useRouter();
   const [user, setUser] = useState({});
-  const [me, setMe] = useState({});
 
-  const parseJwt = (token) => {
-    try {
-      return JSON.parse(window.atob(token.split(".")[1]));
-    } catch (e) {
-      return null;
-    }
-  };
-
-  console.log("ME", me);
 
   const [state, setState] = useState({ fixed: false, sidebarOpened: false });
 
@@ -45,7 +35,7 @@ const Navbar = function ({ size }) {
   useEffect(() => {
     const local = JSON.parse(localStorage.getItem("token"));
     setUser(local);
-    setMe(parseJwt(user));
+    // setMe(parseJwt(user));
   }, [router]);
 
   return (
