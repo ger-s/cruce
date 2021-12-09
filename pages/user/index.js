@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import useImput from "../../hooks/useInput";
+import useInput from "../../hooks/useInput";
 import {
-  Checkbox,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  Menu,
-  Segment,
-  Sidebar,
+ 
   Card,
   Button,
   Container,
@@ -27,10 +20,7 @@ const HomeUser = ({ parse }) => {
   const phone = useInput("phone");
   const [user, setUser] = useState({});
   const [state, setState] = useState(true);
-  //   const [visible, setVisible] = React.useState(false);
-  //   console.log("parse", parse);
-  //   console.log("user", user);
-
+ 
   const change = async (e) => {
     setState(!state);
   };
@@ -74,45 +64,7 @@ const HomeUser = ({ parse }) => {
   };
 
   return (
-    // <div className="ui container fluid">
-    // //   {/* <Grid columns={1}>
-    // <Grid.Column>
-    //   <Checkbox
-    //     checked={visible}
-    //     label={{ children: <code>visible</code> }}
-    //     onChange={(e, data) => setVisible(data.checked)}
-    //   />
-    // </Grid.Column>
-
-    // <Grid.Column>
-    //   <Sidebar.Pushable as={Segment}>
-    //     <Sidebar
-    //       as={Menu}
-    //       animation="overlay"
-    //       icon="labeled"
-    //       inverted
-    //       onHide={() => setVisible(false)}
-    //       vertical
-    //       visible={visible}
-    //       width="thin"
-    //     >
-    //       <Menu.Item as="a">
-    //         <Icon name="home" />
-    //         Home
-    //       </Menu.Item>
-    //       <Menu.Item as="a">
-    //         <Icon name="gamepad" />
-    //         Games
-    //       </Menu.Item>
-    //       <Menu.Item as="a">
-    //         <Icon name="camera" />
-    //         Channels
-    //       </Menu.Item>
-    //     </Sidebar>
-
-    //     <Sidebar.Pusher>
-    //       <Segment basic>
-    //         <Header as="h3">hola</Header> */}
+    
 
     <Container>
       {state ? (
@@ -130,9 +82,7 @@ const HomeUser = ({ parse }) => {
               <Card.Description>Email: {user.email} </Card.Description>
               <Card.Description>DNI: {user.dni}</Card.Description>
               <Card.Description>Telefono: {user.phone}</Card.Description>
-              {/* <Card.Description>
-                 Rol: <strong></strong>
-               </Card.Description> */}
+              
             </Card.Content>
             <Card.Content extra>
               <div className="ui two buttons">
@@ -178,9 +128,7 @@ const HomeUser = ({ parse }) => {
                   Telefono:
                   <input placeholder={user.phone} {...phone} />
                 </Card.Description>
-                {/* <Card.Description>
-            Rol: <strong></strong>
-          </Card.Description> */}
+               
               </Card.Content>
               <Card.Content extra>
                 <div className="ui two buttons">
@@ -195,12 +143,7 @@ const HomeUser = ({ parse }) => {
       )}
     </Container>
 
-    //           * </Segment>
-    //         </Sidebar.Pusher>
-    //       </Sidebar.Pushable>
-    //     </Grid.Column>
-    //   </Grid>
-    // </div>
+   
   );
 };
 
