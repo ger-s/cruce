@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {
-  Header,
-  Icon,
-  Image,
-  Menu,
-  Segment,
-  Sidebar,
-  Dropdown,
-  Grid,
-  Form,
-  Button
-} from "semantic-ui-react";
+import { Header, Icon, Image, Menu, Segment, Sidebar ,Dropdown,Grid, Form, Container, Button} from "semantic-ui-react";
 import useInput from "../../hooks/useInput";
 import Notification from "../../utils/Notification";
 
@@ -58,7 +47,6 @@ const HomeAdmin = () => {
   }, [noSeUsa]);
 
   const handleSubmit = async (e) => {
-    console.log("acaaaaa elegida", sucursalElegida);
     e.preventDefault();
     try {
       const res = await fetch(`/api/admin/getOneSucursal/${id}`, {
@@ -82,7 +70,7 @@ const HomeAdmin = () => {
         return Notification.errorMessage(success.successMessage);
       }
     } catch (e) {
-      return Notification.errorMessage(e);
+      return Notification.errorMessage("Seleccioná una sucursal");
     }
   };
 
@@ -100,92 +88,100 @@ const HomeAdmin = () => {
   const [visible, setVisible] = React.useState(false);
 
   return (
-    <div className="ui container fluid">
-      <Grid>
-        <Grid.Row>
-          <Grid.Column width={3}>
-            <Sidebar.Pushable
-              as={Segment}
-              className=" ui container fluid"
-              style={{ height: "900px" }}
+        <div className="ui container fluid">
+    <Grid >
+    <Grid.Row>
+      <Grid.Column /* width={3} */>
+      {/* <Sidebar.Pushable
+      as={Segment}
+      className=" ui container fluid"
+      style={{ height: "900px" }}
+    >
+      <Sidebar
+        as={Menu}
+        animation="overlay"
+        icon="labeled"
+        inverted
+        vertical
+        visible
+        width="thin"
+        style={{width:"100%" ,}}
+      >
+        <Menu.Item as="a">
+          <Icon name="home" />
+          Home
+        </Menu.Item>
+        <Menu.Item as="a">
+          <Icon name="gamepad" />
+          Games
+        </Menu.Item>
+        <Menu.Item as="a">
+          <Icon name="camera" />
+          Channels
+        </Menu.Item>
+      </Sidebar>
+
+      <Sidebar.Pusher>
+        <Segment basic>
+        </Segment>
+      </Sidebar.Pusher>
+    </Sidebar.Pushable>
+ */}
+
+      </Grid.Column>
+      <Grid.Column width={13}>
+          <h1 style={{textAlign:"center" , marginTop: "5%", marginBottom: "5%"}}>Elegí una sucursal</h1>
+          <Form onSubmit={handleSubmit}  >
+          <Dropdown
+              clearable
+              fluid
+             style={{}}
+              search
+              selection
+              options={sucursales}
+              onChange={handleClick} 
+              
+              placeholder="Seleccioná sucursal"
+            />
+        <Container textAlign="center">
+          <Button
+            primary
+            size="huge"
+            type="submit"
+            style={{ marginBottom: "10%", marginTop: "10%" }}
             >
-              <Sidebar
-                as={Menu}
-                animation="overlay"
-                icon="labeled"
-                inverted
-                vertical
-                visible
-                width="thin"
-                style={{ width: "100%" }}
-              >
-                <Menu.Item as="a">
-                  <Icon name="home" />
-                  Home
-                </Menu.Item>
-                <Menu.Item as="a">
-                  <Icon name="gamepad" />
-                  Games
-                </Menu.Item>
-                <Menu.Item as="a">
-                  <Icon name="camera" />
-                  Channels
-                </Menu.Item>
-              </Sidebar>
-
-              <Sidebar.Pusher>
-                <Segment basic></Segment>
-              </Sidebar.Pusher>
-            </Sidebar.Pushable>
-          </Grid.Column>
-          <Grid.Column width={13}>
-            <h1 style={{ textAlign: "center" }}>Elegi una sucursal</h1>
-            <Form onSubmit={handleSubmit}>
-              <Dropdown
-                clearable
-                fluid
-                search
-                selection
-                options={sucursales}
-                onChange={handleClick}
-                placeholder="Select Country"
-              />
-
-              <Button
-                primary
-                size="huge"
-                type="submit"
-                style={{ marginBottom: "50%", marginTop: "10%" }}
-              >
-                Info sucursal
-              </Button>
-
-              <Link href="/admin/search/user">
-                <Button
-                  primary
-                  size="huge"
-                  type="submit"
-                  style={{ marginBottom: "50%", marginTop: "10%" }}
-                >
-                  Crear operador
-                </Button>
-              </Link>
-              <Link href="/admin/crear-sucursal">
-                <Button
-                  primary
-                  size="huge"
-                  type="submit"
-                  style={{ marginBottom: "50%", marginTop: "10%" }}
-                >
-                  Crear sucursal
-                </Button>
-              </Link>
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </div>
-  );
+            Info sucursal
+          </Button>
+        
+            
+          <Link href="/admin/search/user">
+          <Button
+            primary
+            size="huge"
+            type="submit"
+            style={{ marginBottom: "10%", marginTop: "10%" }}
+            >
+            Editar usuario
+          </Button>
+            </Link>
+            <Link href="/admin/crear-sucursal">
+          <Button
+            primary
+            size="huge"
+            type="submit"
+            style={{ marginBottom: "10%", marginTop: "10%" }}
+            >
+            Crear sucursal
+          </Button>
+            </Link>
+            </Container>
+              </Form>
+            
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
+  </div>
+  )
 };
 
 export default HomeAdmin;
