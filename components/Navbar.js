@@ -18,7 +18,7 @@ import Notification from "../utils/Notification";
 
 const Navbar = function ({ size, parse }) {
   const router = useRouter();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({dni: undefined});
   const [state, setState] = useState({ fixed: false, sidebarOpened: false });
 
   const hideFixedMenu = () => setState({ fixed: false });
@@ -26,15 +26,14 @@ const Navbar = function ({ size, parse }) {
   const handleSidebarHide = () => setState({ sidebarOpened: false });
   const handleToggle = () => setState({ sidebarOpened: true });
 
-  useEffect(() => {
-    const local = localStorage.getItem("token");
-    local ? setUser(parse) : null;
-  }, []);
-
   const handleLogout = () => {
     localStorage.removeItem("token"), router.push("/");
     return Notification.successMessage("Sesión cerrada con éxito.");
   };
+
+  useEffect(() => {
+    parse.dni ? setUser(parse) : setUser({});
+  }, [parse]);
   
   return (
     <>
@@ -112,7 +111,7 @@ const Navbar = function ({ size, parse }) {
             >
               <Menu.Item as="a">Opciones</Menu.Item>
 
-              {!user ? (
+              {!user.dni ? (
                 <>
                   <Link href="/login">
                     <Menu.Item onClick={handleSidebarHide}>

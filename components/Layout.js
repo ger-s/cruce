@@ -15,7 +15,7 @@ const Layout = ({ children, size, parse }) => (
       />
     </Head>
     
-    <Navbar size={size} />
+    <Navbar size={size} parse={parse}/>
 
 
     {children}
