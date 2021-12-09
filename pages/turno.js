@@ -13,6 +13,8 @@ const Turno = ({ size, parse }) => {
   const [hourSelection, setHourSelection] = useState("");
   const [currentStep, setCurrentStep] = useState("sucursal");
 
+  console.log(parse.dni)
+
   /* const parseJwt = (token) => {
     try {
       return JSON.parse(window.atob(token.split(".")[1]));
