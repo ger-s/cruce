@@ -49,8 +49,8 @@ const state = () => {
       return error;
     }
   };
+console.log("h")
 
-  
   return (
     <div>
       <Table style={{ height: "50%", width: "70%", margin: "auto" }} celled>
