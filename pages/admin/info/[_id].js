@@ -38,6 +38,8 @@ function _id() {
       return Notification.errorMessage(e);
     }
   }, [query._id]);
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -69,11 +71,11 @@ function _id() {
 
           return router.push(`/admin`);
         } else {
-          return Notification.errorMessage("error else");
+          return Notification.errorMessage("Ha ocurrido un error");
         }
       }
     } catch (e) {
-      return Notification.errorMessage("error catch");
+      return Notification.errorMessage("Ha ocurrido un error");
     }
   };
 
@@ -81,6 +83,7 @@ function _id() {
   return (
     <div>
       <Container>
+        <Container style={{textAlign: 'center' , marginTop: "10%"}}>
         <Header size="huge">Datos de la sucursal</Header>
         <Card.Content>
           {/* <Image
@@ -100,7 +103,8 @@ function _id() {
             Horario de Cierre: {sucursal.closingTime}
           </Card.Description>
         </Card.Content>
-        <Card.Content extra>
+        </Container>
+        <Card.Content style={{marginTop: "10%" , marginBottom: "13%"}} extra>
           <div className="ui three buttons">
             <Link href={`/admin/${sucursal._id}/state`}>
               <Button basic color="green">

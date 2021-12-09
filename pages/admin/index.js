@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Header, Icon, Image, Menu, Segment, Sidebar ,Dropdown,Grid, Form, Button} from "semantic-ui-react";
+import { Header, Icon, Image, Menu, Segment, Sidebar ,Dropdown,Grid, Form, Container, Button} from "semantic-ui-react";
 import useInput from "../../hooks/useInput";
 import Notification from "../../utils/Notification";
 
@@ -56,7 +56,7 @@ useEffect(async () => {
   const handleSubmit = async (e) => {
 
 
-    console.log("acaaaaa elegida", sucursalElegida)
+   
     e.preventDefault();
     try {
       const res = await fetch(`/api/admin/getOneSucursal/${id}`, {
@@ -81,7 +81,7 @@ useEffect(async () => {
         return Notification.errorMessage(success.successMessage);
       }
     } catch (e) {
-      return Notification.errorMessage(e);
+      return Notification.errorMessage("Seleccioná una sucursal");
     }
   };
 
@@ -107,8 +107,8 @@ useEffect(async () => {
         <div className="ui container fluid">
     <Grid >
     <Grid.Row>
-      <Grid.Column width={3}>
-      <Sidebar.Pushable
+      <Grid.Column /* width={3} */>
+      {/* <Sidebar.Pushable
       as={Segment}
       className=" ui container fluid"
       style={{ height: "900px" }}
@@ -142,29 +142,29 @@ useEffect(async () => {
         </Segment>
       </Sidebar.Pusher>
     </Sidebar.Pushable>
-
+ */}
 
       </Grid.Column>
       <Grid.Column width={13}>
-          <h1 style={{textAlign:"center"}}>Elegi una sucursal</h1>
+          <h1 style={{textAlign:"center" , marginTop: "5%", marginBottom: "5%"}}>Elegí una sucursal</h1>
           <Form onSubmit={handleSubmit}  >
           <Dropdown
               clearable
               fluid
-             
+             style={{}}
               search
               selection
               options={sucursales}
               onChange={handleClick} 
               
-              placeholder="Select Country"
+              placeholder="Seleccioná sucursal"
             />
-       
+        <Container textAlign="center">
           <Button
             primary
             size="huge"
             type="submit"
-            style={{ marginBottom: "50%", marginTop: "10%" }}
+            style={{ marginBottom: "10%", marginTop: "10%" }}
             >
             Info sucursal
           </Button>
@@ -175,9 +175,9 @@ useEffect(async () => {
             primary
             size="huge"
             type="submit"
-            style={{ marginBottom: "50%", marginTop: "10%" }}
+            style={{ marginBottom: "10%", marginTop: "10%" }}
             >
-            Crear operador
+            Editar usuario
           </Button>
             </Link>
             <Link href="/admin/crear-sucursal">
@@ -185,11 +185,12 @@ useEffect(async () => {
             primary
             size="huge"
             type="submit"
-            style={{ marginBottom: "50%", marginTop: "10%" }}
+            style={{ marginBottom: "10%", marginTop: "10%" }}
             >
             Crear sucursal
           </Button>
             </Link>
+            </Container>
               </Form>
             
       </Grid.Column>
