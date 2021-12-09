@@ -2,30 +2,28 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Icon, Table, Button } from "semantic-ui-react";
 
-const State = () => {
+const state = () => {
   const router = useRouter();
   const [turno, setTurno] = useState([]);
   const [idSucursal, setIdSucursal] = useState("");
 
-  useEffect( () => {
-    async () => {
-      const { _id } = router.query;
-      try {
-        const res = await fetch(`/api/admin/getOneSucursal/${_id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-  
-        const success = await res.json();
-  
-        if (success.success) {
-          setTurno(success.data.history);
-          setIdSucursal(success.data._id);
-        } else return "salio mal";
-      } catch (err) {console.log(err)}
-    }
+  useEffect(async () => {
+    const { _id } = router.query;
+    try {
+      const res = await fetch(`/api/admin/getOneSucursal/${_id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const success = await res.json();
+
+      if (success.success) {
+        setTurno(success.data.history);
+        setIdSucursal(success.data._id);
+      } else return "salio mal";
+    } catch (err) {}
   }, [router]);
 
   const handleClick = async (e, value, id) => {
@@ -70,7 +68,7 @@ console.log("h")
         <Table.Body>
           {turno.map((data, i) => {
             return (
-              <Table.Row key={i}>
+              <Table.Row>
                 <Table.Cell> {data.client.name}</Table.Cell>
                 <Table.Cell> {data.date}</Table.Cell>
 
@@ -93,4 +91,4 @@ console.log("h")
   );
 };
 
-export default State;
+export default state;
