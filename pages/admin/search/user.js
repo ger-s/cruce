@@ -67,9 +67,18 @@ const SearchUser = () => {
         <Container textAlign="center" style={{ marginTop: "20%" }}>
           <h1 style={{ marginBottom: "15%" }}>Ingresá un DNI:</h1>
           <Form onSubmit={handleSubmit}>
-            <Form.Field>
-              <input placeholder="DNI" style={{ width: "75%" }} {...dni} />
-            </Form.Field>
+            <div className={dniValidation.status ? "field" : "field error"}>
+              <input
+                onBlur={handleDniValidation}
+                equired
+                placeholder="DNI"
+                style={{ width: "75%" }}
+                {...dni}
+              />
+              {!dniValidation.status ? (
+                <label>{dniValidation.error}</label>
+              ) : null}
+            </div>
             <Button
               primary
               size="huge"

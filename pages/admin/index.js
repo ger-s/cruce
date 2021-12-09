@@ -6,57 +6,47 @@ import useInput from "../../hooks/useInput";
 import Notification from "../../utils/Notification";
 
 const HomeAdmin = () => {
-const noSeUsa = "hola" 
-const router = useRouter();
-const _id = useInput("ID");
+  const noSeUsa = "hola";
+  const router = useRouter();
+  const _id = useInput("ID");
 
-const [id, setId] = useState("")
-const [sucursalElegida, setSucursalElegida]= useState([])
-const sucursal = useInput("Sucursal");
-const [sucursales, setSucursales] = useState([]);
-const [sucursalesId, setSucursalesId] = useState([]);
+  const [id, setId] = useState("");
+  const [sucursalElegida, setSucursalElegida] = useState([]);
+  const sucursal = useInput("Sucursal");
+  const [sucursales, setSucursales] = useState([]);
+  const [sucursalesId, setSucursalesId] = useState([]);
 
-useEffect(async () => {
-  if(sucursales.length < 1){
+  useEffect(async () => {
+    if (sucursales.length < 1) {
+      try {
+        const res = await fetch(`/api/admin/getAllSucursales`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        const success = await res.json();
 
-  
-  try {
-    const res = await fetch(`/api/admin/getAllSucursales`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const success = await res.json();
-   
-    if (success) {
-      
-      success.data.map((sucursales, index) => {
-        setSucursales((old) => [
-          ...old,
-          { key: sucursales._id , text: sucursales.name, value: index },
-          
-
-        ]); /* setSucursalesId((old) => [
+        if (success) {
+          success.data.map((sucursales, index) => {
+            setSucursales((old) => [
+              ...old,
+              { key: sucursales._id, text: sucursales.name, value: index }
+            ]); /* setSucursalesId((old) => [
           ...old,
           { key: index, text: sucursales._id, value: index },
           
   
         ])  */
-      });
+          });
+        }
+      } catch (e) {
+        return Notification.errorMessage("nada");
+      }
     }
-  } catch (e) {
-    return Notification.errorMessage("nada");
-  }
-}
-}, [noSeUsa]);
-
-
+  }, [noSeUsa]);
 
   const handleSubmit = async (e) => {
-
-
-   
     e.preventDefault();
     try {
       const res = await fetch(`/api/admin/getOneSucursal/${id}`, {
@@ -66,18 +56,17 @@ useEffect(async () => {
         },
         param: JSON.stringify({
           _id: id.value
-         
         })
       });
       const success = await res.json();
-      
-     console.log("llegoo",success)
+
+      console.log("llegoo", success);
 
       if (success.success) {
         // localStorage.setItem("dni", JSON.stringify(success.data));
-          return router.push(`/admin/info/${success.data._id}`);
+        return router.push(`/admin/info/${success.data._id}`);
         // setUser(success);
-      }else{
+      } else {
         return Notification.errorMessage(success.successMessage);
       }
     } catch (e) {
@@ -85,24 +74,19 @@ useEffect(async () => {
     }
   };
 
-  const handleClick = (e,value) =>{
+  const handleClick = (e, value) => {
     e.preventDefault();
-    setSucursalElegida(e.target.textContent)
+    setSucursalElegida(e.target.textContent);
 
-    value.options.filter(sucursal => {
-      if(sucursal.text === e.target.textContent){
-        setId(sucursal.key)
+    value.options.filter((sucursal) => {
+      if (sucursal.text === e.target.textContent) {
+        setId(sucursal.key);
       }
-    })
-    
-  }
-
-  
-
+    });
+  };
 
   const [visible, setVisible] = React.useState(false);
 
-  
   return (
         <div className="ui container fluid">
     <Grid >
@@ -198,7 +182,6 @@ useEffect(async () => {
   </Grid>
   </div>
   )
-  
 };
 
 export default HomeAdmin;
