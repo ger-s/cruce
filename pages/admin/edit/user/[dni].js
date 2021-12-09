@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Form, Button, Card, Image } from "semantic-ui-react";
 import { useRouter } from "next/router";
 import Notification from "../../../../utils/Notification";
+import Swal from "sweetalert2";
 
 
 const UserDni = () => {
@@ -62,21 +63,45 @@ const UserDni = () => {
     }
   };
 
+
+
   const deleteUser = async (e) => {
+    e.preventDefault();
     try {
+      const swal = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡Estos cambios no se podran revertir!",
+        icon: "¡Atención!",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, Eliminalo!",
+        cancelButtonText: "Cancelar"
+      });
+      console.log("result swal", swal);
+      if(swal.isConfirmed){ 
       const res = await fetch(`/api/admin/delete/user/${user._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json"
         }
       });
-      const success = await res.json();
-      if (success.success) {
-        Notification.successMessage(success.successMessage);
+      const success =  res.json();
+      if (success) {
+        Swal.fire("¡Eliminado!", "Sucursal eliminada.", "success");
         return router.push("/admin/search/user");
+      }else {
+        return Notification.errorMessage("Ha ocurrido un error");
       }
-    } catch (e) {}
+    }
+    } catch (e) {
+      return Notification.errorMessage(e);
+    }
   };
+
+
+
+
 
   return (
     <Container>
@@ -114,9 +139,9 @@ const UserDni = () => {
 
           <button
             style={{ margin: "0 auto" }}
-            className={`ui animated primary huge submit button`}
+            className={`ui animated submit button`}
             // tabIndex="0"
-            onClick={() => router.push("/admin/search/user")}
+            onClick={() => router.back()}
           >
             <div className="visible content"> Atras </div>
             <div className="hidden content">
