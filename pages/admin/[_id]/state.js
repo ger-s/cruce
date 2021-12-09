@@ -15,7 +15,7 @@ const state = () => {
       const res = await fetch(`/api/admin/getOneSucursal/${_id}`, {
         method: "GET",
         headers: {
-          "Content-Type": "aplication/json",
+          "Content-Type": "application/json",
         },
       });
 
@@ -39,7 +39,7 @@ const state = () => {
       const res = await fetch(`/api/sucursal/turnos/editStatus/${idSucursal}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "aplication/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           _id: idTurno,
