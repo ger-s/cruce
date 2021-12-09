@@ -1,4 +1,5 @@
-import 'semantic-ui-css/semantic.min.css'
+import { useState, useEffect } from "react";
+import "semantic-ui-css/semantic.min.css";
 // import App from 'next/app'
 import Layout from '../components/Layout';
 import useWindowSize from '../hooks/useWindowSize';
@@ -9,6 +10,7 @@ function MyApp({ Component, pageProps }) {
   const size = useWindowSize();
   const parse = useParse()
 
+  
 
   return <Layout size={size} parse={parse}>
     <Component {...pageProps} size={size} parse={parse}/>
@@ -27,4 +29,4 @@ function MyApp({ Component, pageProps }) {
 //   return { ...appProps }
 // }
 
-export default MyApp
+export default MyApp;
