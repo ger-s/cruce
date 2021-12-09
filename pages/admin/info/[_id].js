@@ -38,7 +38,6 @@ function _id() {
       return Notification.errorMessage(e);
     }
   }, [query._id]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -77,6 +76,7 @@ function _id() {
       return Notification.errorMessage("error catch");
     }
   };
+
 
   return (
     <div>

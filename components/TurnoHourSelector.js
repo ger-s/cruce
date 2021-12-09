@@ -26,9 +26,8 @@ const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSel
         })
       });
       const success = await res.json();
-      console.log(success)
       if (success.success) {
-        return success.data.map((horario, index) => {
+        return success.data[0].map((horario, index) => {
           if (horario.turnosRestantes > 0) {
             setHourSelector((old) => [
               ...old,
