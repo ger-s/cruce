@@ -25,11 +25,17 @@ const Navbar = function ({ size, parse }) {
   const showFixedMenu = () => setState({ fixed: true });
   const handleSidebarHide = () => setState({ sidebarOpened: false });
   const handleToggle = () => setState({ sidebarOpened: true });
+
+  useEffect(()=>  {
+  const local=localStorage.getItem("token")
+  local?setUser(local):null
+  },[])
+
   const handleLogout = () => {
     localStorage.removeItem("token"), router.push("/");
     return Notification.successMessage("Sesión cerrada con éxito.");
   };
-
+console.log(user)
   return (
     <>
       {size.width / size.height > 0.7 ? (
@@ -72,7 +78,7 @@ const Navbar = function ({ size, parse }) {
                   <Menu.Item as="a">Company</Menu.Item>
                   <Menu.Item as="a">Careers</Menu.Item> */}
                   <Menu.Item position="right">
-                    {!user ? (
+                    {!user.dni ? (
                       <>
                         <Link href="/login">
                           <Button as="a"> Iniciar sesión </Button>

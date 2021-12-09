@@ -8,7 +8,8 @@ function useParse () {
       function parseJwt(token) {
         return JSON.parse(window.atob(token.split(".")[1]));
       }
-      setUser(parseJwt(localStorage.getItem("token")));
+     const tok=localStorage.getItem("token")
+    tok?  setUser(parseJwt(localStorage.getItem("token"))):null
     }
   }, []);
   return user;

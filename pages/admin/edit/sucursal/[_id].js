@@ -50,10 +50,7 @@ const CreateSucursal = ({size}) => {
           })
       });
       const { data, success, successMessage } = await res.json();
-      // console.log("DATAAAA", data)
-      // console.log("SUCCESSSS", success)
-      // console.log("MESSAGEEE", successMessage) 
-
+    
       if (success) {
         setForm({
           ...form,
