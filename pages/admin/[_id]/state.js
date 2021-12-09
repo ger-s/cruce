@@ -52,6 +52,7 @@ const State = () => {
     }
   };
 
+  
   return (
     <div>
       <Table style={{ height: "50%", width: "70%", margin: "auto" }} celled>
