@@ -30,6 +30,7 @@ const Login = ({size}) => {
       if (success.body.success) {
         localStorage.setItem("token", JSON.stringify(success.headers.Authorization));
         Notification.successMessage(success.body.successMessage);
+        router.reload()
         return router.push("/logged");
       } else {
         Notification.errorMessage(success.body.successMessage);

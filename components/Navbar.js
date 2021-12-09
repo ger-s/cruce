@@ -16,7 +16,7 @@ import Notification from "../utils/Notification";
 // import jwt_decode from 'jwt-decode';
 // const { jwtPass } = require("../secret.json");
 
-const Navbar = function ({ size, parse }) {
+const Navbar = ({ size, parse }) => {
   const router = useRouter();
   const [user, setUser] = useState({dni: undefined});
   const [state, setState] = useState({ fixed: false, sidebarOpened: false });
@@ -27,13 +27,14 @@ const Navbar = function ({ size, parse }) {
   const handleToggle = () => setState({ sidebarOpened: true });
 
   const handleLogout = () => {
+    setUser({dni: undefined}), router.reload()
     localStorage.removeItem("token"), router.push("/");
     return Notification.successMessage("Sesión cerrada con éxito.");
   };
 
   useEffect(() => {
-    parse.dni ? setUser(parse) : setUser({});
-  }, [parse]);
+    !user.dni ? setUser(parse) : null
+  }, [router]);
   
   return (
     <>
@@ -77,7 +78,7 @@ const Navbar = function ({ size, parse }) {
                   <Menu.Item as="a">Company</Menu.Item>
                   <Menu.Item as="a">Careers</Menu.Item> */}
                   <Menu.Item position="right">
-                    {!user.dni ? (
+                    {!parse?.dni ? (
                       <>
                         <Link href="/login">
                           <Button as="a"> Iniciar sesión </Button>
@@ -111,7 +112,7 @@ const Navbar = function ({ size, parse }) {
             >
               <Menu.Item as="a">Opciones</Menu.Item>
 
-              {!user.dni ? (
+              {!parse?.dni ? (
                 <>
                   <Link href="/login">
                     <Menu.Item onClick={handleSidebarHide}>
