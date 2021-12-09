@@ -81,16 +81,16 @@ const Navbar = ({ size, parse }) => {
                     {!parse?.dni ? (
                       <>
                         <Link href="/login">
-                          <Button as="a"> Iniciar sesión </Button>
+                          <Button as="a" > Iniciar sesión </Button>
                         </Link>
                         <Link href="/register">
-                          <Button as="a" style={{ marginLeft: "0.5em" }}>
+                          <Button as="a" style={{ marginLeft: "0.5em" }}secondary >
                             Registrate
                           </Button>
                         </Link>
                       </>
                     ) : (
-                      <Button as="a" onClick={handleLogout}>
+                      <Button as="a" onClick={handleLogout} secondary>
                         Cerrar sesión
                       </Button>
                     )}

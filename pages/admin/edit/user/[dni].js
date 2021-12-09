@@ -114,9 +114,9 @@ const UserDni = () => {
 
           <button
             style={{ margin: "0 auto" }}
-            className={`ui animated primary huge submit button`}
+            className={`ui animated submit button`}
             // tabIndex="0"
-            onClick={() => router.push("/admin/search/user")}
+            onClick={() => router.back()}
           >
             <div className="visible content"> Atras </div>
             <div className="hidden content">

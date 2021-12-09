@@ -1,11 +1,12 @@
-import { useRouter } from "next/router";
+import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { Icon, Table, Button } from "semantic-ui-react";
+import { Icon, Table, Button , Container } from "semantic-ui-react";
 
 const state = () => {
   const router = useRouter();
   const [turno, setTurno] = useState([]);
   const [idSucursal, setIdSucursal] = useState("");
+  const [newTable, setNewTable] = useState([]);
 
   useEffect(async () => {
     const { _id } = router.query;
@@ -39,7 +40,7 @@ const state = () => {
         }),
       });
       const success = await res.json();
-      console.log(success);
+      setNewTable(success);
       if (success) {
         console.log("exitoso");
       } else {
@@ -49,15 +50,16 @@ const state = () => {
       return error;
     }
   };
-console.log("h")
 
   return (
     <div>
+      <Container>
       <Table style={{ height: "50%", width: "70%", margin: "auto" }} celled>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Nombre</Table.HeaderCell>
             <Table.HeaderCell>Dia</Table.HeaderCell>
+            <Table.HeaderCell>DNI</Table.HeaderCell>
             <Table.HeaderCell>Estado</Table.HeaderCell>
             <Table.HeaderCell style={{ width: "20%" }}>
               Asistencia
@@ -66,27 +68,78 @@ console.log("h")
         </Table.Header>
 
         <Table.Body>
-          {turno.map((data, i) => {
-            return (
-              <Table.Row>
-                <Table.Cell> {data.client.name}</Table.Cell>
-                <Table.Cell> {data.date}</Table.Cell>
+          {newTable.success
+            ? newTable.data.history.map((data, i) => {
+                return (
+                  <Table.Row>
+                    {console.log(newTable)}
+                    <Table.Cell> {data.client.name}</Table.Cell>
+                    <Table.Cell> {data.date}</Table.Cell>
+                    <Table.Cell> {data.client.dni}</Table.Cell>
+                    <Table.Cell> {data.state}</Table.Cell>
 
-                <Table.Cell> {data.state}</Table.Cell>
+                    {data.state === "pendiente" ? (
+                      <div>
+                        <Table.Cell>
+                          <Button
+                            onClick={handleClick}
+                            positive
+                            value={data._id}
+                          >
+                            Asistio
+                          </Button>
+                          <Button
+                            onClick={handleClick}
+                            negative
+                            value={data._id}
+                          >
+                            No asistio
+                          </Button>
+                        </Table.Cell>
+                      </div>
+                    ) : (
+                      <Table.Cell>
+                        <p>Confirmada</p>
+                      </Table.Cell>
+                    )}
+                  </Table.Row>
+                );
+              })
+            : turno.map((data, i) => {
+                return (
+                  <Table.Row>
+                    {console.log(data)}
+                    <Table.Cell> {data.client.name}</Table.Cell>
+                    <Table.Cell> {data.date}</Table.Cell>
+                    <Table.Cell> {data.client.dni}</Table.Cell>
+                    <Table.Cell> {data.state}</Table.Cell>
 
-                <Table.Cell>
-                  <Button onClick={handleClick} positive value={data._id}>
-                    Asistio
-                  </Button>
-                  <Button onClick={handleClick} negative value={data._id}>
-                    No asistio
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
+                    {data.state === "pendiente" ? (
+                      <Table.Cell>
+                        <Button onClick={handleClick} positive value={data._id}>
+                          Asistio
+                        </Button>
+                        <Button onClick={handleClick} negative value={data._id}>
+                          No asistio
+                        </Button>
+                      </Table.Cell>
+                    ) : (
+                      <Table.Cell>
+                        <p>Confirmada</p>
+                      </Table.Cell>
+                    )}
+                  </Table.Row>
+                );
+              })}
         </Table.Body>
       </Table>
+      <Button animated onClick={()=>router.back()} >
+      <Button.Content visible>Volver atras</Button.Content>
+      <Button.Content hidden>
+        <Icon name='arrow left' />
+      </Button.Content>
+    </Button>
+    </Container>
     </div>
   );
 };

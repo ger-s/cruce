@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { Icon } from "semantic-ui-react";
 
 import {
   Container,
@@ -119,7 +120,14 @@ function _id() {
           </div>
         </Card.Content>
       </Container>
+      <Button animated onClick={()=>router.back()} >
+      <Button.Content visible>Volver atras</Button.Content>
+      <Button.Content hidden>
+        <Icon name='arrow left' />
+      </Button.Content>
+    </Button>
     </div>
+    
   );
 }
 
