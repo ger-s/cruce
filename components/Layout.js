@@ -2,8 +2,7 @@ import Head from "next/head";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-const Layout = ({ children, size }) => (
-  
+const Layout = ({ children, size, parse }) => (
   <>
     <Head>
       <title>App Cruce</title>
@@ -16,7 +15,7 @@ const Layout = ({ children, size }) => (
       />
     </Head>
     
-    <Navbar size={size} />
+    <Navbar size={size} parse={parse}/>
 
 
     {children}

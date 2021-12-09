@@ -56,7 +56,7 @@ console.log("sucursallll", sucursal)
             </Card.Content>
             <Card.Content extra>  
               <div className="ui three buttons">
-              <Link href={`/admin/${sucursal.name}/state`}>
+              <Link href={`/admin/${sucursal._id}/state`}>
               <Button basic color="green" >
                   Ingresar
                 </Button>

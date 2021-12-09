@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import "semantic-ui-css/semantic.min.css";
 // import App from 'next/app'
-import Layout from "../components/Layout";
-import useWindowSize from "../hooks/useWindowSize";
+import Layout from '../components/Layout';
+import useWindowSize from '../hooks/useWindowSize';
+import useParse from '../hooks/useParse'
 
 function MyApp({ Component, pageProps }) {
+
   const size = useWindowSize();
+  const parse = useParse()
 
   
 
-  return (
-    <Layout size={size} >
-      <Component {...pageProps} size={size} />
-    </Layout>
-  );
+  return <Layout size={size} parse={parse}>
+    <Component {...pageProps} size={size} parse={parse}/>
+  </Layout>
 }
 
 // Only uncomment this method if you have blocking data requirements for

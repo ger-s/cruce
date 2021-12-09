@@ -21,13 +21,13 @@ const SucursalSchema = mongoose.Schema({
   },
   city: {
     type: String,
-    required: [true, "por favor, agregá una ciudad."],
+    required: [false, "por favor, agregá una ciudad."],
     unique: false,
     trim: true,
   },
   zipCode: {
     type: String,
-    required: [true, "por favor, agregá una dirección."],
+    required: [false, "por favor, agregá una dirección."],
     unique: false,
     trim: true,
   },
@@ -42,8 +42,8 @@ const SucursalSchema = mongoose.Schema({
     {
       name: { type: String },
       lastName: { type: String },
-      dni: { type: Number, unique: [true,"este dni esta siendo utilizado"] },
-      email: { type: String, unique: [true, "este mail esta siendo utilizado"]},
+      dni: { type: Number, unique: false },
+      email: { type: String, unique: false },
       
     },
   ],
