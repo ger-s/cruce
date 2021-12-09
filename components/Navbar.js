@@ -9,7 +9,7 @@ import {
   Menu,
   Segment,
   Sidebar,
-  Visibility
+  Visibility,
 } from "semantic-ui-react";
 import Notification from "../utils/Notification";
 // import jwt from "jsonwebtoken";
@@ -26,16 +26,16 @@ const Navbar = function ({ size, parse }) {
   const handleSidebarHide = () => setState({ sidebarOpened: false });
   const handleToggle = () => setState({ sidebarOpened: true });
 
-  useEffect(()=>  {
-  const local=localStorage.getItem("token")
-  local?setUser(local):null
-  },[])
+  useEffect(() => {
+    const local = localStorage.getItem("token");
+    local ? setUser(parse) : null;
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token"), router.push("/");
     return Notification.successMessage("Sesión cerrada con éxito.");
   };
-console.log(user)
+  
   return (
     <>
       {size.width / size.height > 0.7 ? (
@@ -48,7 +48,7 @@ console.log(user)
             <Segment
               textAlign="center"
               style={{
-                padding: "1em 0em"
+                padding: "1em 0em",
               }}
               vertical
             >
@@ -143,7 +143,7 @@ console.log(user)
                     ? {
                         minHeight: 125,
                         padding: "1em 0em",
-                        background: "white"
+                        background: "white",
                       }
                     : { padding: "1em 0em", background: "none" }
                 }
