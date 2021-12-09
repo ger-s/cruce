@@ -1,5 +1,5 @@
 import React, { useEffect, useState }  from "react";
-import { Container, Button } from "semantic-ui-react";
+import { Container, Button, Icon } from "semantic-ui-react";
 import useInput              from "../../../../hooks/useInput";
 import Notification          from "../../../../utils/Notification";
 import { useRouter }         from "next/router";
@@ -205,7 +205,7 @@ const CreateSucursal = ({size}) => {
             />
           </div>
 
-          <div style={{marginTop: "10%" }}>
+          <div style={{marginTop: "10%",marginBottom:"5%" }}>
             <Button
             primary
             size="huge"
@@ -216,7 +216,12 @@ const CreateSucursal = ({size}) => {
           </Button>
           </div>
         </form>
-
+        <Button animated onClick={()=>router.back()}  >
+      <Button.Content visible>Volver atras</Button.Content>
+      <Button.Content hidden>
+        <Icon name='arrow left' />
+      </Button.Content>
+    </Button>
       </Container>
     </Container>
   );
