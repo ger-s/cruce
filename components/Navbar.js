@@ -18,7 +18,7 @@ import Notification from "../utils/Notification";
 
 const Navbar = ({ size, parse }) => {
   const router = useRouter();
-  const [user, setUser] = useState({dni: undefined});
+  const [user, setUser] = useState({ dni: undefined });
   const [state, setState] = useState({ fixed: false, sidebarOpened: false });
 
   const hideFixedMenu = () => setState({ fixed: false });
@@ -27,15 +27,15 @@ const Navbar = ({ size, parse }) => {
   const handleToggle = () => setState({ sidebarOpened: true });
 
   const handleLogout = () => {
-    setUser({dni: undefined}), router.reload()
+    setUser({ dni: undefined }), router.reload();
     localStorage.removeItem("token"), router.push("/");
     return Notification.successMessage("Sesión cerrada con éxito.");
   };
 
   useEffect(() => {
-    !user.dni ? setUser(parse) : null
+    !user.dni ? setUser(parse) : null;
   }, [router]);
-  console.log("====>>",user)
+  console.log("====>>", parse);
   return (
     <>
       {size.width / size.height > 0.7 ? (
@@ -81,18 +81,43 @@ const Navbar = ({ size, parse }) => {
                     {!parse?.dni ? (
                       <>
                         <Link href="/login">
-                          <Button as="a" > Iniciar sesión </Button>
+                          <Button as="a"> Iniciar sesión </Button>
                         </Link>
                         <Link href="/register">
-                          <Button as="a" style={{ marginLeft: "0.5em" }}secondary >
+                          <Button
+                            as="a"
+                            style={{ marginLeft: "0.5em" }}
+                            secondary
+                          >
                             Registrate
                           </Button>
                         </Link>
                       </>
                     ) : (
+                      <>
+                          {( parse.role === "admin" || parse.role === "operador"?
+                            <>
+                        <h3 style={{ marginRight: "1em", marginTop: "0.6em" }}>
+                          {parse.role}
+                        </h3>
+                        <Button as="a" onClick={handleLogout} secondary>
+                          Cerrar sesión
+                        </Button>
+                        </>
+                      :    <>
+                      <Link  href="/user">
+                        
+                      <h3 style={{ marginRight: "1em", marginTop: "0.6em" }}>
+                        {parse.name}
+                      </h3>
+                      
+                      </Link>
                       <Button as="a" onClick={handleLogout} secondary>
                         Cerrar sesión
                       </Button>
+                      </>) }
+                      </>
+                      
                     )}
                   </Menu.Item>
                 </Container>
@@ -128,10 +153,28 @@ const Navbar = ({ size, parse }) => {
                   </Link>
                 </>
               ) : (
+                <div>
+                {( parse.role === "admin" || parse.role === "operador" ?
+                   <>
+                  <Menu.Item>
+                    <h5>{parse.role}</h5>
+                  </Menu.Item>
+                  <Menu.Item onClick={handleLogout}>
+                    <p onClick={handleSidebarHide}>Cerrar sesión</p>
+                  </Menu.Item>
+                </>
+                :  <>
+                <Menu.Item>
+                  <Link href="/user">
+                  <h5>{parse.name}</h5>
+                  </Link>
+                </Menu.Item>
                 <Menu.Item onClick={handleLogout}>
                   <p onClick={handleSidebarHide}>Cerrar sesión</p>
                 </Menu.Item>
-              )}
+              </> )}
+                </div>
+                    )}
             </Sidebar>
 
             <Sidebar.Pusher dimmed={state.sidebarOpened}>
