@@ -9,14 +9,14 @@ export default async (req, res) => {
   switch (method) {
     case "GET":
       try {
-        const auth = await validateJWT(req);
+       /*  const auth = await validateJWT(req);
         console.log('auth', auth)
         if (auth.status === 401) {
           return res.status(401).json({ success: false, successMessage: auth.token })
         }
         if (auth.token?.role.length < 2) {
           return res.status(401).json({ success: false, message: "Problema en el usuario " })
-        }
+        } */
         const sucursales = await Sucursal.find({});
         res
           .status(200)
