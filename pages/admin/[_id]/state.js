@@ -1,6 +1,7 @@
 import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Icon, Table, Button , Container } from "semantic-ui-react";
+import Swal from "sweetalert2";
 
 const state = () => {
   const router = useRouter();
@@ -28,7 +29,19 @@ const state = () => {
   }, [router]);
 
   const handleClick = async (e, value, id) => {
+    e.preventDefault();
     try {
+      const swal = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "¡Estos cambios no se podran revertir!",
+        icon: "¡Atención!",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, cambiar estado!",
+        cancelButtonText: "Cancelar"
+      });
+      if(swal.isConfirmed){
       const res = await fetch(`/api/sucursal/turnos/editStatus/${idSucursal}`, {
         method: "PUT",
         headers: {
@@ -39,15 +52,19 @@ const state = () => {
           state: e.target.textContent,
         }),
       });
-      const success = await res.json();
-      setNewTable(success);
-      if (success) {
-        console.log("exitoso");
+      const success =  await res.json();
+       if (success) {
+        Swal.fire("Estado cambiado!", "Asistencia modificada", "success");
+        
       } else {
-        console.log("error");
-      }
-    } catch (error) {
-      return error;
+        return Notification.errorMessage("Ha ocurrido un error");
+      } 
+      
+      setNewTable(success);
+  
+    }
+    } catch (e) {
+      return Notification.errorMessage("Ha ocurrido un error");
     }
   };
 

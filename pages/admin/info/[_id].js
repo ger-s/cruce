@@ -124,12 +124,15 @@ function _id() {
           </div>
         </Card.Content>
       </Container>
+      <Container>
+        
       <Button animated onClick={()=>router.back()} >
       <Button.Content visible>Volver atras</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow left' />
       </Button.Content>
     </Button>
+      </Container>
     </div>
     
   );

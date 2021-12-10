@@ -17,7 +17,7 @@ const Register = ({size}) => {
   const [emailValidation, setEmailValidation] = useState({status: true, error: ""});
 
   const handleNameValidation = () => {
-    if (!name.value.match("^[a-zA-Z]+$")) {
+    if (!name.value.match("^[a-zA-ZáéíóúüñÁÉÍÓÚÑÜ]+$")) {
       return setNameValidation({status: false, error: "El nombre sólo acepta letras."});
     } else if (name.value.length > 30) {
       return setNameValidation({status: false, error: "El nombre debe tener menos de 30 caracteres."});
@@ -35,7 +35,7 @@ const Register = ({size}) => {
   };
 
   const handleLastNameValidation = () => {
-    if (!lastName.value.match("^[a-zA-Z]+$")) {
+    if (!lastName.value.match("^[a-zA-ZáéíóúüñÁÉÍÓÚÑÜ]+$")) {
       return setLastNameValidation({status: false, error: "El apellido sólo acepta letras."});
     } else if (lastName.value.length > 30) {
       return setLastNameValidation({status: false, error: "El apellido debe tener menos de 30 caracteres."});
