@@ -7,6 +7,7 @@
     "start": "next start",
     "lint": "next lint"
   },
+
   "dependencies": {
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
@@ -30,4 +31,5 @@
     "eslint": "7.32.0",
     "eslint-config-next": "12.0.4"
   }
+  
 }

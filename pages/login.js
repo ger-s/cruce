@@ -34,7 +34,6 @@ const Login = ({ size }) => {
           JSON.stringify(success.headers.Authorization)
         );
 
-       
         Notification.successMessage(success.body.successMessage);
         router.reload()
         return router.push("/logged");
