@@ -10,8 +10,6 @@ function MyApp({ Component, pageProps }) {
   const size = useWindowSize();
   const parse = useParse()
 
-  
-
   return <Layout size={size} parse={parse}>
     <Component {...pageProps} size={size} parse={parse}/>
   </Layout>

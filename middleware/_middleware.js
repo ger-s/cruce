@@ -5,45 +5,25 @@ const { jwtPass } = require('../secret.json')
 const validateJWT = async (req, res, role) => {
   try {
     const reqToken = await req.headers.authorization.split(" ")[1];
+    console.log('hola luis')
     let type;
     if (!reqToken) {
-      return new Response("Auth required", {
-        status: 401,
-        headers: {
-          "WW-Authenticate": "Basic realm='Secure Area'"
-        }
-      })
+      return {status: 401, token: null}
     }
     jwt.verify(reqToken, jwtPass, (err, payload) => {
-      if (err) return new Response("Auth required", {
-        status: 401,
-        headers: {
-          "WW-Authenticate": "Basic realm='Secure Area'"
-        }
-      })
+      if (err) return {status: 401, token: null}
       type = payload;
-      console.log("TYPEEE",type.role)
+      //console.log("TYPEEE",type.role)
     });
-
     
     if (!type) {
-      return new Response("Auth required", {
-        status: 401,
-        headers: {
-          "WW-Authenticate": "Basic realm='Secure Area'"
-        }
-      })
+      return {status: 401, token: null}
     }
     
     return {status: true, token: type}
       
   } catch (err) {
-    return new Response("Auth required", {
-      status: 401,
-      headers: {
-        "WW-Authenticate": "Basic realm='Secure Area'"
-      }
-    })
+    return {status: 401, token: null}
   }
 }
 

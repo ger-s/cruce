@@ -33,9 +33,8 @@ const Navbar = ({ size, parse }) => {
   };
 
   useEffect(() => {
-    !user.dni ? setUser(parse) : null;
-  }, [router]);
-  console.log("====>>", parse);
+    !user.dni ? setUser(parse) : null
+  }, []);
   return (
     <>
       {size.width / size.height > 0.7 ? (

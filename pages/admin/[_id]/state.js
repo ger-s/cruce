@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Icon, Table, Button , Container } from "semantic-ui-react";
 import Swal from "sweetalert2";
 
-const state = () => {
+const State = () => {
   const router = useRouter();
   const [turno, setTurno] = useState([]);
   const [idSucursal, setIdSucursal] = useState("");
@@ -161,4 +161,4 @@ const state = () => {
   );
 };
 
-export default state;
+export default State;
