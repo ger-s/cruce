@@ -97,11 +97,11 @@ const PasswordForget = () => {
   const handleSubmitCode = async (e) => {
     e.preventDefault();
     try {
-      const parseLocal = await JSON.parse(localStorage.getItem("code"));
-      const comparation= await bcryptjs.compare(code.value, parseLocal)
+      const parseLocal = await JSON.parse(localStorage.getItem("code"))
+      const comparation = await bcryptjs.compare(code.value, parseLocal)
       if (comparation) {
-        setCurrentStep("pass");
-        return Notification.successMessage("Código correcto");
+        setCurrentStep('pass');
+        return Notification.successMessage('Código correcto')
       } else {
         Notification.errorMessage("Código incorrecto");
       }

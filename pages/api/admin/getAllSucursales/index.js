@@ -9,15 +9,14 @@ export default async (req, res) => {
   switch (method) {
     case "GET":
       try {
-        /* const auth = await validateJWT(req);
-        auth.status === 401
-          ? res
-              .status(401)
-              .json({ status: auth.status, message: auth.statusText })
-          : null;
-        auth.token.role !== "admin"
-          ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
-          : null; */
+        const auth = await validateJWT(req);
+        console.log('auth', auth)
+        if (auth.status === 401) {
+          return res.status(401).json({ success: false, successMessage: auth.token })
+        }
+        if (auth.token?.role.length < 2) {
+          return res.status(401).json({ success: false, message: "Problema en el usuario " })
+        }
         const sucursales = await Sucursal.find({});
         res
           .status(200)
@@ -27,12 +26,12 @@ export default async (req, res) => {
             data: sucursales,
           });
       } catch (error) {
-        res.status(400).json({ success: false, successMessage: error });
+        res.status(400).json({body: { success: false, successMessage: 'sdfsdfsdf' }});
       }
       break;
 
     default:
-      res.status(400).json({ success: false });
+      res.status(400).json({body: { success: false }});
       break;
   }
 };
