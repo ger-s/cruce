@@ -21,6 +21,7 @@ const Login = ({ size }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
+          
         },
         body: JSON.stringify({
           email: email.value,
@@ -28,6 +29,8 @@ const Login = ({ size }) => {
         })
       });
       const success = await res.json();
+
+      console.log("success =>>>>>>>>",success);
       if (success.body.success) {
         localStorage.setItem(
           "token",

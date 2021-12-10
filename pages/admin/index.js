@@ -1,62 +1,52 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Header, Icon, Image, Menu, Segment, Sidebar ,Dropdown,Grid, Form, Button} from "semantic-ui-react";
+import { Header, Icon, Image, Menu, Segment, Sidebar ,Dropdown,Grid, Form, Container, Button} from "semantic-ui-react";
 import useInput from "../../hooks/useInput";
 import Notification from "../../utils/Notification";
 
 const HomeAdmin = () => {
-const noSeUsa = "hola" 
-const router = useRouter();
-const _id = useInput("ID");
+  const noSeUsa = "hola";
+  const router = useRouter();
+  const _id = useInput("ID");
 
-const [id, setId] = useState("")
-const [sucursalElegida, setSucursalElegida]= useState([])
-const sucursal = useInput("Sucursal");
-const [sucursales, setSucursales] = useState([]);
-const [sucursalesId, setSucursalesId] = useState([]);
+  const [id, setId] = useState("");
+  const [sucursalElegida, setSucursalElegida] = useState([]);
+  const sucursal = useInput("Sucursal");
+  const [sucursales, setSucursales] = useState([]);
+  const [sucursalesId, setSucursalesId] = useState([]);
 
-useEffect(async () => {
-  if(sucursales.length < 1){
+  useEffect(async () => {
+    if (sucursales.length < 1) {
+      try {
+        const res = await fetch(`/api/admin/getAllSucursales`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        const success = await res.json();
 
-  
-  try {
-    const res = await fetch(`/api/admin/getAllSucursales`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const success = await res.json();
-   
-    if (success) {
-      
-      success.data.map((sucursales, index) => {
-        setSucursales((old) => [
-          ...old,
-          { key: sucursales._id , text: sucursales.name, value: index },
-          
-
-        ]); /* setSucursalesId((old) => [
+        if (success) {
+          success.data.map((sucursales, index) => {
+            setSucursales((old) => [
+              ...old,
+              { key: sucursales._id, text: sucursales.name, value: index }
+            ]); /* setSucursalesId((old) => [
           ...old,
           { key: index, text: sucursales._id, value: index },
           
   
         ])  */
-      });
+          });
+        }
+      } catch (e) {
+        return Notification.errorMessage("nada");
+      }
     }
-  } catch (e) {
-    return Notification.errorMessage("nada");
-  }
-}
-}, [noSeUsa]);
-
-
+  }, [noSeUsa]);
 
   const handleSubmit = async (e) => {
-
-
-    console.log("acaaaaa elegida", sucursalElegida)
     e.preventDefault();
     try {
       const res = await fetch(`/api/admin/getOneSucursal/${id}`, {
@@ -66,49 +56,43 @@ useEffect(async () => {
         },
         param: JSON.stringify({
           _id: id.value
-         
         })
       });
       const success = await res.json();
-      
-     console.log("llegoo",success)
+
+      console.log("llegoo", success);
 
       if (success.success) {
         // localStorage.setItem("dni", JSON.stringify(success.data));
-          return router.push(`/admin/info/${success.data._id}`);
+        return router.push(`/admin/info/${success.data._id}`);
         // setUser(success);
-      }else{
+      } else {
         return Notification.errorMessage(success.successMessage);
       }
     } catch (e) {
-      return Notification.errorMessage(e);
+      return Notification.errorMessage("Seleccioná una sucursal");
     }
   };
 
-  const handleClick = (e,value) =>{
+  const handleClick = (e, value) => {
     e.preventDefault();
-    setSucursalElegida(e.target.textContent)
+    setSucursalElegida(e.target.textContent);
 
-    value.options.filter(sucursal => {
-      if(sucursal.text === e.target.textContent){
-        setId(sucursal.key)
+    value.options.filter((sucursal) => {
+      if (sucursal.text === e.target.textContent) {
+        setId(sucursal.key);
       }
-    })
-    
-  }
-
-  
-
+    });
+  };
 
   const [visible, setVisible] = React.useState(false);
 
-  
   return (
         <div className="ui container fluid">
     <Grid >
     <Grid.Row>
-      <Grid.Column width={3}>
-      <Sidebar.Pushable
+      <Grid.Column /* width={3} */>
+      {/* <Sidebar.Pushable
       as={Segment}
       className=" ui container fluid"
       style={{ height: "900px" }}
@@ -142,29 +126,29 @@ useEffect(async () => {
         </Segment>
       </Sidebar.Pusher>
     </Sidebar.Pushable>
-
+ */}
 
       </Grid.Column>
       <Grid.Column width={13}>
-          <h1 style={{textAlign:"center"}}>Elegi una sucursal</h1>
+          <h1 style={{textAlign:"center" , marginTop: "5%", marginBottom: "5%"}}>Elegí una sucursal</h1>
           <Form onSubmit={handleSubmit}  >
           <Dropdown
               clearable
               fluid
-             
+             style={{}}
               search
               selection
               options={sucursales}
               onChange={handleClick} 
               
-              placeholder="Select Country"
+              placeholder="Seleccioná sucursal"
             />
-       
+        <Container textAlign="center">
           <Button
             primary
             size="huge"
             type="submit"
-            style={{ marginBottom: "50%", marginTop: "10%" }}
+            style={{ marginBottom: "10%", marginTop: "10%" }}
             >
             Info sucursal
           </Button>
@@ -175,9 +159,9 @@ useEffect(async () => {
             primary
             size="huge"
             type="submit"
-            style={{ marginBottom: "50%", marginTop: "10%" }}
+            style={{ marginBottom: "10%", marginTop: "10%" }}
             >
-            Crear operador
+            Editar usuario
           </Button>
             </Link>
             <Link href="/admin/crear-sucursal">
@@ -185,11 +169,12 @@ useEffect(async () => {
             primary
             size="huge"
             type="submit"
-            style={{ marginBottom: "50%", marginTop: "10%" }}
+            style={{ marginBottom: "10%", marginTop: "10%" }}
             >
             Crear sucursal
           </Button>
             </Link>
+            </Container>
               </Form>
             
       </Grid.Column>
@@ -197,7 +182,6 @@ useEffect(async () => {
   </Grid>
   </div>
   )
-  
 };
 
 export default HomeAdmin;
