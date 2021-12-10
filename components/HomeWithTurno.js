@@ -11,10 +11,48 @@ const HomeWithTurno = ({size, turno}) => {
   const turnoSeconds = turno[0].date ? new Date (turno[0].date).getTime() / 1000 : null
 
   const [counter, setCounter] = useState(Math.round(turnoSeconds - todaySeconds))
-
+console.log(turno,"TURNO")
   useEffect(() => {
     counter > 0 && setTimeout(()=> {setCounter(counter-1)}, 1000)
+   
   }, [counter])
+  
+
+useEffect(async()=>  {
+  if(counter==="86400") {
+    try{
+    
+      const res = await fetch(`/api/email/${turno[0].client.dni}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+         _id:turno[1]._id 
+        })
+      });
+      const success = await res.json();
+    
+      console.log("llegoo", success);
+    
+      if (success.success) {
+        // localStorage.setItem("dni", JSON.stringify(success.data));
+        return router.push(`/admin/info/${success.data._id}`);
+        // setUser(success);
+      } else {
+        return Notification.errorMessage(success.successMessage);
+      }
+    
+    }catch(error) {
+      return Notification.errorMessage("Seleccioná una sucursal");
+    
+    }
+        }
+  
+},[counter])
+
+
+
   return (
     <motion.div
     className="ui container fluid"
