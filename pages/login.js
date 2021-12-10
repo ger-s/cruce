@@ -35,9 +35,9 @@ const Login = ({ size }) => {
         );
 
        
+        router.push('/')
         Notification.successMessage(success.body.successMessage);
-        router.reload()
-        return router.push("/logged");
+        return router.reload()
       } else {
         Notification.errorMessage(success.body.successMessage);
       }

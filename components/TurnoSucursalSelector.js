@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, Form } from "semantic-ui-react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
+  const router = useRouter()
   const [sucursales, setSucursales] = useState([]);
 
   const handleSelection = async (e) => {
@@ -21,13 +23,18 @@ const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
       try {
         const scs = await fetch("/api/admin/getAllSucursales", {
           method: "GET",
-          
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("token")
+          },
         });
         const success = await scs.json();
-        if (success) {
+        if (success.success) {
           return success.data.map((sucursal, index) =>
             setSucursales((old) => [...old, { key: index, text: sucursal.name, value: sucursal._id}])
           );
+        } else {
+          success.successMessage === null ? router.push('/') : console.log(success)
         }
       } catch (err) {
         console.log(err);

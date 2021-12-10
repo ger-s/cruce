@@ -34,7 +34,7 @@ const Navbar = ({ size, parse }) => {
 
   useEffect(() => {
     !user.dni ? setUser(parse) : null
-  }, [router]);
+  }, []);
   
   return (
     <>

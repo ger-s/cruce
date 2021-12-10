@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Icon, Table, Button } from "semantic-ui-react";
 
-const state = () => {
+const State = () => {
   const router = useRouter();
   const [turno, setTurno] = useState([]);
   const [idSucursal, setIdSucursal] = useState("");
@@ -68,7 +68,7 @@ console.log("h")
         <Table.Body>
           {turno.map((data, i) => {
             return (
-              <Table.Row>
+              <Table.Row key={i}>
                 <Table.Cell> {data.client.name}</Table.Cell>
                 <Table.Cell> {data.date}</Table.Cell>
 
@@ -91,4 +91,4 @@ console.log("h")
   );
 };
 
-export default state;
+export default State;

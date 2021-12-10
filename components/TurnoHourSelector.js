@@ -9,7 +9,8 @@ const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSel
   const handleSelection = (e) => {
     e.preventDefault();
     const str = e.target.textContent;
-    hourSelection(str)
+    const strVerify = str.indexOf('¡') > -1 ? str.slice(0, str.indexOf('¡') - 1) : str
+    hourSelection(strVerify)
     return step('checkout')
   };
 
@@ -18,7 +19,7 @@ const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSel
       const res = await fetch(`/api/sucursal/turnos/getAllTurnos/${sucursalSelection}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           day: daySelection,
@@ -31,7 +32,16 @@ const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSel
           if (horario.turnosRestantes > 0) {
             setHourSelector((old) => [
               ...old,
-              { key: index, text: new Date(horario.horaTurno).toLocaleTimeString('es-AR').slice(0,5), value: index },
+              { 
+                key: index, 
+                text: 
+                (
+                  horario.turnosRestantes > 3 ?
+                  new Date(horario.horaTurno).toLocaleTimeString('es-AR').slice(0,5)
+                  : `${new Date(horario.horaTurno).toLocaleTimeString('es-AR').slice(0,5)} ¡Sólo quedan ${horario.turnosRestantes} turnos!`
+                ), 
+                value: index 
+              },
             ])
           }
         }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 
 import TurnoDaySelector from "../components/TurnoDaySelector";
@@ -7,30 +8,15 @@ import TurnoHourSelector from "../components/TurnoHourSelector";
 import TurnoCheckout from "../components/TurnoCheckout";
 
 const Turno = ({ size, parse }) => {
-  const [user, setUser] = useState({})
+  const router = useRouter();
   const [sucursalSelection, setSucursalSelection] = useState("");
   const [daySelection, setDaySelection] = useState("");
   const [hourSelection, setHourSelection] = useState("");
   const [currentStep, setCurrentStep] = useState("sucursal");
 
-  console.log(parse.dni)
-
-  /* const parseJwt = (token) => {
-    try {
-      return JSON.parse(window.atob(token.split(".")[1]));
-    } catch (e) {
-      return null;
-    }
-  };
-
-  useEffect(async () => {
-    try {
-      const token = await parseJwt(localStorage.getItem('token'))
-      setUser(token)
-    } catch(error) {
-      console.log(error)
-    }
-  }, []) */
+  useEffect(() => {
+    console.log(parse);
+  }, []);
 
   /* useEffect( async () => {
     try {
@@ -88,34 +74,34 @@ const Turno = ({ size, parse }) => {
       }
     >
       {currentStep === "sucursal" ? (
-          <TurnoSucursalSelector
-            sucursalSelection={setSucursalSelection}
-            size={size}
-            step={setCurrentStep}
-          />
+        <TurnoSucursalSelector
+          sucursalSelection={setSucursalSelection}
+          size={size}
+          step={setCurrentStep}
+        />
       ) : currentStep === "day" ? (
-          <TurnoDaySelector
-            daySelection={setDaySelection}
-            size={size}
-            step={setCurrentStep}
-          />
+        <TurnoDaySelector
+          daySelection={setDaySelection}
+          size={size}
+          step={setCurrentStep}
+        />
       ) : currentStep === "hour" ? (
-          <TurnoHourSelector
-            sucursalSelection={sucursalSelection}
-            daySelection={daySelection}
-            hourSelection={setHourSelection}
-            size={size}
-            step={setCurrentStep}
-          />
+        <TurnoHourSelector
+          sucursalSelection={sucursalSelection}
+          daySelection={daySelection}
+          hourSelection={setHourSelection}
+          size={size}
+          step={setCurrentStep}
+        />
       ) : currentStep === "checkout" ? (
-          <TurnoCheckout
-            sucursalSelection={sucursalSelection}
-            daySelection={daySelection}
-            hourSelection={hourSelection}
-            size={size}
-            step={setCurrentStep}
-            user={parse}
-          />
+        <TurnoCheckout
+          sucursalSelection={sucursalSelection}
+          daySelection={daySelection}
+          hourSelection={hourSelection}
+          size={size}
+          step={setCurrentStep}
+          user={parse}
+        />
       ) : null}
     </div>
   );
