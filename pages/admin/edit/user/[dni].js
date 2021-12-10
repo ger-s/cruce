@@ -88,7 +88,7 @@ const UserDni = () => {
       });
       const success =  res.json();
       if (success) {
-        Swal.fire("¡Eliminado!", "Sucursal eliminada.", "success");
+        Swal.fire("¡Eliminado!", "Usuario eliminado.", "success");
         return router.push("/admin/search/user");
       }else {
         return Notification.errorMessage("Ha ocurrido un error");
