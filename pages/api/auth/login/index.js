@@ -35,7 +35,7 @@ export default async (req, res) => {
             token: "",
           }});
         // verificar si es un isAdmin  o isOperator  //
-        const token = generateJWT({ id: userFound._id, role: userFound.role, dni: userFound.dni, email: userFound.email });
+        const token = generateJWT({ id: userFound._id, role: userFound.role, dni: userFound.dni, email: userFound.email, name: userFound.name });
 
         res.status(200).json({headers: { Authorization: `Bearer ${token} `  }, body: { success: true, successMessage: "Usuario logueado", data: '' }});
       } catch (error) {

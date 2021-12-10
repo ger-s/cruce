@@ -11,6 +11,7 @@ function UserFound({ user }) {
     setState('edit')
   }
 
+console.log("======> user", user)
 
   return (
     // <Container>

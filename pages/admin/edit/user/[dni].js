@@ -164,15 +164,15 @@ const UserDni = () => {
               <Card.Description>Email: {user.email} </Card.Description>
               <Card.Description>DNI: {user.dni} </Card.Description>
               <Card.Description>Telefono: {user.phone}</Card.Description>
-
+           
               <Form>
                 <Card.Description>
                   <Form.Group inline>
                     <label>Rol</label>
                     <Form.Radio
                       label="Operador"
-                      value="operator"
-                      checked={value === "operator"}
+                      value="operador"
+                      checked={value === "operador"}
                       onChange={handleChange}
                     />
                     <Form.Radio
