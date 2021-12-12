@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Container, Icon, Button } from 'semantic-ui-react'
 import { useRouter } from 'next/router'
 import Notification from '../utils/Notification'
-import { motion } from "framer-motion";
+import { addScaleCorrector, motion } from "framer-motion";
 
 
 const HomeWithTurno = ({size, turno}) => {
@@ -22,14 +22,20 @@ const HomeWithTurno = ({size, turno}) => {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            _id: turno[0]._id
+            _id: turno[0]._id,
+            sucursalName: turno[1].name,
+            horaTurno: `${turno[0].date.slice(0, 10)}T${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
           })
         })
   
         const success = await res.json()
-        success.success && console.log(success)
-        Notification.successMessage(success.successMessage)
-        router.reload()
+        if (success.success) {
+          console.log(success)
+          Notification.successMessage(success.successMessage)
+          router.reload()
+        } else {
+          console.log(success.successMessage)
+        }
       } catch(error) {
         console.log(error)
       }

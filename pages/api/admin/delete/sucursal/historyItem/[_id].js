@@ -1,6 +1,7 @@
 import dbConnect from "../../../../../../utils/dbConnect";
 import Sucursal from "../../../../../../models/Sucursal";
 import validateJWT from "../../../../../../middleware/_middleware";
+import Turno from "../../../../../../models/Turno";
 const mongoose = require('mongoose')
 dbConnect();
 
@@ -25,14 +26,22 @@ export default async (req, res) => {
         
         const index = await sucursal.history.findIndex(turno => turno._id.toString() === req.body._id )
         
-        console.log(index)
+        sucursal.history[index].state = 'cancelado'
         
-        await sucursal.history.splice(index, 1)
-          
         const sucursalModified = await Sucursal.findOneAndUpdate(
           { _id: `${req.query._id}` },
           sucursal
         );
+
+        const turnoUpdate = await Turno.updateOne(
+          {
+            "sucursal.name": req.body.sucursalName,
+            horaTurno: new Date(req.body.horaTurno),
+          }, [{
+            $set: {
+              turnosRestantes: {$sum: ["$turnosRestantes", 1]}
+            }
+          }]);
         return res.status(201).json({
           success: true,
           successMessage: "Turno borrado satisfactoriamente",
