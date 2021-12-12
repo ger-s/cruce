@@ -5,7 +5,6 @@ const { jwtPass } = require('../secret.json')
 const validateJWT = async (req, res, role) => {
   try {
     const reqToken = await req.headers.authorization.split(" ")[1];
-    console.log('hola luis')
     let type;
     if (!reqToken) {
       return {status: 401, token: null}

@@ -6,15 +6,76 @@ import { motion } from "framer-motion";
 
 
 const HomeWithTurno = ({size, turno}) => {
+  const router = useRouter()
   const today = new Date()
   const todaySeconds = today.getTime() / 1000
   const turnoSeconds = turno[0].date ? new Date (turno[0].date).getTime() / 1000 : null
 
   const [counter, setCounter] = useState(Math.round(turnoSeconds - todaySeconds))
+  const handleDelete = async (e) => {
+    e.preventDefault()
+    if (counter > 7200) {
+      try {
+        const res = await fetch(`/api/admin/delete/sucursal/historyItem/${turno[1]._id}`, {
+          method: 'PUT',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            _id: turno[0]._id
+          })
+        })
+  
+        const success = await res.json()
+        success.success && console.log(success)
+        Notification.successMessage(success.successMessage)
+        router.reload()
+      } catch(error) {
+        console.log(error)
+      }
+    } else {
+      Notification.errorMessage('No se puede borrar, faltan menos de 2 horas para el turno')
+    }
+  }
 
   useEffect(() => {
     counter > 0 && setTimeout(()=> {setCounter(counter-1)}, 1000)
+   
   }, [counter])
+
+useEffect(async()=>  {
+  if(counter==="86400") {
+    try{
+    
+      const res = await fetch(`/api/email/${turno[0].client.dni}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+         _id:turno[1]._id 
+        })
+      });
+      const success = await res.json();
+    
+      console.log("llegoo", success);
+    
+      if (success.success) {
+        // localStorage.setItem("dni", JSON.stringify(success.data));
+        return router.push(`/admin/info/${success.data._id}`);
+        // setUser(success);
+      } else {
+        return Notification.errorMessage(success.successMessage);
+      }
+    
+    }catch(error) {
+      return Notification.errorMessage("Seleccioná una sucursal");
+    
+    }
+        }
+  
+},[counter])
+
   return (
     <motion.div
     className="ui container fluid"
@@ -61,7 +122,7 @@ const HomeWithTurno = ({size, turno}) => {
               <Button icon color="blue">
                 <Icon name="edit"/>
               </Button>
-              <Button icon color="red">
+              <Button icon color="red" onClick={handleDelete}>
                 <Icon name="trash" />
               </Button>
               </div>

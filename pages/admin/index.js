@@ -41,7 +41,7 @@ const HomeAdmin = () => {
           });
         }
       } catch (e) {
-        return Notification.errorMessage("nada");
+        return Notification.errorMessage("no tenés permisos admin");
       }
     }
   }, [noSeUsa]);
@@ -54,9 +54,7 @@ const HomeAdmin = () => {
         headers: {
           "Content-Type": "application/json"
         },
-        param: JSON.stringify({
-          _id: id.value
-        })
+       
       });
       const success = await res.json();
 

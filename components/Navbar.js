@@ -28,14 +28,15 @@ const Navbar = ({ size, parse }) => {
   const handleToggle = () => setState({ sidebarOpened: true });
 
   const handleLogout = () => {
-    setUser({ dni: undefined }), router.reload();
+    setUser({ dni: undefined })
+    router.reload();
     localStorage.removeItem("token"), router.push("/");
     return Notification.successMessage("Sesión cerrada con éxito.");
   };
 
   useEffect(() => {
     !user.dni ? setUser(parse) : null
-  }, []);
+  }, [router]);
   return (
     <>
       {size.width / size.height > 0.7 ? (

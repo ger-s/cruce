@@ -1,10 +1,10 @@
 import { Button, Form, Container, Icon } from "semantic-ui-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 import useInput from "../../../hooks/useInput";
 import Notification from "../../../utils/Notification";
-import bcryptjs from "bcryptjs";
+
 
 const EditPassword = ({ size, parse }) => {
   const router = useRouter();
@@ -83,7 +83,8 @@ const EditPassword = ({ size, parse }) => {
       });
       const success = await res.json();
       if (success.success) {
-       return  Notification.successMessage(success.message);
+        Notification.successMessage(success.message);
+        return router.push("/user")
       } else {
         return Notification.errorMessage("No se pudo modificar contraseña");
       }

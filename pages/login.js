@@ -5,9 +5,10 @@ import { Container } from "semantic-ui-react";
 import useInput from "../hooks/useInput";
 import Notification from "../utils/Notification";
 import jwt from "jsonwebtoken";
+import { useEffect } from "react";
 const { jwtPass } = require("../secret.json");
 
-const Login = ({ size }) => {
+const Login = ({ size, parse }) => {
   const router = useRouter();
 
   const email = useInput("email");
@@ -36,9 +37,6 @@ const Login = ({ size }) => {
           "token",
           JSON.stringify(success.headers.Authorization)
         );
-
-       
-        router.push('/')
         Notification.successMessage(success.body.successMessage);
         return router.reload()
       } else {
@@ -48,6 +46,10 @@ const Login = ({ size }) => {
       Notification.errorMessage(err);
     }
   };
+
+  useEffect(() => {
+    parse.dni ? router.push('/') : null
+  }, [parse])
 
   return (
     <Container>
