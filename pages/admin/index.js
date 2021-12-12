@@ -36,7 +36,7 @@ const HomeAdmin = ({ parse }) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token"),
+            "Authorization": localStorage.getItem("token")
           },
         });
         const success = await res.json();

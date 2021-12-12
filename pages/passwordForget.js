@@ -75,7 +75,9 @@ const PasswordForget = () => {
       const res = await fetch("/api/resetPassword", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+
         },
         body: JSON.stringify({
           email: email.value

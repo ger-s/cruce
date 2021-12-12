@@ -44,6 +44,8 @@ const SearchUser = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+
         },
         param: JSON.stringify({
           dni: dni.value,

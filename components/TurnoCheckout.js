@@ -24,6 +24,8 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+
         },
         body: JSON.stringify({
           horaTurno: `${daySelection}T${hourSelection.slice(0,2)}:${hourSelection.slice(3)}:00`,
@@ -52,6 +54,8 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+
         }
       })
       const success = await res.json()

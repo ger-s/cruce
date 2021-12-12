@@ -19,7 +19,8 @@ const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSel
       const res = await fetch(`/api/sucursal/turnos/getAllTurnos/${sucursalSelection}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
         },
         body: JSON.stringify({
           day: daySelection,
