@@ -83,10 +83,10 @@ const EditPassword = ({ size, parse }) => {
       });
       const success = await res.json();
       if (success.success) {
-        Notification.successMessage(success.message);
+        Notification.successMessage("Contraseña modificada exitosamente");
         return router.push("/user")
       } else {
-        return Notification.errorMessage("No se pudo modificar contraseña");
+        return Notification.errorMessage("No se pudo modificar la contraseña");
       }
     } catch (e) {}
   };
