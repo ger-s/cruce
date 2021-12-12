@@ -7,7 +7,7 @@ import Notification from "../utils/Notification";
 import { useEffect, useState } from "react";
 //import useValidations from "../hooks/useValidations";
 
-const Register = ({size}) => {
+const Register = ({size, parse}) => {
   const router = useRouter();
   const [nameValidation, setNameValidation] = useState({status: true, error: ""});
   const [lastNameValidation, setLastNameValidation] = useState({status: true, error: ""});
@@ -123,6 +123,10 @@ const Register = ({size}) => {
       Notification.errorMessage(successMessage);
     }
   };
+
+  useEffect(() => {
+    parse.dni ? router.push('/') : null
+  }, [parse])
 
   useEffect(() => {}, [name.value]);
 
