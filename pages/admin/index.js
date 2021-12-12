@@ -22,7 +22,9 @@ const HomeAdmin = () => {
         const res = await fetch(`/api/admin/getAllSucursales`, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("token")
+
           }
         });
         const success = await res.json();

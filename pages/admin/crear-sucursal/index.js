@@ -27,6 +27,8 @@ const CreateSucursal = ({size}) => {
         // headers va por default
         headers: {
           "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+
         },
         // es importante que al enviar algo, se haga el stringify
         body: JSON.stringify({

@@ -19,7 +19,9 @@ const HomeWithTurno = ({size, turno}) => {
         const res = await fetch(`/api/admin/delete/sucursal/historyItem/${turno[1]._id}`, {
           method: 'PUT',
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("token")
+
           },
           body: JSON.stringify({
             _id: turno[0]._id
@@ -50,7 +52,9 @@ useEffect(async()=>  {
       const res = await fetch(`/api/email/${turno[0].client.dni}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+
         },
         body: JSON.stringify({
          _id:turno[1]._id 
