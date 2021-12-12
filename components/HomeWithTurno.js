@@ -6,15 +6,38 @@ import { motion } from "framer-motion";
 
 
 const HomeWithTurno = ({size, turno}) => {
+  const router = useRouter()
   const today = new Date()
   const todaySeconds = today.getTime() / 1000
   const turnoSeconds = turno[0].date ? new Date (turno[0].date).getTime() / 1000 : null
 
   const [counter, setCounter] = useState(Math.round(turnoSeconds - todaySeconds))
 
+  const handleDelet = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await fetch(`/api/admin/delete/sucursal/historyItem/${turno[1]._id}`, {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          _id: turno[0]._id
+        })
+      })
+
+      const success = await res.json()
+      success.success && console.log(success)
+      router.reload()
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     counter > 0 && setTimeout(()=> {setCounter(counter-1)}, 1000)
   }, [counter])
+
   return (
     <motion.div
     className="ui container fluid"
@@ -61,7 +84,7 @@ const HomeWithTurno = ({size, turno}) => {
               <Button icon color="blue">
                 <Icon name="edit"/>
               </Button>
-              <Button icon color="red">
+              <Button icon color="red" onClick={handleDelet}>
                 <Icon name="trash" />
               </Button>
               </div>

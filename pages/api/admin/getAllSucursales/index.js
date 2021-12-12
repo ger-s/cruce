@@ -10,7 +10,6 @@ export default async (req, res) => {
     case "GET":
       try {
         const auth = await validateJWT(req);
-        console.log('auth', auth)
         if (auth.status === 401) {
           return res.status(401).json({ success: false, successMessage: auth.token })
         }
