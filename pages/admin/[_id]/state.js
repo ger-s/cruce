@@ -11,6 +11,7 @@ const State = () => {
 
   useEffect(async () => {
     const { _id } = router.query;
+   
     try {
       const res = await fetch(`/api/admin/getOneSucursal/${_id}`, {
         method: "GET",
@@ -27,6 +28,8 @@ const State = () => {
       } else return "salio mal";
     } catch (err) {}
   }, [router]);
+
+
 
   const handleClick = async (e, value, id) => {
     e.preventDefault();
@@ -88,7 +91,7 @@ const State = () => {
           {newTable.success
             ? newTable.data.history.map((data, i) => {
                 return (
-                  <Table.Row>
+                  <Table.Row key={i}>
                     {console.log(newTable)}
                     <Table.Cell> {data.client.name}</Table.Cell>
                     <Table.Cell> {data.date}</Table.Cell>
@@ -124,7 +127,7 @@ const State = () => {
               })
             : turno.map((data, i) => {
                 return (
-                  <Table.Row>
+                  <Table.Row key={i}>
                     {console.log(data)}
                     <Table.Cell> {data.client.name}</Table.Cell>
                     <Table.Cell> {data.date}</Table.Cell>

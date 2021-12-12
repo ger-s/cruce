@@ -36,8 +36,6 @@ const Login = ({ size }) => {
           "token",
           JSON.stringify(success.headers.Authorization)
         );
-
-       
         router.push('/')
         Notification.successMessage(success.body.successMessage);
         return router.reload()

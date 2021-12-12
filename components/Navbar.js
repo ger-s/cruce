@@ -17,6 +17,7 @@ import Notification from "../utils/Notification";
 // const { jwtPass } = require("../secret.json");
 
 const Navbar = ({ size, parse }) => {
+ 
   const router = useRouter();
   const [user, setUser] = useState({ dni: undefined });
   const [state, setState] = useState({ fixed: false, sidebarOpened: false });
