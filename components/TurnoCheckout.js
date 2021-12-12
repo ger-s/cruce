@@ -40,7 +40,7 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
         Notification.successMessage(success.successMessage)
         return router.push('/')
       } else {
-        Notification.errorMessage('algo salio mal al confirmar')
+        Notification.errorMessage('Algo salió mal al confirmar')
       }
     } catch(error) {
       console.log(error)
@@ -62,7 +62,7 @@ const TurnoCheckout = ({ sucursalSelection, daySelection, hourSelection, size, s
       if (success.success) {
         return setSucursal(success.data)
       } else {
-        console.log('algo salio mal')
+        console.log('Algo salió mal')
       }
     } catch(error) {
       console.log(error)

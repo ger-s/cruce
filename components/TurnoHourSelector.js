@@ -75,7 +75,7 @@ const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSel
           <Form>
             <Form.Input size="huge">
               <Dropdown
-                placeholder="Sucursal"
+                placeholder="Horario..."
                 selection
                 options={hourSelector}
                 onChange={handleSelection}

@@ -5,6 +5,9 @@ import SemanticDatepicker from "react-semantic-ui-datepickers";
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
 
 const TurnoDaySelector = ({ daySelection, size, step }) => {
+
+  const yesterday = new Date(Number(new Date().getFullYear()), Number(new Date().getMonth()), (Number(new Date().toLocaleDateString('es-AR').slice(0,2))))
+
   const handleSelection = (e) => {
     e.preventDefault();
     const str = e.target.dataset.testid.slice(
@@ -37,6 +40,8 @@ const TurnoDaySelector = ({ daySelection, size, step }) => {
           <Form>
             <Form.Input size="big">
               <SemanticDatepicker
+                //maxDate={maxDate}
+                minDate={yesterday}
                 locale={"es-ES"}
                 format={"DD-MM-YYYY"}
                 onChange={handleSelection}

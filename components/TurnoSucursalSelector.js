@@ -64,7 +64,7 @@ const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
           <Form>
             <Form.Input size="huge">
               <Dropdown
-                placeholder="Sucursal"
+                placeholder="Sucursal..."
                 search
                 selection
                 options={sucursales}

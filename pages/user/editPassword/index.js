@@ -83,10 +83,10 @@ const EditPassword = ({ size, parse }) => {
       });
       const success = await res.json();
       if (success.success) {
-        Notification.successMessage(success.message);
+        Notification.successMessage("Contraseña modificada exitosamente");
         return router.push("/user")
       } else {
-        return Notification.errorMessage("No se pudo modificar contraseña");
+        return Notification.errorMessage("No se pudo modificar la contraseña");
       }
     } catch (e) {}
   };
@@ -187,7 +187,7 @@ const EditPassword = ({ size, parse }) => {
         </Form>
 
         <Button animated onClick={() => router.back()}>
-          <Button.Content visible>Volver atrás</Button.Content>
+          <Button.Content visible>Atrás</Button.Content>
           <Button.Content hidden>
             <Icon name="arrow left" />
           </Button.Content>

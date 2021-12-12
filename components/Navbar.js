@@ -29,13 +29,17 @@ const Navbar = ({ size, parse }) => {
 
   const handleLogout = () => {
     setUser({ dni: undefined })
-    router.reload();
-    localStorage.removeItem("token"), router.push("/");
-    return Notification.successMessage("Sesión cerrada con éxito.");
+    localStorage.removeItem("token")
+    Notification.successMessage("Sesión cerrada con éxito.");
+    setTimeout(() => router.reload(), 2000)
   };
 
   useEffect(() => {
-    !user.dni ? setUser(parse) : null
+    if (!parse.dni) {
+      if (router.pathname !== '/' && router.pathname !== '/login' && router.pathname !== '/register') {
+        router.push('/')
+      }
+    }
   }, [router]);
   return (
     <>
@@ -96,7 +100,7 @@ const Navbar = ({ size, parse }) => {
                       </>
                     ) : (
                       <>
-                          {( parse.role === "admin" || parse.role === "operador"?
+                          {( parse.role === "admin" || parse.role === "operator"?
                             <>
                         <h3 style={{ marginRight: "1em", marginTop: "0.6em" }}>
                           {parse.role}

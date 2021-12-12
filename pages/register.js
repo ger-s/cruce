@@ -30,7 +30,7 @@ const Register = ({size, parse}) => {
     if (password.value.length > 7 && password.value.length < 30) {
       return setPasswordValidation({status: true, error: ""});
     } else {
-      return setPasswordValidation({status: false, error: "La contraseña sólo puede tener entre 8 y 30 caracteres."});
+      return setPasswordValidation({status: false, error: "La contraseña debe tener entre 8 y 30 caracteres."});
     }
   };
 
@@ -48,7 +48,7 @@ const Register = ({size, parse}) => {
     if (!dni.value.match("^[0-9]+$")) {
       return setDniValidation({status: false, error: "El DNI debe tener sólo números."})
     } else if (dni.value.length < 7 || dni.value.length > 8) {
-      return setDniValidation({status: false, error: "El DNI debe tener sólo entre 7 y 8 caracteres."});
+      return setDniValidation({status: false, error: "El DNI debe tener entre 7 y 8 caracteres."});
     } else {
       return setDniValidation({status: true, error: ""});
     }
@@ -86,7 +86,7 @@ const Register = ({size, parse}) => {
       !phoneValidation.status ||
       !emailValidation.status
     ) {
-      Notification.errorMessage("Hay campos erroneos");
+      Notification.errorMessage("Hay campos erróneos");
       return false;
     }
     e.preventDefault();
@@ -113,14 +113,19 @@ const Register = ({size, parse}) => {
       // hay que convertirlo a json primero
       const { data, success, successMessage } = await res.json();
 
+      console.log("DATAAAA", data)
+
       if (success) {
         Notification.successMessage(successMessage);
         return router.push("/login");
       } else {
-        Notification.errorMessage(successMessage);
+        if(data.keyValue.email) return Notification.errorMessage(`El email ${data.keyValue.email} ya existe`);
+        
+        if(data.keyValue.dni) return Notification.errorMessage(`El DNI ${data.keyValue.dni} ya existe`);
+        
       }
     } catch (error) {
-      Notification.errorMessage(successMessage);
+      Notification.errorMessage("Registro fallido");
     }
   };
 

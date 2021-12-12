@@ -70,12 +70,12 @@ const UserDni = () => {
     try {
       const swal = await Swal.fire({
         title: "¿Estás seguro?",
-        text: "¡Estos cambios no se podran revertir!",
+        text: "¡Estos cambios no se podrán revertir!",
         icon: "¡Atención!",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Si, Eliminalo!",
+        confirmButtonText: "Sí, eliminar",
         cancelButtonText: "Cancelar"
       });
       console.log("result swal", swal);
@@ -119,7 +119,7 @@ const UserDni = () => {
               <Card.Meta>{user.lastName}</Card.Meta>
               <Card.Description>Email: {user.email}</Card.Description>
               <Card.Description>DNI: {user.dni} </Card.Description>
-              <Card.Description>Telefono: {user.phone}</Card.Description>
+              <Card.Description>Teléfono: {user.phone}</Card.Description>
               <Card.Description>
                 Rol: <strong>{user.role}</strong>
               </Card.Description>
@@ -143,7 +143,7 @@ const UserDni = () => {
             // tabIndex="0"
             onClick={() => router.back()}
           >
-            <div className="visible content"> Atras </div>
+            <div className="visible content"> Atrás </div>
             <div className="hidden content">
               <i className="left arrow icon"></i>
             </div>

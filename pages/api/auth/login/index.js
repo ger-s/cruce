@@ -19,7 +19,7 @@ export default async (req, res) => {
             body: {
               success: false,
               data: "",
-              successMessage: "Usuario no encontrado",
+              successMessage: "Credenciales incorrectas",
               token: ""
             }
           });
@@ -34,7 +34,7 @@ export default async (req, res) => {
             headers: { Authorization: null },
             body: {
               success: false,
-              successMessage: "Contraseña incorrecta",
+              successMessage: "Credenciales incorrectas",
               data: "",
               token: ""
             }

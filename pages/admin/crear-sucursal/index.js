@@ -148,7 +148,7 @@ const CreateSucursal = ({size}) => {
         </form>
 
         <Button animated onClick={()=>router.back()}  >
-      <Button.Content visible>Volver atras</Button.Content>
+      <Button.Content visible>Atrás</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow left' />
       </Button.Content>
