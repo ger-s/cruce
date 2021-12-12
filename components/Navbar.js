@@ -100,7 +100,7 @@ const Navbar = ({ size, parse }) => {
                       </>
                     ) : (
                       <>
-                          {( parse.role === "admin" || parse.role === "operador"?
+                          {( parse.role === "admin" || parse.role === "operator"?
                             <>
                         <h3 style={{ marginRight: "1em", marginTop: "0.6em" }}>
                           {parse.role}

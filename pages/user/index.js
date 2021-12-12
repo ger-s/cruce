@@ -210,7 +210,7 @@ const HomeUser = ({ parse }) => {
             <Container>
               <Card.Content>
                 <Button animated onClick={() => change()}>
-                  <Button.Content visible>Volver atrás</Button.Content>
+                  <Button.Content visible>Atrás</Button.Content>
                   <Button.Content hidden>
                     <Icon name="arrow left" />
                   </Button.Content>

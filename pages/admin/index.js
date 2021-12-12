@@ -158,7 +158,7 @@ const HomeAdmin = ({ parse }) => {
                 selection
                 options={sucursales}
                 onChange={handleClick}
-                placeholder="Seleccioná sucursal"
+                placeholder="Seleccioná una sucursal"
               />
               <Container textAlign="center">
                 <Button

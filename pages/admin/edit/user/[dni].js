@@ -143,7 +143,7 @@ const UserDni = () => {
             // tabIndex="0"
             onClick={() => router.back()}
           >
-            <div className="visible content"> Atras </div>
+            <div className="visible content"> Atrás </div>
             <div className="hidden content">
               <i className="left arrow icon"></i>
             </div>
