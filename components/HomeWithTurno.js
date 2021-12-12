@@ -122,7 +122,7 @@ useEffect(async()=>  {
               <Button icon color="blue">
                 <Icon name="edit"/>
               </Button>
-              <Button icon color="red" onClick={handleDelet}>
+              <Button icon color="red" onClick={handleDelete}>
                 <Icon name="trash" />
               </Button>
               </div>

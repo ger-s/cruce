@@ -41,7 +41,7 @@ const HomeAdmin = () => {
           });
         }
       } catch (e) {
-        return Notification.errorMessage("nada");
+        return Notification.errorMessage("no tenés permisos admin");
       }
     }
   }, [noSeUsa]);
