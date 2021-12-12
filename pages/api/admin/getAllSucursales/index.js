@@ -9,8 +9,8 @@ export default async (req, res) => {
   switch (method) {
     case "GET":
       try {
-       /*  const auth = await validateJWT(req);
-        console.log('auth', auth)
+        const auth = await validateJWT(req);
+
         if (auth.status === 401) {
           return res.status(401).json({ success: false, successMessage: auth.token })
         }
