@@ -12,24 +12,29 @@ const HomeWithTurno = ({size, turno}) => {
   const turnoSeconds = turno[0].date ? new Date (turno[0].date).getTime() / 1000 : null
 
   const [counter, setCounter] = useState(Math.round(turnoSeconds - todaySeconds))
-  const handleDelet = async (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault()
-    try {
-      const res = await fetch(`/api/admin/delete/sucursal/historyItem/${turno[1]._id}`, {
-        method: 'PUT',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          _id: turno[0]._id
+    if (counter > 7200) {
+      try {
+        const res = await fetch(`/api/admin/delete/sucursal/historyItem/${turno[1]._id}`, {
+          method: 'PUT',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            _id: turno[0]._id
+          })
         })
-      })
-
-      const success = await res.json()
-      success.success && console.log(success)
-      router.reload()
-    } catch(error) {
-      console.log(error)
+  
+        const success = await res.json()
+        success.success && console.log(success)
+        Notification.successMessage(success.successMessage)
+        router.reload()
+      } catch(error) {
+        console.log(error)
+      }
+    } else {
+      Notification.errorMessage('No se puede borrar, faltan menos de 2 horas para el turno')
     }
   }
 
