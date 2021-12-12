@@ -40,7 +40,7 @@ const HomeWithTurno = ({size, turno}) => {
         console.log(error)
       }
     } else {
-      Notification.errorMessage('No se puede borrar, faltan menos de 2 horas para el turno')
+      Notification.errorMessage('Sólo se puede cancelar hasta con 2 horas de antelación')
     }
   }
 
