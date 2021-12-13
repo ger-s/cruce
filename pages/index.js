@@ -34,7 +34,7 @@ export default function Home({parse}) {
     <>
    {sucursales[0] ? (
       <>
-      < HomeWithTurno turno={sucursales}/>
+      < HomeWithTurno turno={sucursales} parse={parse}/>
     </>
     ) : ( 
    <div>

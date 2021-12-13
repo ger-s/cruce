@@ -6,13 +6,17 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 
 
-const HomeWithTurno = ({size, turno}) => {
+
+const HomeWithTurno = ({size, turno, parse}) => {
   const router = useRouter()
   const today = new Date()
   const todaySeconds = today.getTime() / 1000
   const turnoSeconds = turno[0].date ? new Date (turno[0].date).getTime() / 1000 : null
 
   const [counter, setCounter] = useState(Math.round(turnoSeconds - todaySeconds))
+
+
+
   const handleDelete = async (e) => {
     e.preventDefault()
     if (counter > 7200) {
@@ -36,6 +40,7 @@ const HomeWithTurno = ({size, turno}) => {
 
             },
             body: JSON.stringify({
+              dni: parse.dni,
               _id: turno[0]._id,
               sucursalName: turno[1].name,
             horaTurno: `${turno[0].date.slice(0, 10)}T${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
@@ -63,7 +68,7 @@ const HomeWithTurno = ({size, turno}) => {
   }, [counter])
 
 useEffect(async()=>  {
-  if(counter==="86400") {
+  if(counter===86400) {
     try{
     
       const res = await fetch(`/api/email/${turno[0].client.dni}`, {
@@ -78,16 +83,12 @@ useEffect(async()=>  {
         })
       });
       const success = await res.json();
-    
-      console.log("llegoo", success);
-    
+        
       if (success.success) {
-        // localStorage.setItem("dni", JSON.stringify(success.data));
-        return router.push(`/admin/info/${success.data._id}`);
-        // setUser(success);
+      
       } else {
         return Notification.errorMessage(success.successMessage);
-      }
+      } 
     
     }catch(error) {
       return Notification.errorMessage("Seleccioná una sucursal");
@@ -97,6 +98,7 @@ useEffect(async()=>  {
   
 },[counter])
 
+console.log(counter)
   return (
     <motion.div
     className="ui container fluid"
@@ -132,7 +134,11 @@ useEffect(async()=>  {
             <Card.Content>
               <Card.Description>
                 {`Hora: ${new Date(turno[0].date).toLocaleTimeString('es-AR')}`}<br/>
-                {`Quedan: ${Math.floor(counter/3600)}:${Math.floor((counter/60) % 60)}:${counter % 60}`}<br/>
+                
+                { counter < 86400?
+                  (`Quedan: ${Math.floor(counter/3600)}:${Math.floor((counter/60) % 60)}:${counter % 60}`) : (null)
+                }
+
 
                 <div >
                 </div>
