@@ -40,7 +40,7 @@ const HomeAdmin = ({ parse }) => {
           },
         });
         const success = await res.json();
-        success.role !== "admin" ? router.push("/404") : setWaitSuccess(true)
+        success.role !== "admin" ? router.push("/") : setWaitSuccess(true)
         if (success.success) {
           success.data.map((sucursales, index) => {
             setSucursales((old) => [

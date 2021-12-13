@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 
 
-const HomeWithTurno = ({size, turno}) => {
+const HomeWithTurno = ({size, turno,parse}) => {
   const router = useRouter()
   const today = new Date()
   const todaySeconds = today.getTime() / 1000
@@ -14,6 +14,7 @@ const HomeWithTurno = ({size, turno}) => {
 
   const [counter, setCounter] = useState(Math.round(turnoSeconds - todaySeconds))
   const handleDelete = async (e) => {
+    console.log(parse,"SDSDSD")
     e.preventDefault()
     if (counter > 7200) {
       try {
@@ -41,7 +42,23 @@ const HomeWithTurno = ({size, turno}) => {
             horaTurno: `${turno[0].date.slice(0, 10)}T${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
           })
         })
-        
+        try {
+          const res = await fetch(`/api/user/edit/${parse.id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: localStorage.getItem("token"),
+            },
+            body: JSON.stringify({
+              conTurno: false,
+            }),
+          });
+          const success = await res.json();
+        } catch (error) {}
+  
+
+
+
         const success = await res.json()
         if (success.success) {
           Notification.successMessage(success.successMessage)

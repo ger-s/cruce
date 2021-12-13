@@ -14,9 +14,33 @@ const Turno = ({ size, parse }) => {
   const [hourSelection, setHourSelection] = useState("");
   const [currentStep, setCurrentStep] = useState("sucursal");
 
-  useEffect(() => {
-    console.log(parse);
-  }, [parse]);
+  useEffect(async() => {
+    try {
+    console.log(parse,"SSDSDSD")
+  const res =await fetch(`/api/user/me/${parse.id}`,  {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
+    },
+    
+  }) ;
+  const success = await res.json();
+   if(success.data.conTurno)  {
+    router.push("/")
+   }
+
+
+  }catch(err) {
+
+
+
+  }
+
+
+
+
+  }, [router,parse]);
 
   /* useEffect( async () => {
     try {

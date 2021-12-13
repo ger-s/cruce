@@ -35,7 +35,7 @@ function _id() {
       if (success.success) {
         setSucursal(success.data);
       } else {
-        return Notification.errorMessage("Ha ocurrido un error");
+        return console.log("Ha ocurrido un error");
       }
     } catch (e) {
       return Notification.errorMessage(e);
