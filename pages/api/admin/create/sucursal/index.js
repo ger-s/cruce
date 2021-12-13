@@ -24,7 +24,7 @@ export default async (req, res) => {
           .status(201)
           .json({ success: true, successMessage: "¡Sucursal creada!", data: createSucursal });
       } catch (error) {
-        res.status(400).json({ success: false, successMessage: error });
+        res.status(400).json({ success: false, successMessage: "BACK" });
       }
 
     default:
