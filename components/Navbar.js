@@ -36,11 +36,11 @@ const Navbar = ({ size, parse }) => {
 
   useEffect(() => {
     if (parse.dni === false) {
-      if (router.pathname !== '/' && router.pathname !== '/login' && router.pathname !== '/register') {
+      if (router.pathname !== '/' && router.pathname !== '/login' && router.pathname !== '/register' && router.pathname !== '/passwordForget') {
         router.push('/')
       }
     }
-  }, [router]);
+  }, [parse]);
   return (
     <>
       {size.width / size.height > 0.7 ? (
