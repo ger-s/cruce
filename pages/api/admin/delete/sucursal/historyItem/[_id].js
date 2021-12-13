@@ -2,6 +2,9 @@ import dbConnect from "../../../../../../utils/dbConnect";
 import Sucursal from "../../../../../../models/Sucursal";
 import validateJWT from "../../../../../../middleware/_middleware";
 import Turno from "../../../../../../models/Turno";
+import User from "../../../../../../models/User";
+import sendEmail from "../../../../../../utils/sendEmail"
+
 const mongoose = require('mongoose')
 dbConnect();
 
@@ -20,9 +23,12 @@ export default async (req, res) => {
         auth.token.role !== "admin"
           ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
           : null; */
-        const sucursal = await Sucursal.findOne({
-          _id: `${req.query._id}`,
-        });
+          /* const user = await User.findOne({ dni: `${req.query.dni}` }); */
+          const sucursal = await Sucursal.findOne({
+            _id: `${req.query._id}`,
+          });
+          
+        const user = await User.findOne({ dni: `${req.body.dni}` });
         
         const index = await sucursal.history.findIndex(turno => turno._id.toString() === req.body._id )
         
@@ -42,6 +48,13 @@ export default async (req, res) => {
               turnosRestantes: {$sum: ["$turnosRestantes", 1]}
             }
           }]);
+
+         
+          sendEmail(
+            user.email,
+            "Cancelación de turno",
+            `Hola ${user.name}! \nCancelaste tu turno satisfactoriamente.`
+          ); 
         return res.status(201).json({
           success: true,
           successMessage: "Turno borrado satisfactoriamente",

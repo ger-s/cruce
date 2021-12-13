@@ -22,10 +22,22 @@ export default async (req, res) => {
  */
         const user = await User.findOne({ dni: `${req.query.dni}` });
 
-        !user ? res.status(400).json({ success: false, successMessage: "hubo un problema con el usuario." }) : null;
+        !user
+          ? res
+              .status(400)
+              .json({
+                success: false,
+                successMessage: "hubo un problema con el usuario.",
+              })
+          : null;
+
+        const sucursalEncontrada = await Sucursal.findOne({
+          _id: `${req.body.sucursal._id}`,
+        });
 
         const createTurno = await Sucursal.updateOne(
           { _id: req.body.sucursal._id },
+
           {
             $push: {
               history: {
@@ -40,21 +52,41 @@ export default async (req, res) => {
             },
           }
         );
-        const update = await Turno.updateOne({
-          "sucursal.name": req.body.sucursal.name,
-          horaTurno: new Date(req.body.horaTurno),
-        }, [{
-          $set: {
-            turnosRestantes: {$sum: ["$turnosRestantes", -1]}
-          }
-        }]);
-        /* sendEmail(
+        const update = await Turno.updateOne(
+          {
+            "sucursal.name": req.body.sucursal.name,
+            horaTurno: new Date(req.body.horaTurno),
+          },
+          [
+            {
+              $set: {
+                turnosRestantes: { $sum: ["$turnosRestantes", -1] },
+              },
+            },
+          ]
+        );
+
+        sendEmail(
           user.email,
           "registro de turno",
-          `Hola ${user.name}! \nTe enviamos la confirmación del turno. \nSucursal: ${req.body.sucursal.name}, \nDirección: ${createTurno.sucursal.address},\nHorario: ${createTurno.horaTurno}  \nContacto: ${createTurno.sucursal.phone}`
-        ); */
+          `Hola ${
+            user.name
+          }! \nTe enviamos la confirmación del turno. \nSucursal: ${
+            req.body.sucursal.name
+          }, \nDirección: ${sucursalEncontrada.address},\nDía: ${new Date(
+            req.body.horaTurno
+          ).toLocaleDateString("es-AR")}\nHorario: ${new Date(
+            req.body.horaTurno
+          ).toLocaleTimeString("es-AR")}\nContacto: ${sucursalEncontrada.phone}`
+        );
 
-        res.status(200).json({ success: true, successMessage: "Turno creado con éxito", data: createTurno });
+        res
+          .status(200)
+          .json({
+            success: true,
+            successMessage: "Turno creado con éxito",
+            data: createTurno,
+          });
       } catch (error) {
         res.status(400).json({ success: console.log(error) });
       }

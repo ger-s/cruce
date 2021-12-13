@@ -27,7 +27,7 @@ export default async (req, res) => {
             role: auth.token?.role
           });
       } catch (error) {
-        res.status(400).json({body: { success: false, successMessage: 'sdfsdfsdf' }});
+        res.status(400).json({body: { success: false, successMessage: error }});
       }
       break;
 
