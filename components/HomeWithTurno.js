@@ -129,13 +129,11 @@ useEffect(async()=>  {
             </Card.Content>
             <Card.Content extra>
               <div className="ui container two buttons" style={{padding: "10%"}}>
-              <Button icon color="blue">
-                <Icon name="edit"/>
-              </Button>
               <Button icon color="red" onClick={handleDelete}>
                 <Icon name="trash" />
               </Button>
               </div>
+              <p style={{color:"blue", fontWeight:"bold"}}> Para modificar el turno, primero cancelelo y vuelva a sacar otro. </p>
             </Card.Content>
           </Card>
         </div>
