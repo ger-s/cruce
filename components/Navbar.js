@@ -63,9 +63,13 @@ const Navbar = ({ size, parse }) => {
                 size="large"
                 style={{ backgroundColor: "white" }}
               >
+
+
                 <Container>
                   <Menu.Item position="left">
-                    <Link href="/">
+                  {( parse.role === "admin" || parse.role === "operator"?(
+
+                    <Link href="/admin">
                       <a>
                         <Image
                           pointing
@@ -74,7 +78,16 @@ const Navbar = ({ size, parse }) => {
                           //disabled
                         />
                       </a>
-                    </Link>
+                    </Link>): (<Link href="/">
+                      <a>
+                        <Image
+                          pointing
+                          src="/cruce.svg"
+                          size="tiny"
+                          //disabled
+                        />
+                      </a>
+                    </Link>)  )}
                   </Menu.Item>
                   {/* <Menu.Item as="a" active>
                     Home
@@ -102,9 +115,11 @@ const Navbar = ({ size, parse }) => {
                       <>
                           {( parse.role === "admin" || parse.role === "operator"?
                             <>
+                            <Link  href="/admin">
                         <h3 style={{ marginRight: "1em", marginTop: "0.6em" }}>
                           {parse.role}
                         </h3>
+                        </Link>
                         <Button as="a" onClick={handleLogout} secondary>
                           Cerrar sesión
                         </Button>
@@ -161,9 +176,11 @@ const Navbar = ({ size, parse }) => {
                 <div>
                 {( parse.role === "admin" || parse.role === "operador" ?
                    <>
+                  <Link  href="/admin">
                   <Menu.Item>
                     <h5>{parse.role}</h5>
                   </Menu.Item>
+                  </Link>
                   <Menu.Item onClick={handleLogout}>
                     <p onClick={handleSidebarHide}>Cerrar sesión</p>
                   </Menu.Item>
@@ -205,13 +222,21 @@ const Navbar = ({ size, parse }) => {
                     style={{ border: "none" }}
                   >
                     <Menu.Item position="left">
-                      <Link href="/">
+                    {( parse.role === "admin" || parse.role === "operator"?(
+
+                      <Link href="/admin">
                         <Image
                           src="https://www.e-cruce.com/wp-content/uploads/2019/10/cruce.svg"
                           size="tiny"
                           //disabled
                         />
-                      </Link>
+                      </Link>):( <Link href="/">
+                        <Image
+                          src="https://www.e-cruce.com/wp-content/uploads/2019/10/cruce.svg"
+                          size="tiny"
+                          //disabled
+                        />
+                      </Link>)) }
                     </Menu.Item>
 
                     <Menu.Item position="right" onClick={handleToggle}>
