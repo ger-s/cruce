@@ -40,7 +40,7 @@ const Navbar = ({ size, parse }) => {
         router.push('/')
       }
     }
-  }, [router]);
+  }, [parse]);
   return (
     <>
       {size.width / size.height > 0.7 ? (

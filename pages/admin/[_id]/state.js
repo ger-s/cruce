@@ -96,7 +96,7 @@ const State = () => {
                   <Table.Row key={i}>
                     {console.log(newTable)}
                     <Table.Cell> {data.client.name}</Table.Cell>
-                    <Table.Cell> {data.date}</Table.Cell>
+                    <Table.Cell> {new Date(data.date).toLocaleString("es-AR")}</Table.Cell>
                     <Table.Cell> {data.client.dni}</Table.Cell>
                     <Table.Cell> {data.state}</Table.Cell>
 
@@ -132,7 +132,7 @@ const State = () => {
                   <Table.Row key={i}>
                     {console.log(data)}
                     <Table.Cell> {data.client.name}</Table.Cell>
-                    <Table.Cell> {data.date}</Table.Cell>
+                    <Table.Cell> {new Date(data.date).toLocaleString("es-AR")}</Table.Cell>
                     <Table.Cell> {data.client.dni}</Table.Cell>
                     <Table.Cell> {data.state}</Table.Cell>
 
