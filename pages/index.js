@@ -5,9 +5,9 @@ import HomeWithTurno from "../components/HomeWithTurno";
 
 
 export default function Home({parse}) {
+
   const [sucursales, setSucursales] = useState([])
 
-  console.log('esto', sucursales)
 
   useEffect(async () =>{
     try {

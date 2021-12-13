@@ -7,23 +7,26 @@ const State = () => {
   const router = useRouter();
   const [turno, setTurno] = useState([]);
   const [idSucursal, setIdSucursal] = useState("");
-  const [newTable, setNewTable] = useState([]);
-
+  const yesterday = new Date(new Date().toLocaleDateString())
+  const filterTurno = turno.filter((turno) => (yesterday.getTime() <= (new Date(turno.date).getTime())) && ((new Date(turno.date).getTime()) <= yesterday.getTime() + 604800000))
+  const sortTurno = filterTurno.sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime()
+  })
+  
   useEffect(async () => {
     const { _id } = router.query;
-   
+    
     try {
       const res = await fetch(`/api/admin/getOneSucursal/${_id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           "Authorization": localStorage.getItem("token")
-
         },
       });
-
+      
       const success = await res.json();
-
+      
       if (success.success) {
         setTurno(success.data.history);
         setIdSucursal(success.data._id);
@@ -60,12 +63,10 @@ const State = () => {
       const success =  await res.json();
        if (success) {
         Swal.fire("¡Estado modificado!", "Asistencia modificada", "success");
-        
+        setTimeout(() => {router.reload()}, 2000);
       } else {
         return Notification.errorMessage("Ha ocurrido un error");
       } 
-      
-      setNewTable(success);
   
     }
     } catch (e) {
@@ -90,58 +91,29 @@ const State = () => {
         </Table.Header>
 
         <Table.Body>
-          {newTable.success
-            ? newTable.data.history.map((data, i) => {
+          {sortTurno.map((data, i) => {
                 return (
                   <Table.Row key={i}>
-                    {console.log(newTable)}
                     <Table.Cell> {data.client.name}</Table.Cell>
                     <Table.Cell> {new Date(data.date).toLocaleString("es-AR")}</Table.Cell>
                     <Table.Cell> {data.client.dni}</Table.Cell>
                     <Table.Cell> {data.state}</Table.Cell>
 
-                    {data.state === "pendiente" ? (
-                      <div>
-                        <Table.Cell>
-                          <Button
-                            onClick={handleClick}
-                            positive
-                            value={data._id}
-                          >
-                            Asistió
-                          </Button>
-                          <Button
-                            onClick={handleClick}
-                            negative
-                            value={data._id}
-                          >
-                            No asistió
-                          </Button>
-                        </Table.Cell>
-                      </div>
-                    ) : (
-                      <Table.Cell>
-                        <p>Confirmada</p>
-                      </Table.Cell>
-                    )}
-                  </Table.Row>
-                );
-              })
-            : turno.map((data, i) => {
-                return (
-                  <Table.Row key={i}>
-                    {console.log(data)}
-                    <Table.Cell> {data.client.name}</Table.Cell>
-                    <Table.Cell> {new Date(data.date).toLocaleString("es-AR")}</Table.Cell>
-                    <Table.Cell> {data.client.dni}</Table.Cell>
-                    <Table.Cell> {data.state}</Table.Cell>
-
-                    {data.state === "pendiente" ? (
+                    {data.state === "pendiente" && (new Date(data.date).getTime()) <= (new Date().getTime()) ? (
                       <Table.Cell>
                         <Button onClick={handleClick} positive value={data._id}>
                           Asistió
                         </Button>
                         <Button onClick={handleClick} negative value={data._id}>
+                          No asistió
+                        </Button>
+                      </Table.Cell>
+                    ) : data.state === "pendiente" ? (
+                      <Table.Cell>
+                        <Button onClick={handleClick} positive value={data._id} disabled>
+                          Asistió
+                        </Button>
+                        <Button onClick={handleClick} negative value={data._id} disabled>
                           No asistió
                         </Button>
                       </Table.Cell>
