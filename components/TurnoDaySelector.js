@@ -48,6 +48,7 @@ const TurnoDaySelector = ({ daySelection, size, step }) => {
               />
             </Form.Input>
           </Form>
+      <a><p style={{marginTop: '20%'}} onClick={() => step('sucursal')}>Volver al paso anterior</p></a>
         </div>
       </div>
     </motion.div>

@@ -16,7 +16,7 @@ const Turno = ({ size, parse }) => {
 
   useEffect(() => {
     console.log(parse);
-  }, []);
+  }, [parse]);
 
   /* useEffect( async () => {
     try {
