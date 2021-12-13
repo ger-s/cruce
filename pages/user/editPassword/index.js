@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import useInput from "../../../hooks/useInput";
 import Notification from "../../../utils/Notification";
 
-
 const EditPassword = ({ size, parse }) => {
   const router = useRouter();
 
@@ -84,7 +83,7 @@ const EditPassword = ({ size, parse }) => {
       const success = await res.json();
       if (success.success) {
         Notification.successMessage("Contraseña modificada exitosamente");
-        return router.push("/user")
+        return router.push("/user");
       } else {
         return Notification.errorMessage("No se pudo modificar la contraseña");
       }
@@ -108,6 +107,7 @@ const EditPassword = ({ size, parse }) => {
               className={currentPassValidation.status ? "field" : "field error"}
             >
               <input
+                required
                 type="password"
                 style={
                   size.width / size.height > 0.7
@@ -130,6 +130,7 @@ const EditPassword = ({ size, parse }) => {
               className={passValidation.status ? "field" : "field error"}
             >
               <input
+                required
                 type="password"
                 placeholder="Contraseña de entre 8 y 30 caracteres"
                 style={
@@ -153,6 +154,7 @@ const EditPassword = ({ size, parse }) => {
               className={confirmPassValidation.status ? "field" : "field error"}
             >
               <input
+                required
                 type="password"
                 style={
                   size.width / size.height > 0.7
