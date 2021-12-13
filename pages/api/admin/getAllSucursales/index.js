@@ -24,6 +24,7 @@ export default async (req, res) => {
             success: true,
             successMessage: "Sucursales encontradas",
             data: sucursales,
+            role: auth.token?.role
           });
       } catch (error) {
         res.status(400).json({body: { success: false, successMessage: 'sdfsdfsdf' }});

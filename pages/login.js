@@ -21,7 +21,7 @@ const Login = ({ size, parse }) => {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
           
         },
         body: JSON.stringify({
@@ -31,14 +31,13 @@ const Login = ({ size, parse }) => {
       });
       const success = await res.json();
 
-      console.log("success =>>>>>>>>",success);
       if (success.body.success) {
         localStorage.setItem(
           "token",
           JSON.stringify(success.headers.Authorization)
         );
         Notification.successMessage(success.body.successMessage);
-        return router.reload()
+        setTimeout(() => router.reload(), 2100)
       } else {
         Notification.errorMessage(success.body.successMessage);
       }
@@ -48,7 +47,11 @@ const Login = ({ size, parse }) => {
   };
 
   useEffect(() => {
-    parse.dni ? router.push('/') : null
+    if (parse.dni) {
+      parse.role === 'user' && router.push('/')
+      parse.role === 'admin' && router.push('/admin')
+      parse.role === 'operator' && router.push('/admin')
+    }
   }, [parse])
 
   return (

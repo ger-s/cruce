@@ -28,16 +28,6 @@ const CreateSucursal = ({size}) => {
   });
 
 
-  // Hacer la logica para limpiar el input cuando hago click, y si no completo que me vuelva el value original
-
-/*   const handleClick = (e) => {
-    setForm({
-      ...form,
-      [e.target.value]: "",
-  });
-  } */
-
-
   useEffect(async () => {
     try {
       const res = await fetch(`/api/admin/getOneSucursal/${query._id}`, {
@@ -64,7 +54,7 @@ const CreateSucursal = ({size}) => {
       });
       } 
       else {
-        Notification.errorMessage("hola elseee");
+        Notification.errorMessage("Ha habido un error");
       }
 
     } catch (error) {
@@ -217,7 +207,7 @@ const CreateSucursal = ({size}) => {
           </div>
         </form>
         <Button animated onClick={()=>router.back()}  >
-      <Button.Content visible>Volver atras</Button.Content>
+      <Button.Content visible>Atrás</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow left' />
       </Button.Content>

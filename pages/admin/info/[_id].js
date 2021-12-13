@@ -26,6 +26,8 @@ function _id() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+
         },
       });
 
@@ -33,7 +35,7 @@ function _id() {
       if (success.success) {
         setSucursal(success.data);
       } else {
-        return Notification.errorMessage("Ha ocurrido un error");
+        return console.log("Ha ocurrido un error");
       }
     } catch (e) {
       return Notification.errorMessage(e);
@@ -95,8 +97,8 @@ function _id() {
           <Card.Header>{}</Card.Header>
           <Card.Meta>{}</Card.Meta>
           <Card.Description>Nombre: {sucursal.name}</Card.Description>
-          <Card.Description>Dirección: {sucursal.phone}</Card.Description>
-          <Card.Description>Telefono: {sucursal.phone}</Card.Description>
+          <Card.Description>Dirección: {sucursal.address}</Card.Description>
+          <Card.Description>Teléfono: {sucursal.phone}</Card.Description>
           <Card.Description>
             Horario de Apertura: {sucursal.openingTime}
           </Card.Description>
@@ -127,7 +129,7 @@ function _id() {
       <Container>
         
       <Button animated onClick={()=>router.back()} >
-      <Button.Content visible>Volver atras</Button.Content>
+      <Button.Content visible>Atrás</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow left' />
       </Button.Content>

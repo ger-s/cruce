@@ -27,6 +27,8 @@ const CreateSucursal = ({size}) => {
         // headers va por default
         headers: {
           "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+
         },
         // es importante que al enviar algo, se haga el stringify
         body: JSON.stringify({
@@ -146,7 +148,7 @@ const CreateSucursal = ({size}) => {
         </form>
 
         <Button animated onClick={()=>router.back()}  >
-      <Button.Content visible>Volver atras</Button.Content>
+      <Button.Content visible>Atrás</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow left' />
       </Button.Content>

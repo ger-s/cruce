@@ -17,6 +17,8 @@ const State = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+
         },
       });
 
@@ -25,7 +27,7 @@ const State = () => {
       if (success.success) {
         setTurno(success.data.history);
         setIdSucursal(success.data._id);
-      } else return "salio mal";
+      } else return "Algo salió mal";
     } catch (err) {}
   }, [router]);
 
@@ -36,12 +38,12 @@ const State = () => {
     try {
       const swal = await Swal.fire({
         title: "¿Estás seguro?",
-        text: "¡Estos cambios no se podran revertir!",
+        text: "¡Estos cambios no se podrán revertir!",
         icon: "¡Atención!",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Si, cambiar estado!",
+        confirmButtonText: "¡Sí, cambiar estado!",
         cancelButtonText: "Cancelar"
       });
       if(swal.isConfirmed){
@@ -57,7 +59,7 @@ const State = () => {
       });
       const success =  await res.json();
        if (success) {
-        Swal.fire("Estado cambiado!", "Asistencia modificada", "success");
+        Swal.fire("¡Estado modificado!", "Asistencia modificada", "success");
         
       } else {
         return Notification.errorMessage("Ha ocurrido un error");
@@ -78,7 +80,7 @@ const State = () => {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Nombre</Table.HeaderCell>
-            <Table.HeaderCell>Dia</Table.HeaderCell>
+            <Table.HeaderCell>Día</Table.HeaderCell>
             <Table.HeaderCell>DNI</Table.HeaderCell>
             <Table.HeaderCell>Estado</Table.HeaderCell>
             <Table.HeaderCell style={{ width: "20%" }}>
@@ -94,7 +96,7 @@ const State = () => {
                   <Table.Row key={i}>
                     {console.log(newTable)}
                     <Table.Cell> {data.client.name}</Table.Cell>
-                    <Table.Cell> {data.date}</Table.Cell>
+                    <Table.Cell> {new Date(data.date).toLocaleString("es-AR")}</Table.Cell>
                     <Table.Cell> {data.client.dni}</Table.Cell>
                     <Table.Cell> {data.state}</Table.Cell>
 
@@ -106,14 +108,14 @@ const State = () => {
                             positive
                             value={data._id}
                           >
-                            Asistio
+                            Asistió
                           </Button>
                           <Button
                             onClick={handleClick}
                             negative
                             value={data._id}
                           >
-                            No asistio
+                            No asistió
                           </Button>
                         </Table.Cell>
                       </div>
@@ -130,17 +132,17 @@ const State = () => {
                   <Table.Row key={i}>
                     {console.log(data)}
                     <Table.Cell> {data.client.name}</Table.Cell>
-                    <Table.Cell> {data.date}</Table.Cell>
+                    <Table.Cell> {new Date(data.date).toLocaleString("es-AR")}</Table.Cell>
                     <Table.Cell> {data.client.dni}</Table.Cell>
                     <Table.Cell> {data.state}</Table.Cell>
 
                     {data.state === "pendiente" ? (
                       <Table.Cell>
                         <Button onClick={handleClick} positive value={data._id}>
-                          Asistio
+                          Asistió
                         </Button>
                         <Button onClick={handleClick} negative value={data._id}>
-                          No asistio
+                          No asistió
                         </Button>
                       </Table.Cell>
                     ) : (
@@ -154,7 +156,7 @@ const State = () => {
         </Table.Body>
       </Table>
       <Button animated onClick={()=>router.back()} >
-      <Button.Content visible>Volver atras</Button.Content>
+      <Button.Content visible>Atrás</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow left' />
       </Button.Content>

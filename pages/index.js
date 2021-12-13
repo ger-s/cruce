@@ -39,9 +39,9 @@ export default function Home({parse}) {
     ) : ( 
    <div>
       <Container>
-        <Container textAlign="center" style={{ margin: "25vh", width: "75%" }}>
+        <Container textAlign="center" style={{ margin: "10vh", width: "75%" }}>
           <h1 style={{ fontSize: "250%", marginBottom: "6%" }}> ¡Bienvenido a Cruce! </h1>
-          <p style={{ fontSize: "200%" }}> 
+          <p style={{ fontSize: "200%", marginBottom: "35vh"  }}> 
             <Link href={parse.dni ? "/turno" : "/login"}>  Reservá tu turno acá </Link> 
           </p>
         </Container>

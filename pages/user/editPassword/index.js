@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import useInput from "../../../hooks/useInput";
 import Notification from "../../../utils/Notification";
 
-
 const EditPassword = ({ size, parse }) => {
   const router = useRouter();
 
@@ -83,10 +82,10 @@ const EditPassword = ({ size, parse }) => {
       });
       const success = await res.json();
       if (success.success) {
-        Notification.successMessage(success.message);
-        return router.push("/user")
+        Notification.successMessage("Contraseña modificada exitosamente");
+        return router.push("/user");
       } else {
-        return Notification.errorMessage("No se pudo modificar contraseña");
+        return Notification.errorMessage("No se pudo modificar la contraseña");
       }
     } catch (e) {}
   };
@@ -108,6 +107,7 @@ const EditPassword = ({ size, parse }) => {
               className={currentPassValidation.status ? "field" : "field error"}
             >
               <input
+                required
                 type="password"
                 style={
                   size.width / size.height > 0.7
@@ -130,6 +130,7 @@ const EditPassword = ({ size, parse }) => {
               className={passValidation.status ? "field" : "field error"}
             >
               <input
+                required
                 type="password"
                 placeholder="Contraseña de entre 8 y 30 caracteres"
                 style={
@@ -153,6 +154,7 @@ const EditPassword = ({ size, parse }) => {
               className={confirmPassValidation.status ? "field" : "field error"}
             >
               <input
+                required
                 type="password"
                 style={
                   size.width / size.height > 0.7
@@ -187,7 +189,7 @@ const EditPassword = ({ size, parse }) => {
         </Form>
 
         <Button animated onClick={() => router.back()}>
-          <Button.Content visible>Volver atrás</Button.Content>
+          <Button.Content visible>Atrás</Button.Content>
           <Button.Content hidden>
             <Icon name="arrow left" />
           </Button.Content>
