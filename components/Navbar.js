@@ -35,7 +35,7 @@ const Navbar = ({ size, parse }) => {
   };
 
   useEffect(() => {
-    if (!parse.dni) {
+    if (parse.dni === false) {
       if (router.pathname !== '/' && router.pathname !== '/login' && router.pathname !== '/register') {
         router.push('/')
       }

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Card, Container, Icon, Button } from 'semantic-ui-react'
 import { useRouter } from 'next/router'
 import Notification from '../utils/Notification'
-import { addScaleCorrector, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import Swal from "sweetalert2";
 
 
 const HomeWithTurno = ({size, turno}) => {
@@ -16,28 +17,38 @@ const HomeWithTurno = ({size, turno}) => {
     e.preventDefault()
     if (counter > 7200) {
       try {
-        const res = await fetch(`/api/admin/delete/sucursal/historyItem/${turno[1]._id}`, {
-          method: 'PUT',
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": localStorage.getItem("token")
+        const confirm  = await Swal.fire({
+          title: '¿Estás seguro?',
+          text: "No podrás revertir la cancelación",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Borrar',
+          cancelButtonText: 'Volver'
+        })
+        if (confirm.isConfirmed) {
+          const res = await fetch(`/api/admin/delete/sucursal/historyItem/${turno[1]._id}`, {
+            method: 'PUT',
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": localStorage.getItem("token")
 
-          },
-          body: JSON.stringify({
-            _id: turno[0]._id,
-            sucursalName: turno[1].name,
+            },
+            body: JSON.stringify({
+              _id: turno[0]._id,
+              sucursalName: turno[1].name,
             horaTurno: `${turno[0].date.slice(0, 10)}T${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
           })
         })
-  
+        
         const success = await res.json()
         if (success.success) {
-          console.log(success)
           Notification.successMessage(success.successMessage)
-          router.reload()
+          setTimeout(()=> router.reload(), 2000)
         } else {
           console.log(success.successMessage)
-        }
+        }}
       } catch(error) {
         console.log(error)
       }
@@ -45,7 +56,7 @@ const HomeWithTurno = ({size, turno}) => {
       Notification.errorMessage('Sólo se puede cancelar hasta con 2 horas de antelación')
     }
   }
-
+  
   useEffect(() => {
     counter > 0 && setTimeout(()=> {setCounter(counter-1)}, 1000)
    
@@ -133,7 +144,7 @@ useEffect(async()=>  {
                 <Icon name="trash" />
               </Button>
               </div>
-              <p style={{color:"blue", fontWeight:"bold"}}> Para modificar el turno, primero cancelelo y vuelva a sacar otro. </p>
+              <p style={{color: 'black'}}> ¿Necesitás cambiar el turno?, eliminá el existente, y pedí uno nuevo en el horario deseado. </p>
             </Card.Content>
           </Card>
         </div>
