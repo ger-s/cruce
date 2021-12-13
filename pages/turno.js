@@ -24,7 +24,8 @@ const Turno = ({ size, parse }) => {
         const scs = await fetch(`/api/sucursal/turnos/getAllTurnos/${sucursalSelection}`, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("token")
           },
         });
         const success = await scs.json();
@@ -33,7 +34,8 @@ const Turno = ({ size, parse }) => {
           const scs2 = await fetch(`/api/admin/getOneSucursal/${sucursalSelection}`, {
             method: "GET",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              "Authorization": localStorage.getItem("token")
             },
           });
           const sucursal = await scs2.json()

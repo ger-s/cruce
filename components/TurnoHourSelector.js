@@ -10,8 +10,10 @@ const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSel
     e.preventDefault();
     const str = e.target.textContent;
     const strVerify = str.indexOf('¡') > -1 ? str.slice(0, str.indexOf('¡') - 1) : str
-    hourSelection(strVerify)
-    return step('checkout')
+    if (strVerify.length < 6) {
+      hourSelection(strVerify)
+      return step('checkout')
+    }
   };
 
   useEffect(async () => {
