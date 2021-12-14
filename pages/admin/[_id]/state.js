@@ -12,6 +12,8 @@ const State = () => {
   const sortTurno = filterTurno.sort((a, b) => {
     return new Date(a.date).getTime() - new Date(b.date).getTime()
   })
+
+  console.log('ey')
   
   useEffect(async () => {
     const { _id } = router.query;
