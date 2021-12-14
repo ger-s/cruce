@@ -15,7 +15,6 @@ const HomeWithTurno = ({size, turno, parse}) => {
   const [counter, setCounter] = useState(Math.round(turnoSeconds - todaySeconds))
 
   const handleDelete = async (e) => {
-    console.log(parse,"SDSDSD")
     e.preventDefault()
     if (counter > 7200) {
       try {
@@ -82,9 +81,8 @@ const HomeWithTurno = ({size, turno, parse}) => {
   }, [counter])
 
 useEffect(async()=>  {
-  if(counter===86400) {
+  if(counter === 86400) {
     try{
-    
       const res = await fetch(`/api/email/${turno[0].client.dni}`, {
         method: "POST",
         headers: {
@@ -99,20 +97,18 @@ useEffect(async()=>  {
       const success = await res.json();
         
       if (success.success) {
-      
+
       } else {
         return Notification.errorMessage(success.successMessage);
       } 
-    
+
     }catch(error) {
       return Notification.errorMessage("Seleccioná una sucursal");
-    
     }
-        }
+  }
   
-},[counter])
+}, [counter, parse])
 
-console.log(counter)
   return (
     <motion.div
     className="ui container fluid"

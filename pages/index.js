@@ -20,9 +20,27 @@ export default function Home({parse}) {
       });
       const success = await res.json();
       if (success.success) {
-        success.data.map(sucursal => {
-          const fil = sucursal.history.filter(history => (history.client.dni === parse.dni) && (history.state === 'pendiente'))
-          fil[0]?.client ? setSucursales([fil[0], sucursal]) : null
+        success.data.map(async (sucursal) => {
+          const fil = sucursal.history.filter((history) => (history.client.dni === parse.dni) && (history.state === 'pendiente'))
+          if (fil[0]?.client) {
+            if ((new Date(fil[0].horaTurno).getTime()) < (new Date().getTime())) {
+              const res = await fetch(`/api/user/me/${parse.dni}`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: localStorage.getItem("token")
+                }
+              })
+              const success = await res.json()
+              if (success.success) {
+                console.log('ey')
+              } else {
+                console.log(success.successMessage)
+              }
+            } else {
+              setSucursales([fil[0], sucursal])
+            }
+          }
         })
       }
     } catch (err) {

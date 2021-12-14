@@ -4,14 +4,7 @@ import { useRouter } from "next/router";
 import Notification from "../utils/Notification";
 import { motion } from "framer-motion";
 
-const TurnoCheckout = ({
-  sucursalSelection,
-  daySelection,
-  hourSelection,
-  size,
-  step,
-  user,
-}) => {
+const TurnoCheckout = ({sucursalSelection, daySelection, hourSelection, size, step, user}) => {
   const router = useRouter();
   const [sucursal, setSucursal] = useState({});
   const [dateString, setDateString] = useState("");
@@ -44,20 +37,6 @@ const TurnoCheckout = ({
           },
         }),
       });
-
-      try {
-        const res = await fetch(`/api/user/edit/${user.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token"),
-          },
-          body: JSON.stringify({
-            conTurno: true,
-          }),
-        });
-        const success = await res.json();
-      } catch (error) {}
 
       const success = await res.json();
       if (success.success) {

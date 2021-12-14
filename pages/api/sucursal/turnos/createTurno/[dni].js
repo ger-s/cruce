@@ -66,6 +66,8 @@ export default async (req, res) => {
           ]
         );
 
+        const updateUser = await User.updateOne({ dni: `${user.dni}` }, {conTurno: true})
+
         sendEmail(
           user.email,
           "registro de turno",
