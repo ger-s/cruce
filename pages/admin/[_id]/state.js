@@ -36,7 +36,7 @@ const State = () => {
 
 
 
-  const handleClick = async (e, value, id) => {
+  const handleClick = async (e) => {
     e.preventDefault();
     try {
       const swal = await Swal.fire({
@@ -50,23 +50,29 @@ const State = () => {
         cancelButtonText: "Cancelar"
       });
       if(swal.isConfirmed){
-      const res = await fetch(`/api/sucursal/turnos/editStatus/${idSucursal}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          _id: e.target.value,
-          state: e.target.textContent,
-        }),
-      });
-      const success =  await res.json();
-       if (success) {
-        Swal.fire("¡Estado modificado!", "Asistencia modificada", "success");
-        setTimeout(() => {router.reload()}, 2000);
-      } else {
-        return Notification.errorMessage("Ha ocurrido un error");
-      } 
+        const userUpdate = await fetch(`/api/user/me/${e.target.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        })
+        const res = await fetch(`/api/sucursal/turnos/editStatus/${idSucursal}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            _id: e.target.value,
+            state: e.target.textContent,
+          }),
+        });
+        const success =  await res.json();
+        if (success) {
+          Swal.fire("¡Estado modificado!", "Asistencia modificada", "success");
+          setTimeout(() => {router.reload()}, 2000);
+        } else {
+          return Notification.errorMessage("Ha ocurrido un error");
+        } 
   
     }
     } catch (e) {
@@ -101,19 +107,19 @@ const State = () => {
 
                     {data.state === "pendiente" && (new Date(data.date).getTime()) <= (new Date().getTime()) ? (
                       <Table.Cell>
-                        <Button onClick={handleClick} positive value={data._id}>
+                        <Button onClick={handleClick} positive value={data._id} id={data.client.dni}>
                           Asistió
                         </Button>
-                        <Button onClick={handleClick} negative value={data._id}>
+                        <Button onClick={handleClick} negative value={data._id} id={data.client.dni}>
                           No asistió
                         </Button>
                       </Table.Cell>
                     ) : data.state === "pendiente" ? (
                       <Table.Cell>
-                        <Button onClick={handleClick} positive value={data._id} disabled>
+                        <Button onClick={handleClick} positive value={data._id} id={data.client.dni} disabled>
                           Asistió
                         </Button>
-                        <Button onClick={handleClick} negative value={data._id} disabled>
+                        <Button onClick={handleClick} negative value={data._id} id={data.client.dni} disabled>
                           No asistió
                         </Button>
                       </Table.Cell>
