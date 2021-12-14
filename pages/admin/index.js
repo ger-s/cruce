@@ -71,8 +71,6 @@ const HomeAdmin = ({ parse }) => {
       });
       const success = await res.json();
 
-      console.log("llegoo", success);
-
       if (success.success) {
         // localStorage.setItem("dni", JSON.stringify(success.data));
         return router.push(`/admin/info/${success.data._id}`);

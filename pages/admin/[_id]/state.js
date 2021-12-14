@@ -8,12 +8,20 @@ const State = () => {
   const [turno, setTurno] = useState([]);
   const [idSucursal, setIdSucursal] = useState("");
   const yesterday = new Date(new Date().toLocaleDateString())
-  const filterTurno = turno.filter((turno) => (yesterday.getTime() <= (new Date(turno.date).getTime())) && ((new Date(turno.date).getTime()) <= yesterday.getTime() + 604800000))
-  const sortTurno = filterTurno.sort((a, b) => {
-    return new Date(a.date).getTime() - new Date(b.date).getTime()
-  })
+  const [filterTurno, setFilterTurno] = useState([])
+  const [sortTurno, setSortTurno] = useState([])
 
-  console.log('ey')
+  useEffect(() => {
+    if (turno.length > 0) {
+      const filter = turno.filter((turno) => (yesterday.getTime() <= (new Date(turno.date).getTime())) && ((new Date(turno.date).getTime()) <= yesterday.getTime() + 604800000))
+      setFilterTurno(filter)
+
+      const sort = filter.sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime()
+      })
+      setSortTurno(sort)
+    }
+  }, [turno])
   
   useEffect(async () => {
     const { _id } = router.query;
