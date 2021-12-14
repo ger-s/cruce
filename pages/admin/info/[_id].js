@@ -18,7 +18,6 @@ function _id() {
   const router = useRouter();
   const query = router.query;
   const [sucursal, setSucursal] = useState({});
-  console.log("query", query);
 
   useEffect(async () => {
     try {
