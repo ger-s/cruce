@@ -20,10 +20,12 @@ export default function Home({parse}) {
       });
       const success = await res.json();
       if (success.success) {
+        console.log('hola')
         success.data.map(async (sucursal) => {
           const fil = sucursal.history.filter((history) => (history.client.dni === parse.dni) && (history.state === 'pendiente'))
           if (fil[0]?.client) {
-            if ((new Date(fil[0].horaTurno).getTime()) < (new Date().getTime())) {
+            console.log(fil[0])
+            if ((new Date(fil[0].date).getTime()) < (new Date().getTime())) {
               const res = await fetch(`/api/user/me/${parse.dni}`, {
                 method: "PUT",
                 headers: {
