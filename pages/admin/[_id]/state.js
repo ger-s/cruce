@@ -7,7 +7,7 @@ const State = () => {
   const router = useRouter();
   const [turno, setTurno] = useState([]);
   const [idSucursal, setIdSucursal] = useState("");
-  const yesterday = new Date(new Date().toLocaleDateString())
+  const yesterday = new Date(new Date().toLocaleDateString('en-US'))
   const [filterTurno, setFilterTurno] = useState([])
   const [sortTurno, setSortTurno] = useState([])
 
