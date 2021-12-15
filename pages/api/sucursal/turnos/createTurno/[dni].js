@@ -47,6 +47,7 @@ export default async (req, res) => {
                   email: user.email,
                 },
                 date: new Date(req.body.horaTurno),
+                creationDate: new Date(),
                 sucursal: req.body.sucursal.name,
               },
             },
