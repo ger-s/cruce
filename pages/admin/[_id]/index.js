@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Chart from 'chart.js/auto';
 import MetricAsistencia from '../../../components/MetricAsistencia'
 import MetricDate from '../../../components/MetricDate'
+import MetricDateHour from '../../../components/MetricDateHour'
 
 const SucursalHome = ({size}) => {
   const router = useRouter();
@@ -38,6 +39,8 @@ const SucursalHome = ({size}) => {
       <div>
         <br/><hr/><br/>
       {<MetricDate turnos={turno} size={size}/>}
+      <br/><hr/><br/>
+      {<MetricDateHour turnos={turno} size={size}/>}
       <br/><hr/><br/>
     </div>
     </div>
