@@ -113,7 +113,7 @@ const Register = ({size, parse}) => {
       // hay que convertirlo a json primero
       const { data, success, successMessage } = await res.json();
 
-      console.log("DATAAAA", data)
+ 
 
       if (success) {
         Notification.successMessage(successMessage);

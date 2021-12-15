@@ -107,10 +107,15 @@ function _id() {
         </Card.Content>
         </Container>
         <Card.Content style={{marginTop: "10%" , marginBottom: "13%"}} extra>
-          <div className="ui three buttons">
+          <div className="ui four buttons">
             <Link href={`/admin/${sucursal._id}/state`}>
               <Button basic color="green">
-                Ingresar
+                Turnos
+              </Button>
+            </Link>
+            <Link href={`/admin/${sucursal._id}`}>
+              <Button basic color="black">
+                Estadísticas
               </Button>
             </Link>
             <Link href={`/admin/edit/sucursal/${sucursal._id}`}>
