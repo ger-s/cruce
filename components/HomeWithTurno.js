@@ -40,19 +40,16 @@ const HomeWithTurno = ({size, turno, parse}) => {
               dni: parse.dni,
               _id: turno[0]._id,
               sucursalName: turno[1].name,
-            horaTurno: `${turno[0].date.slice(0, 10)}T${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
+            horaTurno: `${turno[0].date.slice(0, 10)}T${(Number(turno[0].date.slice(11, 13)) - 3).toString().length === 1 && `0`}${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
           })
         })
         try {
-          const res = await fetch(`/api/user/edit/${parse.id}`, {
+          const res = await fetch(`/api/user/me/${parse.dni}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization: localStorage.getItem("token"),
-            },
-            body: JSON.stringify({
-              conTurno: false,
-            }),
+              "Authorization": localStorage.getItem("token"),
+            }
           });
           const success = await res.json();
         } catch (error) {}
