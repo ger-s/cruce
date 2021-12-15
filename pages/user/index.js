@@ -62,7 +62,7 @@ const HomeUser = ({ parse }) => {
   };
   useEffect(async () => {
     try {
-      const res = await fetch(`/api/user/me/${parse.id}`, {
+      const res = await fetch(`/api/user/me/${parse.dni}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
@@ -86,7 +86,7 @@ const HomeUser = ({ parse }) => {
       return false;
     }
     try {
-      const res = await fetch(`/api/user/edit/${parse.id}`, {
+      const res = await fetch(`/api/user/edit/${parse.dni}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
