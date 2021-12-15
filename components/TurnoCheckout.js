@@ -27,10 +27,7 @@ const TurnoCheckout = ({sucursalSelection, daySelection, hourSelection, size, st
           Authorization: localStorage.getItem("token"),
         },
         body: JSON.stringify({
-          horaTurno: `${daySelection}T${hourSelection.slice(
-            0,
-            2
-          )}:${hourSelection.slice(3)}:00`,
+          horaTurno: `${daySelection}T${Number(hourSelection.slice(0, 2)) + 3}:${hourSelection.slice(3)}:00`,
           sucursal: {
             name: sucursal.name,
             _id: sucursal._id,
