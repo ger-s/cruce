@@ -56,11 +56,11 @@ const MetricDateHour = ({ turnos }) => {
   };
 
   const data = {
-    labels: dataArray.labels,
+    labels: labelsArray,
     datasets: [
       {
         label: "Turnos pedidos",
-        data: dataArray.data,
+        data: dataArray,
         backgroundColor: ["rgb(55, 199, 132)", "rgb(54, 162, 235)"],
         hoverOffset: 4
       }
@@ -86,11 +86,6 @@ const MetricDateHour = ({ turnos }) => {
     }
   }, [_id]);
 
-  console.log(
-    "turnooooo",
-    Number(new Date(turnos[20]?.date).toLocaleTimeString().slice(0, 2))
-  );
-
   useEffect(() => {
     if (turnos.length > 0) {
       const filter = turnos.filter((turno) => (new Date(desde).getTime() <= (new Date(turno.date).getTime())) && ((new Date(turno.date).getTime()) <= new Date(hasta).getTime()))
@@ -100,16 +95,12 @@ const MetricDateHour = ({ turnos }) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime()
       })
       setSortTurno(sort)
-      if (horario.desdeHora > 0) {
+      setDataArray([])
+      setLabelsArray([])
+      if (horario.desdeHora > 0 && desde.length && hasta.length) {
         for (let i = horario.desdeHora; i <= horario.hastaHora; i++) {
-          setLabelsArray((old) => [...old, i]);
-          setDataArray((old) => [
-            ...old,
-            sort.filter((turno) => {
-              Number(new Date(turno.date).toLocaleTimeString().slice(0, 2)) ===
-                i;
-            })
-          ]);
+          setLabelsArray((old) => [...old, `${i} hs`]);
+          setDataArray((old) => [...old, (sort.filter((turno) => (new Date(turno.date).getHours()) === i )).length])
         }
       }
     }
@@ -117,7 +108,7 @@ const MetricDateHour = ({ turnos }) => {
 
   // console.log("setLabelsArray", labelsArray)
 //  console.log("setDataArray", dataArray)
- console.log("sorTurno", sortTurno);
+ console.log("data", dataArray);
 
   return (
     <div>
@@ -142,6 +133,9 @@ const MetricDateHour = ({ turnos }) => {
             />
           </Form.Input>
         </Form>
+      </div>
+      <div>
+      < Bar data={data}/>
       </div>
     </div>
   );
