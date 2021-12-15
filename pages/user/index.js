@@ -86,7 +86,7 @@ const HomeUser = ({ parse }) => {
       return false;
     }
     try {
-      const res = await fetch(`/api/user/edit/${parse.dni}`, {
+      const res = await fetch(`/api/user/edit/${parse.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
