@@ -58,10 +58,7 @@ const UserSchema = new mongoose.Schema(
       default: 'user'
     },
     type: { type: String, default: "default" },
-    conTurno: {
-     type:Boolean,
-     default:false
-    }
+    conTurno: { type:Boolean, default:false }
     
 
   },

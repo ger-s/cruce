@@ -32,7 +32,7 @@ const Turno = ({ size, parse }) => {
     }
   }, [parse, router]);
 
-  /* useEffect( async () => {
+  useEffect( async () => {
     try {
       if (sucursalSelection) {
         const scs = await fetch(`/api/sucursal/turnos/getAllTurnos/${sucursalSelection}`, {
@@ -43,7 +43,6 @@ const Turno = ({ size, parse }) => {
           },
         });
         const success = await scs.json();
-        console.log(success)
         if (success.data[0].length < 1) {
           const scs2 = await fetch(`/api/admin/getOneSucursal/${sucursalSelection}`, {
             method: "GET",
@@ -73,13 +72,12 @@ const Turno = ({ size, parse }) => {
               }
             }
           }
-          
         }
       }
     } catch(error) {
       console.log(error)
     }
-  }, [sucursalSelection]) */
+  }, [sucursalSelection])
 
   return (
     <div
