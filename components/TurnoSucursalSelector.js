@@ -34,7 +34,7 @@ const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
             setSucursales((old) => [...old, { key: index, text: sucursal.name, value: sucursal._id}])
           );
         } else {
-          success.successMessage === null ? router.push('/') : console.log(success)
+          success.successMessage === null ? router.push('/') : null
         }
       } catch (err) {
         console.log(err);

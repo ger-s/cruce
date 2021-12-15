@@ -13,7 +13,7 @@ export default async (req, res) => {
         // const auth = await validateJWT(req)
         // auth.status === 401 ? res.status(401).json({status: auth.status, message: auth.statusText}) : null
         const user = await User.findOne({dni: `${req.query.dni}`});
-        res.status(200).json({ success: true,successMessage:"user", data:user });
+        res.status(200).json({ success: true,successMessage: "success", data: user });
       } catch (error) {
         res.status(400).json({ success: false,successMessage:error });
       }
@@ -23,7 +23,7 @@ export default async (req, res) => {
       try {
 
         const user = await User.updateOne({dni: `${req.query.dni}`}, {conTurno: false});
-        res.status(200).json({ success: true,successMessage:"user", data:user });
+        res.status(200).json({ success: true,successMessage: "success", data: user });
       } catch (error) {
         res.status(400).json({ success: false,successMessage:error });
       }

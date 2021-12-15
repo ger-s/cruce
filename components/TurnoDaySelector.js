@@ -13,7 +13,6 @@ const TurnoDaySelector = ({ daySelection, size, step }) => {
     const str = e.target.dataset.testid.slice(
       e.target.dataset.testid.indexOf("2")
     );
-    console.log(str)
     daySelection(str);
     return step('hour')
   };
@@ -40,7 +39,6 @@ const TurnoDaySelector = ({ daySelection, size, step }) => {
           <Form>
             <Form.Input size="big">
               <SemanticDatepicker
-                //maxDate={maxDate}
                 minDate={yesterday}
                 locale={"es-ES"}
                 format={"DD-MM-YYYY"}
