@@ -15,7 +15,7 @@ export default async (req, res) => {
         
 
         console.log("code", resetCode);
-        const salt = await bcrypt.genSalt(process.env.SECRET_SALT)
+        const salt = await bcrypt.genSalt(Number(process.env.SECRET_SALT))
         const hashedCode = await bcrypt.hash(resetCode, salt)
         const userFound = await User.findOne({ email: req.body.email });
         if (!userFound)
