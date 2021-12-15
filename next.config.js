@@ -1,8 +1,7 @@
-const { dbUrl } = require('./secret.json')
 
 module.exports = {
   reactStrictMode: true,
   env: {
-    MONGO_URI: dbUrl
+    MONGO_URI: process.env.MONGO_URI
   }
 }
