@@ -13,8 +13,6 @@ const MetricDate = ({size, turnos}) => {
   const [desde, setDesde] = useState('')
   const [hasta, setHasta] = useState('')
 
-  console.log(sortTurno)
-
   const handleSelectionDesde = (e) => {
     e.preventDefault();
     const str = e.target.dataset.testid.slice(
