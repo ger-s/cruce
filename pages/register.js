@@ -1,11 +1,9 @@
-import { Button, Form } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Container } from "semantic-ui-react";
 import useInput from "../hooks/useInput";
 import Notification from "../utils/Notification";
 import { useEffect, useState } from "react";
-//import useValidations from "../hooks/useValidations";
 
 const Register = ({size, parse}) => {
   const router = useRouter();

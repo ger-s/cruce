@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { jwtPass } = require('../secret.json')
 
 
 const validateJWT = async (req, res, role) => {
@@ -9,7 +8,7 @@ const validateJWT = async (req, res, role) => {
     if (!reqToken) {
       return {status: 401, token: null}
     }
-    jwt.verify(reqToken, jwtPass, (err, payload) => {
+    jwt.verify(reqToken, process.env.JWT_PASS, (err, payload) => {
       if (err) return {status: 401, token: null}
       type = payload;
       //console.log("TYPEEE",type.role)

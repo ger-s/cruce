@@ -1,6 +1,5 @@
 import { sendError } from "next/dist/server/api-utils";
 import nodemailer from "nodemailer";
-const {userGoogle, passGoogle} = require('../secret.json')
 
 const sendEmail = async (user, subject, text) => {
   try {
@@ -9,8 +8,8 @@ const sendEmail = async (user, subject, text) => {
       port: 587,
       secure: false,
       auth: {
-        user: userGoogle,
-        pass: passGoogle,
+        user: process.env.USER_GOOGLE,
+        pass: process.env.PASS_GOOGLE,
       },
     });
   

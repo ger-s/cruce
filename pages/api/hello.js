@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-const { jwtPass } = require('../../secret.json')
 const jwt = require('jsonwebtoken')
 const validateJWT = require ('../../middleware/_middleware')
 

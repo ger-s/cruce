@@ -1,12 +1,10 @@
-import { Button, Form } from "semantic-ui-react";
+import { Form } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Container } from "semantic-ui-react";
 import useInput from "../hooks/useInput";
 import Notification from "../utils/Notification";
-import jwt from "jsonwebtoken";
 import { useEffect } from "react";
-const { jwtPass } = require("../secret.json");
 
 const Login = ({ size, parse }) => {
   const router = useRouter();

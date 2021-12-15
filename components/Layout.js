@@ -20,7 +20,7 @@ const Layout = ({ children, size, parse }) => (
 
     {children}
 
-    <Footer size={size}/>
+    {/* <Footer size={size}/> */}
   </>
 );
 

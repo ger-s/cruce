@@ -12,9 +12,6 @@ import {
   Visibility,
 } from "semantic-ui-react";
 import Notification from "../utils/Notification";
-// import jwt from "jsonwebtoken";
-// import jwt_decode from 'jwt-decode';
-// const { jwtPass } = require("../secret.json");
 
 const Navbar = ({ size, parse }) => {
  

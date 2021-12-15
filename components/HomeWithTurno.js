@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Container, Icon, Button } from 'semantic-ui-react'
+import { Card, Icon, Button } from 'semantic-ui-react'
 import { useRouter } from 'next/router'
 import Notification from '../utils/Notification'
 import { motion } from "framer-motion";

@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 import "semantic-ui-css/semantic.min.css";
-// import App from 'next/app'
 import Layout from '../components/Layout';
 import useWindowSize from '../hooks/useWindowSize';
 import useParse from '../hooks/useParse'
