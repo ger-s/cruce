@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
 
 import TurnoDaySelector from "../components/TurnoDaySelector";
 import TurnoSucursalSelector from "../components/TurnoSucursalSelector";
@@ -32,7 +31,12 @@ const Turno = ({ size, parse }) => {
     }
   }, [parse, router]);
 
-  /* useEffect( async () => {
+  /* 
+  
+  -----------> FUNCIÓN DE SEEDEO  <----------------
+----------->       NO SE TOCA     <----------------
+
+  useEffect( async () => {
     try {
       if (sucursalSelection) {
         const scs = await fetch(`/api/sucursal/turnos/getAllTurnos/${sucursalSelection}`, {

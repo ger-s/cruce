@@ -15,7 +15,7 @@ export default async (req, res) => {
           return res.status(401).json({ success: false, successMessage: auth.token })
         }
         if (auth.token?.role.length < 2) {
-          return res.status(401).json({ success: false, message: "Problema en el usuario " })
+          return res.status(401).json({ success: false, successMessage: "Problema en el usuario " })
         }
         const sucursales = await Sucursal.find({});
         res

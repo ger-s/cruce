@@ -106,10 +106,6 @@ const MetricDateHour = ({ turnos }) => {
     }
   }, [turnos, desde, hasta]);
 
-  // console.log("setLabelsArray", labelsArray)
-//  console.log("setDataArray", dataArray)
- console.log("data", dataArray);
-
   return (
     <div>
       <div>

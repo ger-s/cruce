@@ -1,8 +1,5 @@
 import dbConnect from "../../../utils/dbConnect";
 import User, { distinct } from "../../../models/User";
-import jwt from "jsonwebtoken";
-import { jwtPass } from "../../../secret.json";
-import generateJWT from "../../../utils/generateJWT";
 import sendEmail from "../../../utils/sendEmail";
 import Sucursal from "../../../models/Sucursal"
 
