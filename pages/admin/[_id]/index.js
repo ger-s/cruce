@@ -36,7 +36,9 @@ const SucursalHome = ({size}) => {
       <h1>porcentaje de asistencia:</h1>
       < MetricAsistencia turnos={turno} size={size}/>
       <div>
+        <br/><hr/><br/>
       {<MetricDate turnos={turno} size={size}/>}
+      <br/><hr/><br/>
     </div>
     </div>
   )
