@@ -257,13 +257,14 @@ const UserDni = () => {
                       onChange={handleChange}
                     />
                   </Form.Group>
-                  {rol.value === 'operator' ? (<Form.Input>
+                  {rol.value === 'operator' ? (<Form.Input required>
                     <Dropdown
                       placeholder="Sucursal..."
                       search
                       selection
                       options={sucursales}
                       onChange={handleSelection}
+                      
                       //style={{ height: "70px" }}
                     />
                   </Form.Input>) : null}

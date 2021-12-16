@@ -66,7 +66,7 @@ const Navbar = ({ size, parse }) => {
                   <Menu.Item position="left">
                   {( parse.role === "admin" || parse.role === "operator"?(
 
-                    <Link href="/admin">
+                    <Link href={router.query._id ? `/admin/${router.query._id}` : '/admin'}>
                       <a>
                         <Image
                           pointing
@@ -112,7 +112,7 @@ const Navbar = ({ size, parse }) => {
                       <>
                           {( parse.role === "admin" || parse.role === "operator"?
                             <>
-                            <Link  href="/admin">
+                            <Link  href={router.query._id ? `/admin/${router.query._id}` : '/admin'}>
                         <h3 style={{ marginRight: "1em", marginTop: "0.6em" }}>
                           {parse.role}
                         </h3>
