@@ -14,8 +14,6 @@ const HomeWithTurno = ({size, turno, parse}) => {
 
   const [counter, setCounter] = useState(Math.round(turnoSeconds - todaySeconds))
 
-  `${turno[0].date.slice(0, 10)}T0${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
-
   const handleDelete = async (e) => {
     e.preventDefault()
     if (counter > 7200) {
@@ -42,7 +40,7 @@ const HomeWithTurno = ({size, turno, parse}) => {
               dni: parse.dni,
               _id: turno[0]._id,
               sucursalName: turno[1].name,
-            horaTurno: (Number(turno[0].date.slice(11, 13)) - 3).toString().length === 1 ? `${turno[0].date.slice(0, 10)}T0${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}` : `${turno[0].date.slice(0, 10)}T${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
+            horaTurno: ((Number(turno[0].date.slice(11, 13)) - 3).toString().length === 1) ? `${turno[0].date.slice(0, 10)}T0${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}` : `${turno[0].date.slice(0, 10)}T${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
           })
         })
         try {
