@@ -1,6 +1,7 @@
 import dbConnect from "../../../../../utils/dbConnect";
 import User from "../../../../../models/User";
 import validateJWT from "../../../../../middleware/_middleware";
+import Sucursal from "../../../../../models/Sucursal";
 
 
 // esta ruta sirve siendo admin poder cambiar el role de user a operador
@@ -22,11 +23,23 @@ export default async (req, res) => {
         auth.token.role !== "admin"
           ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
           : null; */
-        const userModified = await User.findOneAndUpdate(
+        const userModified = await User.updateOne(
           { _id: `${req.query._id}` },
-          req.body
+          {role: req.body.role}
           );
-       
+        
+        if (req.body._id) {
+          const sucursal = await Sucursal.updateOne(
+            { _id: `${req.body._id}` },
+            {
+              $pull: {
+                operators: {
+                  dni: req.body.dni
+                }
+              }
+            }
+          )
+        }
           res
           .status(201)
           .json({
@@ -35,6 +48,7 @@ export default async (req, res) => {
             data: "",
           });
       } catch (error) {
+        console.log(error)
         res.status(400).json({ success: false, successMessage: error });
       }
 

@@ -107,9 +107,11 @@ const MetricDateHour = ({ turnos }) => {
   }, [turnos, desde, hasta]);
 
   return (
-    <div>
+    <div className="ui container">
+      <h2>Tendencia de reservas por hora:</h2>
       <div>
         <Form>
+      <h4>Desde:</h4>
           <Form.Input size="big">
             <SemanticDatepicker
               locale={"es-ES"}
@@ -130,7 +132,7 @@ const MetricDateHour = ({ turnos }) => {
           </Form.Input>
         </Form>
       </div>
-      <div>
+      <div className="ui container">
       < Bar data={data}/>
       </div>
     </div>

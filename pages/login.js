@@ -4,14 +4,13 @@ import { useRouter } from "next/router";
 import { Container } from "semantic-ui-react";
 import useInput from "../hooks/useInput";
 import Notification from "../utils/Notification";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Login = ({ size, parse }) => {
   const router = useRouter();
-
+  const [idSucursal, setIdSucursal] = useState('')
   const email = useInput("email");
   const password = useInput("password");
-
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,13 +43,35 @@ const Login = ({ size, parse }) => {
     }
   };
 
-  useEffect(() => {
-    if (parse.dni) {
-      parse.role === 'user' && router.push('/')
-      parse.role === 'admin' && router.push('/admin')
-      parse.role === 'operator' && router.push('/admin')
+  useEffect(async () => {
+    try {
+      if (parse.dni) {
+        const res = await fetch('/api/admin/getAllSucursales', {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("token")
+          }
+        })
+
+        const success = await res.json()
+        success.data.map(sucursal => {
+          if ((sucursal.operators.filter(operator => operator.dni === parse.dni).length > 0)) {
+            setIdSucursal(sucursal._id)
+          }
+        })
+      }
+    } catch(error) {
+      console.log(error)
     }
-  }, [parse])
+  }, [parse, router])
+
+  useEffect(() => {
+    if (idSucursal) {
+      parse.role === 'operator' && router.push(`/admin/${idSucursal}`)
+    }
+    parse.role === 'user' && router.push('/')
+    parse.role === 'admin' && router.push('/admin')
+  }, [parse, router, idSucursal])
 
   return (
     <Container>

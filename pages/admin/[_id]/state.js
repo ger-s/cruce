@@ -93,6 +93,7 @@ const State = () => {
   return (
     <div>
       <Container>
+        <h2 style={{textAlign:"center", margin: "3%"}}>Reservas</h2>
       <Table style={{ height: "50%", width: "70%", margin: "auto" }} celled>
         <Table.Header>
           <Table.Row>
@@ -143,7 +144,7 @@ const State = () => {
               })}
         </Table.Body>
       </Table>
-      <Button animated onClick={()=>router.back()} >
+      <Button animated onClick={()=>router.back()} style={{marginBottom: '5%'}} >
       <Button.Content visible>Atrás</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow left' />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown, Form } from "semantic-ui-react";
+import { Dropdown, Form, Button } from "semantic-ui-react";
 import { motion } from "framer-motion";
 
 
@@ -68,7 +68,7 @@ const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSel
           display: "flex",
           justifyContent: "center",
           textAlign: "center",
-          marginTop: "20%",
+          marginTop: "15%",
           marginBottom: "24%",
         }}
       >
@@ -85,7 +85,7 @@ const TurnoHourSelector = ({size, hourSelection, step, daySelection, sucursalSel
               />
             </Form.Input>
           </Form>
-          <a><p style={{marginTop: '20%'}} onClick={() => step('day')}>Volver al paso anterior</p></a>
+          <Button size="small" color="blue" style={{marginTop: '40%'}} onClick={() => step('sucursal')}>Volver al paso anterior</Button>
         </div>
       </div>
     </motion.div>

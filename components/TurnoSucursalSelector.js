@@ -55,7 +55,7 @@ const TurnoSucursalSelector = ({size, sucursalSelection, step }) => {
           display: "flex",
           justifyContent: "center",
           textAlign: "center",
-          marginTop: "20%",
+          marginTop: "15%",
           marginBottom: "24%",
         }}
       >

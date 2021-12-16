@@ -90,7 +90,7 @@ const TurnoCheckout = ({sucursalSelection, daySelection, hourSelection, size, st
           display: "flex",
           justifyContent: "center",
           textAlign: "center",
-          marginTop: "20%",
+          marginTop: "10%",
           marginBottom: "24%",
         }}
       >
