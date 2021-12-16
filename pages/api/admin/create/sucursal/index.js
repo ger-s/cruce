@@ -13,19 +13,20 @@ export default async (req, res) => {
         auth.status === 401
           ? res
               .status(401)
-              .json({ status: auth.status, message: auth.statusText })
+              .json({ status: auth.status, successMessage: auth.statusText })
           : null;
         auth.token.role !== "admin"
-          ? res.status(401).json({ status: false, message: "NO SOS ADMIN " })
+          ? res.status(401).json({ status: false, successMessage: "NO SOS ADMIN " })
           : null; 
         const createSucursal = new Sucursal(req.body);
         await createSucursal.save();
-        res
+        return res
           .status(201)
           .json({ success: true, successMessage: "¡Sucursal creada!", data: createSucursal });
       } catch (error) {
-        res.status(400).json({ success: false, successMessage: "BACK" });
+        res.status(400).json({ success: false, successMessage: error });
       }
+      break;
 
     default:
       res.status(400).json({ success: false });

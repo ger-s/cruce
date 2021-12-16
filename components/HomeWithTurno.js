@@ -114,11 +114,17 @@ useEffect(async()=>  {
           transition={{ stiffness: 150 }}>
     <div
         className="ui container"
-        style={{
+        style={size.width / size.height > 0.7 ? {
           display: "flex",
           justifyContent: "center",
           textAlign: "center",
-          marginTop: "20%",
+          marginTop: "7%",
+          marginBottom: "24%",
+        } : {
+          display: "flex",
+          justifyContent: "center",
+          textAlign: "center",
+          marginTop: "10%",
           marginBottom: "24%",
         }}
       >
@@ -140,7 +146,7 @@ useEffect(async()=>  {
             </Card.Content>
             <Card.Content>
               <Card.Description>
-                {`Hora: ${(Number(new Date(turno[0].date).toLocaleTimeString('es-AR').slice(0,2)) - 3)}${new Date(turno[0].date).toLocaleTimeString('es-AR').slice(2,5)}`}<br/>
+                {`Hora: ${(Number(new Date(turno[0].date).toLocaleTimeString('es-AR').slice(0,2)) + 3)}${new Date(turno[0].date).toLocaleTimeString('es-AR').slice(2,5)}`}<br/>
                 
                 { counter < 86400?
                   (`Quedan: ${Math.floor(counter/3600)}:${Math.floor((counter/60) % 60)}:${counter % 60}`) : (null)
@@ -151,7 +157,7 @@ useEffect(async()=>  {
                 </div>
               </Card.Description>
             </Card.Content>
-            <Card.Content extra>
+            <Card.Content>
               <div className="ui container two buttons" style={{padding: "10%"}}>
               <Button icon color="red" onClick={handleDelete}>
                 <Icon name="trash" />

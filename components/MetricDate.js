@@ -51,13 +51,13 @@ const MetricDate = ({size, turnos}) => {
 
   const data = {
     labels: [
-      'Domingo',
-      'Lunes',
-      'Martes',
-      'Miércoles',
-      'Jueves',
-      'Viernes',
-      'Sábado'
+      'Dom',
+      'Lun',
+      'Mar',
+      'Mie',
+      'Jue',
+      'Vie',
+      'Sab'
     ],
     datasets: [{
       label: 'Turnos pedidos',
@@ -71,9 +71,11 @@ const MetricDate = ({size, turnos}) => {
   };
 
   return (
-    <div>
+    <div className="ui container">
+      <h2>Tendencia de reservas por día:</h2>
       <div>
       <Form>
+      <h4>Desde:</h4>
         <Form.Input size="big">
           <SemanticDatepicker
             locale={"es-ES"}
@@ -94,7 +96,7 @@ const MetricDate = ({size, turnos}) => {
         </Form.Input>
       </Form>
       </div>
-      <div>
+      <div className="ui container">
       < Bar data={data}/>
       </div>
     </div>

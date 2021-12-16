@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 import { motion } from "framer-motion";
 import SemanticDatepicker from "react-semantic-ui-datepickers";
 import "react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css";
@@ -30,7 +30,7 @@ const TurnoDaySelector = ({ daySelection, size, step }) => {
           display: "flex",
           justifyContent: "center",
           textAlign: "center",
-          marginTop: "20%",
+          marginTop: "15%",
           marginBottom: "24%",
         }}
       >
@@ -46,7 +46,7 @@ const TurnoDaySelector = ({ daySelection, size, step }) => {
               />
             </Form.Input>
           </Form>
-      <a><p style={{marginTop: '20%'}} onClick={() => step('sucursal')}>Volver al paso anterior</p></a>
+          <Button size="small" color="blue" style={{marginTop: '40%'}} onClick={() => step('sucursal')}>Volver al paso anterior</Button>
         </div>
       </div>
     </motion.div>

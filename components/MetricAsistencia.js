@@ -65,7 +65,8 @@ const MetricAsistencia = ({size, turnos}) => {
   }, [turnos, desde, hasta])
 
   return (
-    <div>
+    <div className="ui container" style={{marginBottom: "10%"}}>
+      <h2>Porcentaje de asistencia:</h2>
       <h4>Desde:</h4>
       <Form>
         <Form.Input size="big">
@@ -92,19 +93,19 @@ const MetricAsistencia = ({size, turnos}) => {
         </Form.Input>
       </Form>
       <div className="ui container">
-      <Doughnut data={data} style={size.width / size.height > 0.7 ? {marginLeft: "25%", marginRight: '25%'} : null}/>
-      <h2 style={{color: 'rgb(55, 199, 132)'}}>
+      <Doughnut data={data} style={size.width / size.height > 0.7 ? {marginLeft: "25%", marginRight: '25%'} : {marginBottom: '5%'}}/>
+      <h4 style={{color: 'rgb(55, 199, 132)', margin: 0}}>
       {`Asistió el ${(((asistio * 100) / (asistio + pendiente + noAsistio))).toFixed(2)}% de los turnos.`}
-      </h2>
-      <h2 style={{color: 'rgb(255, 0, 0)'}}>
+      </h4>
+      <h4 style={{color: 'rgb(255, 0, 0)', margin: 0}}>
       {`No asistieron el ${(((noAsistio * 100) / (asistio + pendiente + noAsistio))).toFixed(2)}% de los turnos.`}
-      </h2>
-      <h2 style={{color: 'rgb(54, 162, 235)'}}>
+      </h4>
+      <h4 style={{color: 'rgb(54, 162, 235)', margin: 0}}>
       {`Están pendientes el ${(((pendiente * 100) / (asistio + pendiente + noAsistio))).toFixed(2)}% de los turnos.`}
-      </h2>
-      <h2>
+      </h4>
+      <h4 style={{margin: 0}}>
       {`Se cancelaron ${cancelados} turnos.`}
-      </h2>
+      </h4>
     </div>
     </div>
   );

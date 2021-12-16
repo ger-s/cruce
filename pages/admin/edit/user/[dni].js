@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Form, Button, Card, Image } from "semantic-ui-react";
+import { Container, Form, Button, Card, Image, Dropdown } from "semantic-ui-react";
 import { useRouter } from "next/router";
 import Notification from "../../../../utils/Notification";
 import Swal from "sweetalert2";
@@ -9,25 +9,62 @@ const UserDni = () => {
   const router = useRouter();
   const query = router.query;
   const [user, setUser] = useState({});
- 
+  const [sucursales, setSucursales] = useState([])
+  const [sucursalSelection, setSucursalSelection] = useState('')
   const [state, setState] = useState(true);
   const [rol, setRol] = useState({});
+  const [todasSucursales, setTodasSucursales] = useState([])
  
   const { value } = rol;
 
+  const handleSelection = async (e) => {
+    e.preventDefault();
+    try {
+      const str = sucursales.find(sucursal => sucursal.text === e.target.textContent)
+      setSucursalSelection(str.value)
+    } catch(error) {
+      console.log(error)
+    }
+  };
+
+  useEffect(() => {
+    if (rol.value === 'user') {
+      todasSucursales.map(sucursal => {
+        if ((sucursal.operators.filter(operator => operator.dni === user.dni)).length > 0) {
+          setSucursalSelection(sucursal._id)
+        }
+      })
+    }
+  }, [rol])
+
   useEffect(async () => {
     try {
+      const suc = await fetch('/api/admin/getAllSucursales', {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
+        },
+      })
+      const succ3ss = await suc.json()
+
       const res = await fetch(`/api/admin/getOneUser/${query.dni}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
         },
       });
-
       const success = await res.json();
-      if (success.success) {
+      if (success.success && succ3ss.success) {
+        setTodasSucursales(succ3ss.data)
+        if (sucursales.length  < 1) {
+          succ3ss.data.map((sucursal, index) =>
+              setSucursales((old) => [...old, { key: index, text: sucursal.name, value: sucursal._id}])
+            );
+        }
         setUser(success.data);
-        setRol({ value: success.data.role });
+        !rol ? setRol({ value: success.data.role }) : null
       }
     } catch (e) {
       //  return Notification.errorMessage("Ha ocurrido un error");
@@ -43,20 +80,59 @@ const UserDni = () => {
 
   const update = async (e) => {
     try {
-      const res = await fetch(`/api/admin/edit/user/${user._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          role: rol.value
-        })
-      });
-      const success = await res.json();
-      if (success.success) {
+      if (rol.value === 'operator') {
+        const updateOperator = await fetch(`/api/admin/edit/sucursal/${sucursalSelection}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: user.name,
+            lastName: user.lastName,
+            dni: user.dni,
+            email: user.email
+          }),
+        });
+        const succ3ss = await updateOperator.json()
 
-        Notification.successMessage(success.successMessage);
-        change();
+        const res = await fetch(`/api/admin/edit/user/${user._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("token")
+          },
+          body: JSON.stringify({
+            role: rol.value,
+          })
+        });
+
+        const success = await res.json()
+
+        if (succ3ss.success && success.success) {
+          change();
+          return Notification.successMessage(success.successMessage)
+        } else {
+          return Notification.errorMessage(success.successMessage, succ3ss.successMessage);
+        }
+      }
+      if (rol.value === 'user') {
+        const res = await fetch(`/api/admin/edit/user/${user._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("token")
+          },
+          body: JSON.stringify({
+            role: rol.value,
+            _id: sucursalSelection,
+            dni: user.dni
+          })
+        });
+        const success = await res.json();
+        if (success.success) {
+          change();
+          return Notification.successMessage(success.successMessage);
+        }
       }
     } catch (e) {
       Notification.errorMessage("Ha ocurrido un error");
@@ -78,7 +154,6 @@ const UserDni = () => {
         confirmButtonText: "Sí, eliminar",
         cancelButtonText: "Cancelar"
       });
-      console.log("result swal", swal);
       if(swal.isConfirmed){ 
       const res = await fetch(`/api/admin/delete/user/${user._id}`, {
         method: "DELETE",
@@ -171,8 +246,8 @@ const UserDni = () => {
                     <label>Rol</label>
                     <Form.Radio
                       label="Operador"
-                      value="operador"
-                      checked={value === "operador"}
+                      value="operator"
+                      checked={value === "operator"}
                       onChange={handleChange}
                     />
                     <Form.Radio
@@ -182,6 +257,16 @@ const UserDni = () => {
                       onChange={handleChange}
                     />
                   </Form.Group>
+                  {rol.value === 'operator' ? (<Form.Input>
+                    <Dropdown
+                      placeholder="Sucursal..."
+                      search
+                      selection
+                      options={sucursales}
+                      onChange={handleSelection}
+                      //style={{ height: "70px" }}
+                    />
+                  </Form.Input>) : null}
                 </Card.Description>
                 <Card.Content extra>
                   <div className="ui two buttons">
@@ -197,7 +282,8 @@ const UserDni = () => {
                     </Button>
                   </div>
                 </Card.Content>
-              </Form>
+                  
+                </Form>
             </Card.Content>
           </Card>
         </Container>

@@ -92,7 +92,7 @@ const SearchUser = () => {
 
 
           </Form>
-          <Button animated onClick={()=>router.back()} >
+          <Button animated onClick={()=>router.back()} style={{marginBottom: '5%'}} >
       <Button.Content visible>Atrás</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow left' />
