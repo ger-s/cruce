@@ -40,7 +40,7 @@ const HomeWithTurno = ({size, turno, parse}) => {
               dni: parse.dni,
               _id: turno[0]._id,
               sucursalName: turno[1].name,
-            horaTurno: ((Number(turno[0].date.slice(11, 13)) - 3).toString().length === 1) ? `${turno[0].date.slice(0, 10)}T0${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}` : `${turno[0].date.slice(0, 10)}T${Number(turno[0].date.slice(11, 13)) - 3}${turno[0].date.slice(13, 19)}`
+            horaTurno: `${turno[0].date}`
           })
         })
         try {
@@ -140,7 +140,7 @@ useEffect(async()=>  {
             </Card.Content>
             <Card.Content>
               <Card.Description>
-                {`Hora: ${new Date(turno[0].date).toLocaleTimeString('es-AR')}`}<br/>
+                {`Hora: ${(Number(new Date(turno[0].date).toLocaleTimeString('es-AR').slice(0,2)) - 3)}${new Date(turno[0].date).toLocaleTimeString('es-AR').slice(2,5)}`}<br/>
                 
                 { counter < 86400?
                   (`Quedan: ${Math.floor(counter/3600)}:${Math.floor((counter/60) % 60)}:${counter % 60}`) : (null)
