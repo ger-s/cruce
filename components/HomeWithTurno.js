@@ -10,7 +10,7 @@ const HomeWithTurno = ({size, turno, parse}) => {
   const router = useRouter()
   const today = new Date()
   const todaySeconds = today.getTime() / 1000
-  const turnoSeconds = turno[0].date ? new Date (turno[0].date).getTime() / 1000 : null
+  const turnoSeconds = turno[0].date ? (new Date (turno[0].date).getTime() / 1000) + 10800 : null
 
   const [counter, setCounter] = useState(Math.round(turnoSeconds - todaySeconds))
 

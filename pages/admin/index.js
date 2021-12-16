@@ -2,12 +2,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
-  Header,
-  Icon,
-  Image,
-  Menu,
-  Segment,
-  Sidebar,
   Dropdown,
   Grid,
   Form,
@@ -40,18 +34,13 @@ const HomeAdmin = ({ parse }) => {
           },
         });
         const success = await res.json();
-        success.role !== "admin" ? router.push("/") : setWaitSuccess(true)
+        success.role === "admin" ? setWaitSuccess(true) : router.push('/')
         if (success.success) {
           success.data.map((sucursales, index) => {
             setSucursales((old) => [
               ...old,
               { key: sucursales._id, text: sucursales.name, value: index },
-            ]); /* setSucursalesId((old) => [
-          ...old,
-          { key: index, text: sucursales._id, value: index },
-          
-  
-        ])  */
+            ]);
           });
         }
       } catch (e) {
@@ -72,9 +61,7 @@ const HomeAdmin = ({ parse }) => {
       const success = await res.json();
 
       if (success.success) {
-        // localStorage.setItem("dni", JSON.stringify(success.data));
         return router.push(`/admin/info/${success.data._id}`);
-        // setUser(success);
       } else {
         return Notification.errorMessage(success.successMessage);
       }
@@ -94,48 +81,11 @@ const HomeAdmin = ({ parse }) => {
     });
   };
 
-  const [visible, setVisible] = React.useState(false);
-
   return (
     <div className="ui container fluid">
       {waitSuccess ? (<Grid>
         <Grid.Row>
-          <Grid.Column /* width={3} */>
-            {/* <Sidebar.Pushable
-      as={Segment}
-      className=" ui container fluid"
-      style={{ height: "900px" }}
-    >
-      <Sidebar
-        as={Menu}
-        animation="overlay"
-        icon="labeled"
-        inverted
-        vertical
-        visible
-        width="thin"
-        style={{width:"100%" ,}}
-      >
-        <Menu.Item as="a">
-          <Icon name="home" />
-          Home
-        </Menu.Item>
-        <Menu.Item as="a">
-          <Icon name="gamepad" />
-          Games
-        </Menu.Item>
-        <Menu.Item as="a">
-          <Icon name="camera" />
-          Channels
-        </Menu.Item>
-      </Sidebar>
-
-      <Sidebar.Pusher>
-        <Segment basic>
-        </Segment>
-      </Sidebar.Pusher>
-    </Sidebar.Pushable>
- */}
+          <Grid.Column >
           </Grid.Column>
           <Grid.Column width={13}>
             <h1
