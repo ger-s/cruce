@@ -80,7 +80,7 @@ export default async (req, res) => {
             req.body.horaTurno
           ).toLocaleDateString("es-AR")}\nHorario: ${new Date(
             req.body.horaTurno
-          ).toLocaleTimeString("es-AR")}\nContacto: ${sucursalEncontrada.phone}`
+          ).toLocaleTimeString()}\nContacto: ${sucursalEncontrada.phone}`
         );
 
         res
