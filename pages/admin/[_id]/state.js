@@ -44,8 +44,6 @@ const State = () => {
     } catch (err) {}
   }, [router]);
 
-
-
   const handleClick = async (e) => {
     e.preventDefault();
     try {
@@ -111,8 +109,9 @@ const State = () => {
           {sortTurno.map((data, i) => {
                 return (
                   <Table.Row key={i}>
+                    {console.log(data.date)}
                     <Table.Cell> {data.client.name}</Table.Cell>
-                    <Table.Cell> {new Date(data.date).toLocaleString("es-AR")}</Table.Cell>
+                    <Table.Cell> {`${new Date(data.date).toLocaleDateString("es-AR")}, ${new Date(data.date).toLocaleTimeString('en-EN')}`}</Table.Cell>
                     <Table.Cell> {data.client.dni}</Table.Cell>
                     <Table.Cell> {data.state}</Table.Cell>
 
