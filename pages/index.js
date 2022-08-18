@@ -3,11 +3,9 @@ import { useEffect , useState} from "react";
 import { Container } from "semantic-ui-react";
 import HomeWithTurno from "../components/HomeWithTurno";
 
-
 export default function Home({size, parse}) {
 
   const [sucursales, setSucursales] = useState([])
-
 
   useEffect(async () =>{
     try {
